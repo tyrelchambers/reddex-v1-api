@@ -1,0 +1,38 @@
+version: "3.8"
+services:
+  server:
+    container_name: reddex_server
+    build: .
+    ports:
+      - "4000:4000"
+    env_file:
+      - .env
+    restart: unless-stopped
+    command: npm start
+    depends_on:
+      - db
+      - mongodb
+  db:
+    container_name: reddex_db
+    image: postgres
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    restart: unless-stopped
+  mongodb:
+    container_name: mongodb
+    image: mongo
+    ports:
+      - "6000:6000"
+    restart: unless-stopped
+
+networks:
+  default:
+    external:
+      name: reddex_v2_backend
+volumes:
+  postgres_data:
+  pg_dump:
