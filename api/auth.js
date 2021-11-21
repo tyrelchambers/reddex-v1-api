@@ -45,7 +45,13 @@ app.post('/v1/register', async (req, res, next) => {
       password: hashPassword
     ***REMOVED***)
 
-    res.send(user)
+    await db.Profile.create({
+      userId: user.uuid
+    ***REMOVED***)
+
+    const token = await signToken(user.uuid, "1m")
+
+    res.send({user, token***REMOVED***)
   ***REMOVED*** catch (error) {
     next(error)
   ***REMOVED***

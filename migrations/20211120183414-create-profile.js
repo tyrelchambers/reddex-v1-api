@@ -17,6 +17,9 @@ module.exports = {
       reading_time: {
         type: Sequelize.INTEGER,
       ***REMOVED***,
+      reddit_profile:{
+        type: Sequelize.JSON
+      ***REMOVED***,
       userId: {
         type: Sequelize.UUID,
         references: {

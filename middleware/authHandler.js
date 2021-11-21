@@ -6,7 +6,7 @@ const authHandler = async (req, res, next) => {
     const token = req.headers.token || req.query.token;
     const userId = await decodeToken(token***REMOVED***
 
-    if (!userId) return res.status(404).send({ error: "USER_NOT_FOUND" ***REMOVED******REMOVED***
+    if (!userId) return res.status(500).send({ error: "USER_NOT_FOUND" ***REMOVED******REMOVED***
 
     res.locals.userId = userId;
     next(***REMOVED***

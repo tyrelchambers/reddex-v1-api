@@ -8,10 +8,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Profile.belongsTo(models.User, {
-        foreignKey: "userId",
-        onDelete: "CASCADE",
-      ***REMOVED******REMOVED***
+     
     ***REMOVED***
   ***REMOVED***
   Profile.init(
@@ -19,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       greeting: DataTypes.STRING,
       recurring: DataTypes.STRING,
       reading_time: DataTypes.INTEGER,
+      reddit_profile: DataTypes.JSON,
       userId: {
         type: DataTypes.UUID,
         references: {
