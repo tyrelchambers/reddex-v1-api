@@ -3,7 +3,7 @@ require("dotenv").config(***REMOVED***
 module.exports = {
   development: {
     database: process.env.POSTGRES_DB,
-    host: "reddex_db",
+    host: "reddex_v2_db",
     username: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASSWORD,
     dialect: "postgres",
@@ -11,7 +11,7 @@ module.exports = {
   ***REMOVED***,
   production: {
     dialect: "postgres",
-    host: "reddex_db",
+    host: "reddex_v2_db",
     username: process.env.POSTGRES_USER,
     database: process.env.POSTGRES_DB,
     password: process.env.POSTGRES_PASSWORD,

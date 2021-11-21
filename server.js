@@ -12,6 +12,9 @@ const app = express(***REMOVED***
 const database = config[config.env].database;
 const db = mongoose.connection;
 
+const auth = require('./api/auth')
+const user = require('./api/user')
+
 app.use(helmet()***REMOVED***
 
 const port = process.env.PORT || "4000";
@@ -31,10 +34,14 @@ app.use(cors()***REMOVED***
 app.use(morgan("combined")***REMOVED***
 mongoose.connect(database, { useNewUrlParser: true ***REMOVED******REMOVED***
 
+app.use('/api/auth', auth)
+app.use('/api/user', user)
+
+
 db.on("error", console.error.bind(console, "Connection error - Mongodb")***REMOVED***
 db.once("open", () => console.log("Connected sucessfully to Mongo database")***REMOVED***
 
-app.use(function (err, req, res) {
+app.use(function (err, req, res, next) {
   console.error(err.message***REMOVED***
   res.status(500).send(err.message***REMOVED***
 ***REMOVED******REMOVED***
