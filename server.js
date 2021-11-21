@@ -5,7 +5,6 @@ require("dotenv").config(***REMOVED***
 const cors = require("cors"***REMOVED***
 const helmet = require("helmet"***REMOVED***
 const morgan = require("morgan"***REMOVED***
-const expressSanitizer = require("express-sanitizer"***REMOVED***
 const config = require("./config"***REMOVED***
 const mongoose = require("mongoose"***REMOVED***
 
@@ -27,7 +26,7 @@ app.use(
     extended: true,
   ***REMOVED***)
 ***REMOVED***
-app.use(expressSanitizer()***REMOVED***
+
 app.use(cors()***REMOVED***
 app.use(morgan("combined")***REMOVED***
 mongoose.connect(database, { useNewUrlParser: true ***REMOVED******REMOVED***

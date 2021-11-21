@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   server:
-    container_name: reddex_server
+    container_name: reddex_v2_server
     build: .
     ports:
       - "4000:4000"
@@ -13,7 +13,7 @@ services:
       - db
       - mongodb
   db:
-    container_name: reddex_db
+    container_name: reddex_v2_db
     image: postgres
     ports:
       - "5432:5432"
@@ -23,7 +23,7 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     restart: unless-stopped
   mongodb:
-    container_name: mongodb
+    container_name: mongodb_reddex
     image: mongo
     ports:
       - "6000:6000"
@@ -31,8 +31,6 @@ services:
 
 networks:
   default:
-    external:
-      name: reddex_v2_backend
+    name: reddex_v2_backend
 volumes:
   postgres_data:
-  pg_dump:
