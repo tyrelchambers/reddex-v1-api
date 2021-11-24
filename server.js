@@ -14,6 +14,8 @@ const db = mongoose.connection;
 
 const auth = require('./api/auth')
 const user = require('./api/user')
+const posts = require('./api/posts')
+const tokens = require('./api/token')
 
 app.use(helmet()***REMOVED***
 
@@ -36,7 +38,8 @@ mongoose.connect(database, { useNewUrlParser: true ***REMOVED******REMOVED***
 
 app.use('/api/auth', auth)
 app.use('/api/user', user)
-
+app.use("/api/posts", posts***REMOVED***
+app.use('/api/tokens', tokens)
 
 db.on("error", console.error.bind(console, "Connection error - Mongodb")***REMOVED***
 db.once("open", () => console.log("Connected sucessfully to Mongo database")***REMOVED***
