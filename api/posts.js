@@ -124,7 +124,7 @@ app.get("/v1/", authHandler, visitorHandler, async (req, res, next) => {
     ***REMOVED***
 
     if (keywords) {
-      query.keywords = `${keywords***REMOVED***`;
+      query.keywords = `nominations`;
     ***REMOVED***
 
     if (misc) {
