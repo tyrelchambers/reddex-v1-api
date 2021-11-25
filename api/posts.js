@@ -5,12 +5,17 @@ const filterByReadTime = require("../libs/filterByReadTime"***REMOVED***
 const filterBySeries = require("../libs/filterBySeriesOnly"***REMOVED***
 const filterByKeywords = require("../libs/filterByKeywords"***REMOVED***
 const visitorHandler = require("../middleware/visitorHandler"***REMOVED***
+const averageReadingTime = require("../libs/averageReadingTime"***REMOVED***
 const app = express.Router(***REMOVED***
+const authHandler = require('../middleware/authHandler'***REMOVED***
+const db = require('../models/index')
 
-app.delete("/v1/delete", visitorHandler, async (req, res, next) => {
+app.delete("/v1/delete", authHandler, visitorHandler, async (req, res, next) => {
   try {
+        const postOwner = res.locals.userId || res.locals.postToken
+
     await Post.deleteMany({
-      visitor_token: res.locals.postToken,
+      owner: postOwner,
     ***REMOVED******REMOVED***
 
     res.sendStatus(200***REMOVED***
@@ -19,11 +24,20 @@ app.delete("/v1/delete", visitorHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.post("/v1/save", visitorHandler, async (req, res, next) => {
+app.post("/v1/save", authHandler, visitorHandler, async (req, res, next) => {
   try {
     const {subreddit***REMOVED*** = req.body
     
-    console.log(req.body***REMOVED***
+
+    const psqlOwner = await db.User.findOne({
+      where: {
+        uuid: res.locals.userId
+      ***REMOVED***,
+      include: [db.Profile]
+    ***REMOVED***)
+    
+    const userWpm = psqlOwner ? psqlOwner.Profile.reading_time : null
+    const postOwner = (res.locals.userId || res.locals.postToken)
 
     const toInsert = req.body.posts.map((x) => ({
       author: x.author,
@@ -37,75 +51,75 @@ app.post("/v1/save", visitorHandler, async (req, res, next) => {
       post_id: x.post_id,
       subreddit: x.subreddit,
       upvote_ratio: x.upvote_ratio.toFixed(2),
+      reading_time:  averageReadingTime(x.self_text, userWpm),
+
     ***REMOVED***)***REMOVED***
 
 
-    const posts = await Post.create({posts: toInsert, subreddit, visitor_token: res.locals.postToken***REMOVED******REMOVED***
-
+    const posts = await Post.create({posts: toInsert, subreddit, owner: postOwner***REMOVED******REMOVED***
     res.send(posts***REMOVED***
   ***REMOVED*** catch (error) {
     next(error***REMOVED***
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.get("/v1/", visitorHandler, async (req, res, next) => {
+app.get("/v1/", authHandler, visitorHandler, async (req, res, next) => {
   try {
     const {
-      operator,
       upvotes,
       keywords,
-      seriesOnly,
-      omitSeries,
+      misc,
       readTime,
-      readTimeOperator,
-    ***REMOVED*** = req.query;
+    ***REMOVED*** = req.query.filters ? { ...JSON.parse(req.query.filters)***REMOVED*** : {***REMOVED***;
 
-    console.log(req.query***REMOVED***
-    
     let resLimit = 25;
     let page = req.query.page || 1;
     const limit = resLimit * page;
     const skip = resLimit * page - resLimit;
     let query = {***REMOVED***;
+    const postOwner = res.locals.userId || res.locals.postToken
+    
+    if (upvotes) {
+      if (upvotes.value > '0') {
+        if (upvotes.operator === "over") {
+          query.ups = {
+            operator: "gte",
+            value: Number(upvotes.value),
+          ***REMOVED***;
+        ***REMOVED***
 
-    if (upvotes > '0') {
-      if (operator === "over") {
-        query.ups = {
-          operator: "gte",
-          value: Number(upvotes),
-        ***REMOVED***;
-      ***REMOVED***
+        if (upvotes.operator === "equal") {
+          query.ups = {
+            operator: "eq",
+            value: Number(upvotes.value),
+          ***REMOVED***;
+        ***REMOVED***
 
-      if (operator === "equal") {
-        query.ups = {
-          operator: "eq",
-          value: Number(upvotes),
-        ***REMOVED***;
-      ***REMOVED***
-
-      if (operator === "under") {
-        query.ups = {
-          operator: "lte",
-          value: Number(upvotes),
-        ***REMOVED***;
+        if (upvotes.operator === "under") {
+          query.ups = {
+            operator: "lte",
+            value: Number(upvotes.value),
+          ***REMOVED***;
+        ***REMOVED***
       ***REMOVED***
     ***REMOVED***
 
-    console.log(readTime***REMOVED***
 
-    if (readTime > '0') {      
-      if (readTimeOperator === "over") {
-        query.readTime = {
-          operator: "gte",
-          value: Number(readTime),
-        ***REMOVED***;
-      ***REMOVED***
+    if (readTime) {
+      if (readTime.value > '0') {      
+        if (readTime.operator === "over") {
+          query.readTime = {
+            operator: "gte",
+            value: Number(readTime.value),
+          ***REMOVED***;
+        ***REMOVED***
 
-      if (readTimeOperator === "under") {
-        query.readTime = {
-          operator: "lte",
-          value: Number(readTime),
-        ***REMOVED***;
+        if (readTime.operator === "under") {
+          query.readTime = {
+            operator: "lte",
+            value: Number(readTime.value),
+          ***REMOVED***;
+        ***REMOVED***
       ***REMOVED***
     ***REMOVED***
 
@@ -113,30 +127,30 @@ app.get("/v1/", visitorHandler, async (req, res, next) => {
       query.keywords = `${keywords***REMOVED***`;
     ***REMOVED***
 
-    if (seriesOnly === 'true') {
-      query.seriesOnly = true;
+    if (misc) {
+      if (misc.value === 'seriesOnly') {
+        query.seriesOnly = true;
+      ***REMOVED***
+
+      if (misc.value === 'excludeSeries') {
+        query.omitSeries = true
+      ***REMOVED***
     ***REMOVED***
 
-    if (omitSeries === 'true') {
-      query.omitSeries = true
-    ***REMOVED***
-
-    const postOwner = await Post.findOne({visitor_token: res.locals.postToken***REMOVED***)
-    console.log(query***REMOVED***
-    const posts = postOwner === null ? [] : postOwner.posts
+    const _owner = await Post.findOne({owner: postOwner***REMOVED***)
+    const posts = _owner === null ? [] : _owner.posts
                     .filter(post => filterByUpvotes({post, query***REMOVED***))
                     .filter(post => filterByReadTime({post, query***REMOVED***))
                     .filter(post => filterByKeywords({post, query***REMOVED***))
                     .filter(post => filterBySeries({post, query***REMOVED***))
 
-                console.log(posts.length***REMOVED***
                     
     res.send({
       post: {
-        subreddit: postOwner?.subreddit,
+        subreddit: _owner?.subreddit,
         posts: posts.slice(skip, limit)
       ***REMOVED***,
-      maxPages: postOwner ? Math.round(posts.length / 25) : 0,
+      maxPages: _owner ? Math.round(posts.length / 25) : 0,
     ***REMOVED******REMOVED***
   ***REMOVED*** catch (error) {
     next(error***REMOVED***
@@ -148,7 +162,7 @@ app.put("/v1/update", visitorHandler, async (req, res, next) => {
     const { post_id ***REMOVED*** = req.body;
   
     const postOwner = await Post.findOne({
-      visitor_token: res.locals.postToken
+      owner: res.locals.postToken
     ***REMOVED***)
 
     const post = postOwner.posts.filter(p => p.post_id === post_id)[0]

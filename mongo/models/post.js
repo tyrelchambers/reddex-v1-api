@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const postSchema = new Schema(
   {
     subreddit: String,
-    visitor_token: String,
+    owner: String,
 
     posts: [{
       author: String,
@@ -23,8 +23,7 @@ const postSchema = new Schema(
         type: Boolean,
         default: false,
       ***REMOVED***,
-      page: Number,
-      readTime: Number,
+      reading_time: Number,
     ***REMOVED***]
   ***REMOVED***,
   { timestamps: { createdAt: "created_at" ***REMOVED*** ***REMOVED***
