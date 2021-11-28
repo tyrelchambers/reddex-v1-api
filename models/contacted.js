@@ -1,35 +1,30 @@
 ***REMOVED***
 const { Model ***REMOVED*** = require("sequelize"***REMOVED***
 module.exports = (sequelize, DataTypes) => {
-  class Profile extends Model {
+  class Contacted extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-     
+      // define association here
     ***REMOVED***
   ***REMOVED***
-  Profile.init(
+  Contacted.init(
     {
-      greeting: DataTypes.STRING,
-      recurring: DataTypes.STRING,
-      words_per_minute: DataTypes.INTEGER,
-      reddit_profile: DataTypes.JSON,
-      userId: {
+      uuid: {
         type: DataTypes.UUID,
-        references: {
-          model: "Users",
-          key: "uuid",
-          onDelete: "CASCADE",
-        ***REMOVED***,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+        unique: true,
       ***REMOVED***,
+      name: DataTypes.STRING,
     ***REMOVED***,
     {
 ***REMOVED***
-      modelName: "Profile",
+      modelName: "Contacted",
     ***REMOVED***
   ***REMOVED***
-  return Profile;
+  return Contacted;
 ***REMOVED***;

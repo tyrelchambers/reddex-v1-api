@@ -10,8 +10,18 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       User.hasOne(models.Profile, {
         foreignKey: "userId",
-        onDelete: "CASCADE"
-      ***REMOVED***)
+        onDelete: "CASCADE",
+      ***REMOVED******REMOVED***
+
+      User.hasMany(models.Contact, {
+        foreignKey: "userId",
+        onDelete: "CASCADE",
+      ***REMOVED******REMOVED***
+
+      User.hasMany(models.Contacted, {
+        foreignKey: "userId",
+        onDelete: "CASCADE",
+      ***REMOVED******REMOVED***
     ***REMOVED***
   ***REMOVED***
   User.init(

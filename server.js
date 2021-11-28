@@ -12,10 +12,15 @@ const app = express(***REMOVED***
 const database = config[config.env].database;
 const db = mongoose.connection;
 
-const auth = require('./api/auth')
-const user = require('./api/user')
-const posts = require('./api/posts')
-const tokens = require('./api/token')
+const auth = require("./api/auth"***REMOVED***
+const user = require("./api/user"***REMOVED***
+const posts = require("./api/posts"***REMOVED***
+const tokens = require("./api/token"***REMOVED***
+const contacts = require("./api/contact"***REMOVED***
+const contacted = require("./api/contacted"***REMOVED***
+const story = require("./api/story"***REMOVED***
+const inbox = require("./api/inbox"***REMOVED***
+const readingList = require("./api/readingList"***REMOVED***
 
 app.use(helmet()***REMOVED***
 
@@ -36,10 +41,15 @@ app.use(cors()***REMOVED***
 app.use(morgan("combined")***REMOVED***
 mongoose.connect(database, { useNewUrlParser: true ***REMOVED******REMOVED***
 
-app.use('/api/auth', auth)
-app.use('/api/user', user)
+app.use("/api/auth", auth***REMOVED***
+app.use("/api/user", user***REMOVED***
 app.use("/api/posts", posts***REMOVED***
-app.use('/api/tokens', tokens)
+app.use("/api/tokens", tokens***REMOVED***
+app.use("/api/contacts", contacts***REMOVED***
+app.use("/api/contacted", contacted***REMOVED***
+app.use("/api/story", story***REMOVED***
+app.use("/api/inbox.js", inbox***REMOVED***
+app.use("/api/reading_list", readingList***REMOVED***
 
 db.on("error", console.error.bind(console, "Connection error - Mongodb")***REMOVED***
 db.once("open", () => console.log("Connected sucessfully to Mongo database")***REMOVED***
