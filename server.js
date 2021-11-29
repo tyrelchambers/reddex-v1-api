@@ -21,6 +21,7 @@ const contacted = require("./api/contacted"***REMOVED***
 const story = require("./api/story"***REMOVED***
 const inbox = require("./api/inbox"***REMOVED***
 const readingList = require("./api/readingList"***REMOVED***
+const tags = require("./api/tags"***REMOVED***
 
 app.use(helmet()***REMOVED***
 
@@ -50,6 +51,7 @@ app.use("/api/contacted", contacted***REMOVED***
 app.use("/api/story", story***REMOVED***
 app.use("/api/inbox.js", inbox***REMOVED***
 app.use("/api/reading_list", readingList***REMOVED***
+app.use("/api/tags", tags***REMOVED***
 
 db.on("error", console.error.bind(console, "Connection error - Mongodb")***REMOVED***
 db.once("open", () => console.log("Connected sucessfully to Mongo database")***REMOVED***

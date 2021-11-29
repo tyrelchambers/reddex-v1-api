@@ -22,6 +22,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "userId",
         onDelete: "CASCADE",
       ***REMOVED******REMOVED***
+
+      User.hasMany(models.Tag, {
+        foreignKey: "userId",
+        onDelete: "CASCADE",
+      ***REMOVED******REMOVED***
     ***REMOVED***
   ***REMOVED***
   User.init(

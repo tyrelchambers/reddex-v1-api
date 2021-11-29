@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Story.hasMany(models.Tag, {
+        foreignKey: "storyId",
+        onDelete: "CASCADE",
+      ***REMOVED******REMOVED***
     ***REMOVED***
   ***REMOVED***
   Story.init(
