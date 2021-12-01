@@ -90,19 +90,22 @@ app.get("/v1/", authHandler, visitorHandler, async (req, res, next) => {
       if (upvotes.value > "0") {
         if (upvotes.operator === "over") {
           query.ups = {
-            [Op.gte]: Number(upvotes.value),
+            operator: ">=",
+            value: Number(upvotes.value),
           ***REMOVED***;
         ***REMOVED***
 
         if (upvotes.operator === "equal") {
           query.ups = {
-            [Op.eq]: Number(upvotes.value),
+            operator: "=",
+            value: Number(upvotes.value),
           ***REMOVED***;
         ***REMOVED***
 
         if (upvotes.operator === "under") {
           query.ups = {
-            [Op.lte]: Number(upvotes.value),
+            operator: "<=",
+            value: Number(upvotes.value),
           ***REMOVED***;
         ***REMOVED***
       ***REMOVED***
@@ -112,60 +115,53 @@ app.get("/v1/", authHandler, visitorHandler, async (req, res, next) => {
       if (readTime.value > "0") {
         if (readTime.operator === "over") {
           query.readTime = {
-            [Op.gte]: Number(readTime.value),
+            operator: ">=",
+            value: Number(readTime.value),
           ***REMOVED***;
         ***REMOVED***
 
         if (readTime.operator === "under") {
           query.readTime = {
-            [Op.lte]: Number(readTime.value),
+            operator: "<=",
+            value: Number(readTime.value),
           ***REMOVED***;
         ***REMOVED***
       ***REMOVED***
     ***REMOVED***
 
     if (keywords) {
-      query.keywords = {
-        [Op.contains]: keywords,
-      ***REMOVED***;
+      query.keywords = keywords;
     ***REMOVED***
-
+    console.log(query***REMOVED***
     if (misc) {
       if (misc.value === "seriesOnly") {
-        query.link_flair_text = {
-          [Op.eq]: "Series",
-        ***REMOVED***;
+        query.seriesOnly = true;
       ***REMOVED***
 
-      if (misc.value === "excludeSeries") {
-        query.link_flair_text = {
-          [Op.not]: "Series",
-        ***REMOVED***;
+      if (misc.value === "omitSeries") {
+        query.omitSeries = true;
       ***REMOVED***
     ***REMOVED***
 
     const _owner = await db.Post.findOne({
       where: {
         owner: postOwner,
-        posts: {
-          ...query,
-        ***REMOVED***,
       ***REMOVED***,
     ***REMOVED******REMOVED***
 
-    // const posts =
-    //   _owner === null
-    //     ? []
-    //     : _owner.posts
-    //         .filter((post) => filterByUpvotes({ post, query ***REMOVED***))
-    //         .filter((post) => filterByReadTime({ post, query ***REMOVED***))
-    //         .filter((post) => filterByKeywords({ post, query ***REMOVED***))
-    //         .filter((post) => filterBySeries({ post, query ***REMOVED***)***REMOVED***
+    const posts =
+      _owner === null
+        ? []
+        : _owner.posts
+            .filter((post) => filterByUpvotes({ post, query ***REMOVED***))
+            .filter((post) => filterByReadTime({ post, query ***REMOVED***))
+            .filter((post) => filterByKeywords({ post, query ***REMOVED***))
+            .filter((post) => filterBySeries({ post, query ***REMOVED***)***REMOVED***
 
     res.send({
       post: {
         subreddit: _owner?.subreddit,
-        posts: _owner.posts.slice(skip, limit),
+        posts: posts.slice(skip, limit),
       ***REMOVED***,
       maxPages: _owner ? Math.round(_owner.posts.length / 25) : 0,
     ***REMOVED******REMOVED***

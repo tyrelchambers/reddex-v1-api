@@ -1,13 +1,14 @@
-const filterBySeries = ({post, query***REMOVED***) => {
+const filterBySeries = ({ post, query ***REMOVED***) => {
+  console.log(query***REMOVED***
   if (query.seriesOnly) {
-    return post.link_flair_text === "Series"
-  ***REMOVED*** 
-  
-  if (query.omitSeries) {
-    return post.link_flair_text !== "Series"
+    return post.link_flair_text === "Series";
   ***REMOVED***
 
-  return post
-***REMOVED***
+  if (query.omitSeries) {
+    return post.link_flair_text !== "Series";
+  ***REMOVED***
 
-module.exports = filterBySeries
+  return post;
+***REMOVED***;
+
+module.exports = filterBySeries;
