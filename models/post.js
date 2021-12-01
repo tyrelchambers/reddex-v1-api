@@ -1,21 +1,17 @@
 ***REMOVED***
 const { Model ***REMOVED*** = require("sequelize"***REMOVED***
 module.exports = (sequelize, DataTypes) => {
-  class Tag extends Model {
+  class Post extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Tag.belongsToMany(models.Story, {
-        foreignKey: "tagId",
-        as: "stories",
-        through: "StoryTag",
-      ***REMOVED******REMOVED***
+      // define association here
     ***REMOVED***
   ***REMOVED***
-  Tag.init(
+  Post.init(
     {
       uuid: {
         type: DataTypes.UUID,
@@ -23,22 +19,20 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         unique: true,
       ***REMOVED***,
-      tag: {
+      owner: {
         type: DataTypes.STRING,
       ***REMOVED***,
-      userId: {
-        type: DataTypes.UUID,
-        references: {
-          model: "Users",
-          key: "uuid",
-          onDelete: "CASCADE",
-        ***REMOVED***,
+      posts: {
+        type: DataTypes.ARRAY(DataTypes.JSON),
+      ***REMOVED***,
+      subreddit: {
+        type: DataTypes.STRING,
       ***REMOVED***,
     ***REMOVED***,
     {
 ***REMOVED***
-      modelName: "Tag",
+      modelName: "Post",
     ***REMOVED***
   ***REMOVED***
-  return Tag;
+  return Post;
 ***REMOVED***;
