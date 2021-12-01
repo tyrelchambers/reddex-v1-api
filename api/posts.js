@@ -1,5 +1,4 @@
 const express = require("express"***REMOVED***
-const Post = require("../mongo/models/post"***REMOVED***
 const filterByUpvotes = require("../libs/filterByUpvotes"***REMOVED***
 const filterByReadTime = require("../libs/filterByReadTime"***REMOVED***
 const filterBySeries = require("../libs/filterBySeriesOnly"***REMOVED***
@@ -9,7 +8,6 @@ const averageReadingTime = require("../libs/averageReadingTime"***REMOVED***
 const app = express.Router(***REMOVED***
 const authHandler = require("../middleware/authHandler"***REMOVED***
 const db = require("../models/index"***REMOVED***
-const { Op ***REMOVED*** = require("sequelize"***REMOVED***
 
 app.delete(
   "/v1/delete",
@@ -130,7 +128,7 @@ app.get("/v1/", authHandler, visitorHandler, async (req, res, next) => {
     ***REMOVED***
 
     if (keywords) {
-      query.keywords = keywords;
+      query.keywords = keywords.value;
     ***REMOVED***
     console.log(query***REMOVED***
     if (misc) {
