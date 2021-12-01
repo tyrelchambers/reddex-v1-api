@@ -9,8 +9,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Story.hasMany(models.Tag, {
+      Story.belongsToMany(models.Tag, {
         foreignKey: "storyId",
+        through: "StoryTag",
+        as: "tags",
         onDelete: "CASCADE",
       ***REMOVED******REMOVED***
     ***REMOVED***

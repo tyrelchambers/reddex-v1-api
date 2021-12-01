@@ -1,17 +1,20 @@
 const express = require("express"***REMOVED***
 const authHandler = require("../middleware/authHandler"***REMOVED***
-const { db ***REMOVED*** = require("../models/index"***REMOVED***
+const db = require("../models"***REMOVED***
 
 const app = express.Router(***REMOVED***
 
 app.post("/v1/save", authHandler, async (req, res, next) => {
   try {
-    const { tag ***REMOVED*** = req.body;
+    const { tag, stories ***REMOVED*** = req.body;
+    console.log(tag.tag, stories***REMOVED***
 
-    await db.Tag.create({
-      tag,
+    const newTags = await db.Tag.create({
+      tag: tag.tag,
       userId: res.locals.userId,
     ***REMOVED******REMOVED***
+
+    newTags.setStories(stories***REMOVED***
 
     res.sendStatus(200***REMOVED***
   ***REMOVED*** catch (error) {
@@ -22,6 +25,53 @@ app.post("/v1/save", authHandler, async (req, res, next) => {
 app.delete("/v1/:id/delete", authHandler, async (req, res, next) => {
   try {
     const { id ***REMOVED*** = req.params;
+
+    await db.Tag.destroy({
+      where: {
+        uuid: id,
+        userId: res.locals.userId,
+      ***REMOVED***,
+    ***REMOVED******REMOVED***
+
+    res.sendStatus(200***REMOVED***
+  ***REMOVED*** catch (error) {
+    next(error***REMOVED***
+  ***REMOVED***
+***REMOVED******REMOVED***
+
+app.put("/v1/edit", authHandler, async (req, res, next) => {
+  try {
+    const { uuid, tag ***REMOVED*** = req.body;
+
+    await db.Tag.update(
+      {
+        tag,
+      ***REMOVED***,
+      {
+        where: {
+          uuid,
+          userId: res.locals.userId,
+        ***REMOVED***,
+      ***REMOVED***
+    ***REMOVED***
+
+    res.sendStatus(200***REMOVED***
+  ***REMOVED*** catch (error) {
+    next(error***REMOVED***
+  ***REMOVED***
+***REMOVED******REMOVED***
+
+app.get("/v1/:uuid", authHandler, async (req, res, next) => {
+  try {
+    const { uuid ***REMOVED*** = req.params;
+
+    const tag = await db.Tag.findOne({
+      where: {
+        uuid,
+      ***REMOVED***,
+    ***REMOVED******REMOVED***
+
+    res.send(tag***REMOVED***
   ***REMOVED*** catch (error) {
     next(error***REMOVED***
   ***REMOVED***
@@ -29,7 +79,13 @@ app.delete("/v1/:id/delete", authHandler, async (req, res, next) => {
 
 app.get("/v1/", authHandler, async (req, res, next) => {
   try {
-    console.log(db***REMOVED***
+    const tags = await db.Tag.findAll({
+      where: {
+        userId: res.locals.userId,
+      ***REMOVED***,
+    ***REMOVED******REMOVED***
+
+    res.send(tags***REMOVED***
   ***REMOVED*** catch (error) {
     next(error***REMOVED***
   ***REMOVED***
