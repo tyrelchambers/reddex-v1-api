@@ -7,7 +7,6 @@ const app = express.Router(***REMOVED***
 app.post("/v1/save", authHandler, async (req, res, next) => {
   try {
     const { tag, stories ***REMOVED*** = req.body;
-    console.log(tag.tag, stories***REMOVED***
 
     const newTags = await db.Tag.create({
       tag: tag.tag,

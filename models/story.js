@@ -61,6 +61,19 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       ***REMOVED***,
+      reading_time: {
+        type: DataTypes.INTEGER,
+      ***REMOVED***,
+      viewed: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      ***REMOVED***,
+      upvote_ratio: {
+        type: DataTypes.FLOAT,
+      ***REMOVED***,
+      owner: {
+        type: DataTypes.STRING,
+      ***REMOVED***,
       user_id: {
         type: DataTypes.UUID,
         references: {
