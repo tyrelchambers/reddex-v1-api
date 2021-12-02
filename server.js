@@ -5,12 +5,8 @@ require("dotenv").config(***REMOVED***
 const cors = require("cors"***REMOVED***
 const helmet = require("helmet"***REMOVED***
 const morgan = require("morgan"***REMOVED***
-const config = require("./config"***REMOVED***
-const mongoose = require("mongoose"***REMOVED***
 
 const app = express(***REMOVED***
-const database = config[config.env].database;
-const db = mongoose.connection;
 
 const auth = require("./api/auth"***REMOVED***
 const user = require("./api/user"***REMOVED***
@@ -40,7 +36,6 @@ app.use(
 
 app.use(cors()***REMOVED***
 app.use(morgan("combined")***REMOVED***
-mongoose.connect(database, { useNewUrlParser: true ***REMOVED******REMOVED***
 
 app.use("/api/auth", auth***REMOVED***
 app.use("/api/user", user***REMOVED***
@@ -52,9 +47,6 @@ app.use("/api/story", story***REMOVED***
 app.use("/api/inbox.js", inbox***REMOVED***
 app.use("/api/reading_list", readingList***REMOVED***
 app.use("/api/tags", tags***REMOVED***
-
-db.on("error", console.error.bind(console, "Connection error - Mongodb")***REMOVED***
-db.once("open", () => console.log("Connected sucessfully to Mongo database")***REMOVED***
 
 app.use(function (err, req, res, next) {
   console.error(err.message***REMOVED***

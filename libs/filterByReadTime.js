@@ -1,13 +1,13 @@
-const filterByReadTime = ({post, query***REMOVED***) => {
+const filterByReadTime = ({ post, query ***REMOVED***) => {
   if (!query.readTime) return post;
 
-  if (query.readTime.operator === "gte") {
-    return post.readTime >= query.readTime.value
-  ***REMOVED*** else if(query.readTime.operator === "lte") {
-    return post.readTime <= query.readTime.value
+  if (query.readTime.operator === ">=") {
+    return post.readTime >= query.readTime.value;
+  ***REMOVED*** else if (query.readTime.operator === "<=") {
+    return post.readTime <= query.readTime.value;
   ***REMOVED***
-    return post
+    return post;
   ***REMOVED***
-***REMOVED***
+***REMOVED***;
 
-module.exports = filterByReadTime
+module.exports = filterByReadTime;

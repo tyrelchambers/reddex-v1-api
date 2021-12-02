@@ -1,5 +1,4 @@
 const express = require("express"***REMOVED***
-const Post = require("../mongo/models/post"***REMOVED***
 const filterByUpvotes = require("../libs/filterByUpvotes"***REMOVED***
 const filterByReadTime = require("../libs/filterByReadTime"***REMOVED***
 const filterBySeries = require("../libs/filterBySeriesOnly"***REMOVED***
@@ -18,8 +17,10 @@ app.delete(
     try {
       const postOwner = res.locals.userId || res.locals.postToken;
 
-      await Post.deleteMany({
-        owner: postOwner,
+      await db.Post.destroy({
+        where: {
+          owner: postOwner,
+        ***REMOVED***,
       ***REMOVED******REMOVED***
 
       res.sendStatus(200***REMOVED***
@@ -58,11 +59,12 @@ app.post("/v1/save", authHandler, visitorHandler, async (req, res, next) => {
       reading_time: averageReadingTime(x.self_text, userWpm),
     ***REMOVED***)***REMOVED***
 
-    const posts = await Post.create({
+    const posts = await db.Post.create({
       posts: toInsert,
       subreddit,
       owner: postOwner,
     ***REMOVED******REMOVED***
+
     res.send(posts***REMOVED***
   ***REMOVED*** catch (error) {
     next(error***REMOVED***
@@ -86,21 +88,21 @@ app.get("/v1/", authHandler, visitorHandler, async (req, res, next) => {
       if (upvotes.value > "0") {
         if (upvotes.operator === "over") {
           query.ups = {
-            operator: "gte",
+            operator: ">=",
             value: Number(upvotes.value),
           ***REMOVED***;
         ***REMOVED***
 
         if (upvotes.operator === "equal") {
           query.ups = {
-            operator: "eq",
+            operator: "=",
             value: Number(upvotes.value),
           ***REMOVED***;
         ***REMOVED***
 
         if (upvotes.operator === "under") {
           query.ups = {
-            operator: "lte",
+            operator: "<=",
             value: Number(upvotes.value),
           ***REMOVED***;
         ***REMOVED***
@@ -111,14 +113,14 @@ app.get("/v1/", authHandler, visitorHandler, async (req, res, next) => {
       if (readTime.value > "0") {
         if (readTime.operator === "over") {
           query.readTime = {
-            operator: "gte",
+            operator: ">=",
             value: Number(readTime.value),
           ***REMOVED***;
         ***REMOVED***
 
         if (readTime.operator === "under") {
           query.readTime = {
-            operator: "lte",
+            operator: "<=",
             value: Number(readTime.value),
           ***REMOVED***;
         ***REMOVED***
@@ -126,20 +128,25 @@ app.get("/v1/", authHandler, visitorHandler, async (req, res, next) => {
     ***REMOVED***
 
     if (keywords) {
-      query.keywords = `nominations`;
+      query.keywords = keywords.value;
     ***REMOVED***
-
+    console.log(query***REMOVED***
     if (misc) {
       if (misc.value === "seriesOnly") {
         query.seriesOnly = true;
       ***REMOVED***
 
-      if (misc.value === "excludeSeries") {
+      if (misc.value === "omitSeries") {
         query.omitSeries = true;
       ***REMOVED***
     ***REMOVED***
 
-    const _owner = await Post.findOne({ owner: postOwner ***REMOVED******REMOVED***
+    const _owner = await db.Post.findOne({
+      where: {
+        owner: postOwner,
+      ***REMOVED***,
+    ***REMOVED******REMOVED***
+
     const posts =
       _owner === null
         ? []
@@ -154,7 +161,7 @@ app.get("/v1/", authHandler, visitorHandler, async (req, res, next) => {
         subreddit: _owner?.subreddit,
         posts: posts.slice(skip, limit),
       ***REMOVED***,
-      maxPages: _owner ? Math.round(posts.length / 25) : 0,
+      maxPages: _owner ? Math.round(_owner.posts.length / 25) : 0,
     ***REMOVED******REMOVED***
   ***REMOVED*** catch (error) {
     next(error***REMOVED***
@@ -165,8 +172,8 @@ app.put("/v1/update", visitorHandler, async (req, res, next) => {
   try {
     const { post_id ***REMOVED*** = req.body;
 
-    const postOwner = await Post.findOne({
-      owner: res.locals.postToken,
+    const postOwner = await db.Post.findOne({
+      where: { owner: res.locals.postToken ***REMOVED***,
     ***REMOVED******REMOVED***
 
     const post = postOwner.posts.filter((p) => p.post_id === post_id)[0];
