@@ -17,6 +17,7 @@ app.post("/v1/save", authHandler, async (req, res, next) => {
       url,
       subreddit,
       permission,
+      created,
     ***REMOVED*** = req.body;
 
     const existingStory = await db.Story.findOne({
@@ -42,6 +43,7 @@ app.post("/v1/save", authHandler, async (req, res, next) => {
       permission,
       subreddit,
       user_id: res.locals.userId,
+      created,
     ***REMOVED******REMOVED***
 
     res.sendStatus(200***REMOVED***

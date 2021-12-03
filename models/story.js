@@ -71,9 +71,8 @@ module.exports = (sequelize, DataTypes) => {
       upvote_ratio: {
         type: DataTypes.FLOAT,
       ***REMOVED***,
-      owner: {
-        type: DataTypes.STRING,
-      ***REMOVED***,
+      created: DataTypes.INTEGER,
+
       user_id: {
         type: DataTypes.UUID,
         references: {

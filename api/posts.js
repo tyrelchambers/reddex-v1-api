@@ -8,6 +8,7 @@ const averageReadingTime = require("../libs/averageReadingTime"***REMOVED***
 const app = express.Router(***REMOVED***
 const authHandler = require("../middleware/authHandler"***REMOVED***
 const db = require("../models/index"***REMOVED***
+const Post = require("../mongo/models/post"***REMOVED***
 
 app.delete(
   "/v1/delete",
@@ -17,10 +18,8 @@ app.delete(
     try {
       const postOwner = res.locals.userId || res.locals.postToken;
 
-      await db.Post.destroy({
-        where: {
-          owner: postOwner,
-        ***REMOVED***,
+      await Post.deleteMany({
+        owner: postOwner,
       ***REMOVED******REMOVED***
 
       res.sendStatus(200***REMOVED***
@@ -59,7 +58,7 @@ app.post("/v1/save", authHandler, visitorHandler, async (req, res, next) => {
       reading_time: averageReadingTime(x.self_text, userWpm),
     ***REMOVED***)***REMOVED***
 
-    const posts = await db.Post.create({
+    const posts = await Post.create({
       posts: toInsert,
       subreddit,
       owner: postOwner,
@@ -130,7 +129,7 @@ app.get("/v1/", authHandler, visitorHandler, async (req, res, next) => {
     if (keywords) {
       query.keywords = keywords.value;
     ***REMOVED***
-    console.log(query***REMOVED***
+
     if (misc) {
       if (misc.value === "seriesOnly") {
         query.seriesOnly = true;
@@ -141,11 +140,7 @@ app.get("/v1/", authHandler, visitorHandler, async (req, res, next) => {
       ***REMOVED***
     ***REMOVED***
 
-    const _owner = await db.Post.findOne({
-      where: {
-        owner: postOwner,
-      ***REMOVED***,
-    ***REMOVED******REMOVED***
+    const _owner = await Post.findOne({ owner: postOwner ***REMOVED******REMOVED***
 
     const posts =
       _owner === null
@@ -172,7 +167,7 @@ app.put("/v1/update", visitorHandler, async (req, res, next) => {
   try {
     const { post_id ***REMOVED*** = req.body;
 
-    const postOwner = await db.Post.findOne({
+    const postOwner = await Post.findOne({
       where: { owner: res.locals.postToken ***REMOVED***,
     ***REMOVED******REMOVED***
 
