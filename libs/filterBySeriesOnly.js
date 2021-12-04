@@ -1,5 +1,4 @@
 const filterBySeries = ({ post, query ***REMOVED***) => {
-  console.log(query***REMOVED***
   if (query.seriesOnly) {
     return post.link_flair_text === "Series";
   ***REMOVED***

@@ -1,10 +1,12 @@
-const filterByReadTime = ({ post, query ***REMOVED***) => {
+const filterByReadTime = ({ post, query, wpm ***REMOVED***) => {
   if (!query.readTime) return post;
 
+  const _wpm = wpm || 150;
+
   if (query.readTime.operator === ">=") {
-    return post.readTime >= query.readTime.value;
+    return post.self_text >= query.readTime.value * _wpm;
   ***REMOVED*** else if (query.readTime.operator === "<=") {
-    return post.readTime <= query.readTime.value;
+    return post.self_text <= query.readTime.value * _wpm;
   ***REMOVED***
     return post;
   ***REMOVED***

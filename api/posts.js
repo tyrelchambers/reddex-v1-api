@@ -40,7 +40,6 @@ app.post("/v1/save", authHandler, visitorHandler, async (req, res, next) => {
       include: [db.Profile],
     ***REMOVED******REMOVED***
 
-    const userWpm = psqlOwner ? psqlOwner.Profile.words_per_minute : null;
     const postOwner = res.locals.userId || res.locals.postToken;
 
     const toInsert = req.body.posts.map((x) => ({
@@ -55,7 +54,6 @@ app.post("/v1/save", authHandler, visitorHandler, async (req, res, next) => {
       post_id: x.post_id,
       subreddit: x.subreddit,
       upvote_ratio: x.upvote_ratio.toFixed(2),
-      reading_time: averageReadingTime(x.self_text, userWpm),
     ***REMOVED***)***REMOVED***
 
     const posts = await Post.create({
@@ -82,6 +80,13 @@ app.get("/v1/", authHandler, visitorHandler, async (req, res, next) => {
     const skip = resLimit * page - resLimit;
     let query = {***REMOVED***;
     const postOwner = res.locals.userId || res.locals.postToken;
+
+    const user = await db.User.findOne({
+      where: {
+        uuid: res.locals.userId,
+      ***REMOVED***,
+      include: [db.Profile],
+    ***REMOVED******REMOVED***
 
     if (upvotes) {
       if (upvotes.value > "0") {
@@ -147,7 +152,13 @@ app.get("/v1/", authHandler, visitorHandler, async (req, res, next) => {
         ? []
         : _owner.posts
             .filter((post) => filterByUpvotes({ post, query ***REMOVED***))
-            .filter((post) => filterByReadTime({ post, query ***REMOVED***))
+            .filter((post) =>
+              filterByReadTime({
+                post,
+                query,
+                wpm: user.Profile.words_per_minute,
+              ***REMOVED***)
+            )
             .filter((post) => filterByKeywords({ post, query ***REMOVED***))
             .filter((post) => filterBySeries({ post, query ***REMOVED***)***REMOVED***
 

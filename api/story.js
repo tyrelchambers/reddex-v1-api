@@ -38,8 +38,6 @@ app.post("/v1/save", authHandler, async (req, res, next) => {
       include: [db.Profile],
     ***REMOVED******REMOVED***
 
-    const userWpm = psqlOwner ? psqlOwner.Profile.words_per_minute : null;
-
     if (existingStory) throw new Error("Story already exists"***REMOVED***
 
     await db.Story.create({
@@ -56,7 +54,6 @@ app.post("/v1/save", authHandler, async (req, res, next) => {
       user_id: res.locals.userId,
       created,
       upvote_ratio: upvote_ratio.toFixed(2),
-      reading_time: averageReadingTime(self_text, userWpm),
     ***REMOVED******REMOVED***
 
     res.sendStatus(200***REMOVED***
