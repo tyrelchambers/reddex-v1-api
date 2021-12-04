@@ -57,7 +57,10 @@ db.on("error", console.error.bind(console, "Connection error - Mongodb")***REMOV
 db.once("open", () => console.log("Connected sucessfully to Mongo database")***REMOVED***
 
 app.use(function (err, req, res, next) {
+  console.log("--------error--------"***REMOVED***
   console.error(err.message***REMOVED***
+  console.log("--------error--------"***REMOVED***
+
   res.status(500).send(err.message***REMOVED***
 ***REMOVED******REMOVED***
 

@@ -55,4 +55,41 @@ app.post("/v1/save", authHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
+app.put("/v1/tag", authHandler, async (req, res, next) => {
+  try {
+    const { tags, storyId ***REMOVED*** = req.body.data;
+
+    const tagIds = tags.map((tag) => tag.uuid***REMOVED***
+
+    const story = await db.Story.findOne({
+      where: {
+        uuid: storyId,
+      ***REMOVED***,
+    ***REMOVED******REMOVED***
+
+    story.addTags(tagIds***REMOVED***
+
+    res.sendStatus(200***REMOVED***
+  ***REMOVED*** catch (error) {
+    next(error***REMOVED***
+  ***REMOVED***
+***REMOVED******REMOVED***
+
+app.delete("/v1/delete", authHandler, async (req, res, next) => {
+  try {
+    const { uuid ***REMOVED*** = req.body;
+
+    await db.Story.destroy({
+      where: {
+        uuid,
+        user_id: res.locals.userId,
+      ***REMOVED***,
+    ***REMOVED******REMOVED***
+
+    res.sendStatus(200***REMOVED***
+  ***REMOVED*** catch (error) {
+    next(error***REMOVED***
+  ***REMOVED***
+***REMOVED******REMOVED***
+
 module.exports = app;
