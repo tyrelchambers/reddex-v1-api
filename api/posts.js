@@ -33,13 +33,6 @@ app.post("/v1/save", authHandler, visitorHandler, async (req, res, next) => {
   try {
     const { subreddit ***REMOVED*** = req.body;
 
-    const psqlOwner = await db.User.findOne({
-      where: {
-        uuid: res.locals.userId,
-      ***REMOVED***,
-      include: [db.Profile],
-    ***REMOVED******REMOVED***
-
     const postOwner = res.locals.userId || res.locals.postToken;
 
     const toInsert = req.body.posts.map((x) => ({
@@ -50,7 +43,7 @@ app.post("/v1/save", authHandler, visitorHandler, async (req, res, next) => {
       url: x.url,
       num_comments: x.num_comments,
       created: x.created,
-      link_flair_text: x.link_flair_text,
+      flair: x.flair,
       post_id: x.post_id,
       subreddit: x.subreddit,
       upvote_ratio: x.upvote_ratio.toFixed(2),

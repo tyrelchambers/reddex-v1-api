@@ -1,10 +1,10 @@
 const filterBySeries = ({ post, query ***REMOVED***) => {
   if (query.seriesOnly) {
-    return post.link_flair_text === "Series";
+    return post.flair === "Series";
   ***REMOVED***
 
   if (query.omitSeries) {
-    return post.link_flair_text !== "Series";
+    return post.flair !== "Series";
   ***REMOVED***
 
   return post;

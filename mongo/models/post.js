@@ -16,7 +16,7 @@ const postSchema = new Schema(
         url: String,
         num_comments: Number,
         created: Number,
-        link_flair_text: String,
+        flair: String,
         post_id: String,
         subreddit: String,
         upvote_ratio: Number,

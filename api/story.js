@@ -9,7 +9,7 @@ app.post("/v1/save", authHandler, async (req, res, next) => {
   try {
     const {
       author,
-      link_flair_text,
+      flair,
       num_comments,
       post_id,
       self_text,
@@ -31,13 +31,6 @@ app.post("/v1/save", authHandler, async (req, res, next) => {
       ***REMOVED***,
     ***REMOVED******REMOVED***
 
-    const psqlOwner = await db.User.findOne({
-      where: {
-        uuid: res.locals.userId,
-      ***REMOVED***,
-      include: [db.Profile],
-    ***REMOVED******REMOVED***
-
     if (existingStory) throw new Error("Story already exists"***REMOVED***
 
     await db.Story.create({
@@ -47,7 +40,7 @@ app.post("/v1/save", authHandler, async (req, res, next) => {
       ups,
       url,
       num_comments,
-      flair: link_flair_text,
+      flair,
       post_id,
       permission,
       subreddit,
