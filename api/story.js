@@ -1,4 +1,5 @@
 const express = require("express"***REMOVED***
+const averageReadingTime = require("../libs/averageReadingTime"***REMOVED***
 const authHandler = require("../middleware/authHandler"***REMOVED***
 const db = require("../models"***REMOVED***
 
@@ -18,6 +19,7 @@ app.post("/v1/save", authHandler, async (req, res, next) => {
       subreddit,
       permission,
       created,
+      upvote_ratio,
     ***REMOVED*** = req.body;
 
     const existingStory = await db.Story.findOne({
@@ -28,6 +30,15 @@ app.post("/v1/save", authHandler, async (req, res, next) => {
         user_id: res.locals.userId,
       ***REMOVED***,
     ***REMOVED******REMOVED***
+
+    const psqlOwner = await db.User.findOne({
+      where: {
+        uuid: res.locals.userId,
+      ***REMOVED***,
+      include: [db.Profile],
+    ***REMOVED******REMOVED***
+
+    const userWpm = psqlOwner ? psqlOwner.Profile.words_per_minute : null;
 
     if (existingStory) throw new Error("Story already exists"***REMOVED***
 
@@ -44,6 +55,8 @@ app.post("/v1/save", authHandler, async (req, res, next) => {
       subreddit,
       user_id: res.locals.userId,
       created,
+      upvote_ratio: upvote_ratio.toFixed(2),
+      reading_time: averageReadingTime(self_text, userWpm),
     ***REMOVED******REMOVED***
 
     res.sendStatus(200***REMOVED***
