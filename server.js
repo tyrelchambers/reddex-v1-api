@@ -50,7 +50,7 @@ app.use("/api/tokens", tokens***REMOVED***
 app.use("/api/contacts", contacts***REMOVED***
 app.use("/api/contacted", contacted***REMOVED***
 app.use("/api/story", story***REMOVED***
-app.use("/api/inbox.js", inbox***REMOVED***
+app.use("/api/inbox", inbox***REMOVED***
 app.use("/api/reading_list", readingList***REMOVED***
 app.use("/api/tags", tags***REMOVED***
 app.use("/api/search", search***REMOVED***
