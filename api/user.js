@@ -16,7 +16,7 @@ app.get("/v1/me", authHandler, async (req, res, next) => {
       attributes: {
         exclude: ["password"],
       ***REMOVED***,
-      include: [db.Profile],
+      include: [db.Profile, db.Searched],
     ***REMOVED******REMOVED***
 
     res.send(user***REMOVED***

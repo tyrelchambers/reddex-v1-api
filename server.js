@@ -19,6 +19,7 @@ const story = require("./api/story"***REMOVED***
 const inbox = require("./api/inbox"***REMOVED***
 const readingList = require("./api/readingList"***REMOVED***
 const tags = require("./api/tags"***REMOVED***
+const search = require("./api/search"***REMOVED***
 
 app.use(helmet()***REMOVED***
 const database = config[config.env].database;
@@ -52,6 +53,7 @@ app.use("/api/story", story***REMOVED***
 app.use("/api/inbox.js", inbox***REMOVED***
 app.use("/api/reading_list", readingList***REMOVED***
 app.use("/api/tags", tags***REMOVED***
+app.use("/api/search", search***REMOVED***
 
 db.on("error", console.error.bind(console, "Connection error - Mongodb")***REMOVED***
 db.once("open", () => console.log("Connected sucessfully to Mongo database")***REMOVED***
