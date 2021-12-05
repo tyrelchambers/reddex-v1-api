@@ -40,19 +40,30 @@ app.delete("/v1/:id/delete", authHandler, async (req, res, next) => {
 
 app.put("/v1/edit", authHandler, async (req, res, next) => {
   try {
-    const { uuid, tag ***REMOVED*** = req.body;
+    const { tag, stories ***REMOVED*** = req.body;
 
     await db.Tag.update(
       {
-        tag,
+        tag: tag.tag,
       ***REMOVED***,
       {
         where: {
-          uuid,
+          uuid: tag.uuid,
           userId: res.locals.userId,
         ***REMOVED***,
+        returning: true,
+        plain: true,
       ***REMOVED***
     ***REMOVED***
+
+    const tagToAddStoryTo = await db.Tag.findOne({
+      where: {
+        uuid: tag.uuid,
+        userId: res.locals.userId,
+      ***REMOVED***,
+    ***REMOVED******REMOVED***
+
+    tagToAddStoryTo.setStories(stories***REMOVED***
 
     res.sendStatus(200***REMOVED***
   ***REMOVED*** catch (error) {
@@ -68,6 +79,7 @@ app.get("/v1/:uuid", authHandler, async (req, res, next) => {
       where: {
         uuid,
       ***REMOVED***,
+      include: ["stories"],
     ***REMOVED******REMOVED***
 
     res.send(tag***REMOVED***
@@ -82,6 +94,7 @@ app.get("/v1/", authHandler, async (req, res, next) => {
       where: {
         userId: res.locals.userId,
       ***REMOVED***,
+      include: ["stories"],
     ***REMOVED******REMOVED***
 
     res.send(tags***REMOVED***
