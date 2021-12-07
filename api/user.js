@@ -1,5 +1,6 @@
 const { default: axios ***REMOVED*** = require("axios"***REMOVED***
 const express = require("express"***REMOVED***
+const decodeToken = require("../libs/decodeToken"***REMOVED***
 const authHandler = require("../middleware/authHandler"***REMOVED***
 const db = require("../models"***REMOVED***
 const app = express.Router(***REMOVED***
@@ -139,6 +140,31 @@ app.put("/v1/update", authHandler, async (req, res, next) => {
         where: {
           userId: res.locals.userId,
         ***REMOVED***,
+      ***REMOVED***
+    ***REMOVED***
+
+    res.sendStatus(200***REMOVED***
+  ***REMOVED*** catch (error) {
+    next(error***REMOVED***
+  ***REMOVED***
+***REMOVED******REMOVED***
+
+app.get("/v1/confirm_email", authHandler, async (req, res, next) => {
+  try {
+    const { emailToken ***REMOVED*** = req.query;
+
+    const userId = await decodeToken(emailToken***REMOVED***
+
+    const user = await db.User.update(
+      {
+        email_confirmed: true,
+      ***REMOVED***,
+      {
+        where: {
+          uuid: userId,
+        ***REMOVED***,
+        returning: true,
+        plain: true,
       ***REMOVED***
     ***REMOVED***
 
