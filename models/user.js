@@ -55,6 +55,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       ***REMOVED***,
       reddit_refresh_token: DataTypes.STRING,
+      email_confirmed: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      ***REMOVED***,
     ***REMOVED***,
     {
 ***REMOVED***
