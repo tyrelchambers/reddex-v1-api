@@ -27,10 +27,23 @@ app.put("/v1/update", authHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
+app.get("/v1/me", authHandler, async (req, res, next) => {
+  try {
+    const website = await db.Website.findOne({
+      where: {
+        userId: res.locals.userId,
+      ***REMOVED***,
+    ***REMOVED******REMOVED***
+
+    res.send(website***REMOVED***
+  ***REMOVED*** catch (error) {
+    next(error***REMOVED***
+  ***REMOVED***
+***REMOVED******REMOVED***
+
 app.get("/v1/:subdomain", async (req, res, next) => {
   try {
     const { subdomain ***REMOVED*** = req.params;
-    console.log(subdomain***REMOVED***
     const website = await db.Website.findOne({
       where: {
     ***REMOVED***: {
@@ -46,20 +59,6 @@ app.get("/v1/:subdomain", async (req, res, next) => {
     ***REMOVED***
 
     res.send(website.config***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
-
-app.get("/v1/me", authHandler, async (req, res, next) => {
-  try {
-    const website = await db.Website.findOne({
-      where: {
-        userId: res.locals.userId,
-      ***REMOVED***,
-    ***REMOVED******REMOVED***
-
-    res.send(website***REMOVED***
   ***REMOVED*** catch (error) {
     next(error***REMOVED***
   ***REMOVED***
