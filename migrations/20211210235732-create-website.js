@@ -9,7 +9,7 @@ module.exports = {
         unique: true,
       ***REMOVED***,
   ***REMOVED***: {
-        type: Sequelize.JSON,
+        type: Sequelize.JSONB,
       ***REMOVED***,
       userId: {
         type: Sequelize.UUID,

@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       ***REMOVED***,
-  ***REMOVED***: DataTypes.JSON,
+  ***REMOVED***: DataTypes.JSONB,
     ***REMOVED***,
     {
 ***REMOVED***
