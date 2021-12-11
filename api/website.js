@@ -41,6 +41,30 @@ app.get("/v1/me", authHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
+app.get("/v1/checkSubdomain", async (req, res, next) => {
+  try {
+    const { subdomain ***REMOVED*** = req.query;
+
+    const website = await db.Website.findOne({
+      where: {
+    ***REMOVED***: {
+          general: {
+            domain: subdomain,
+          ***REMOVED***,
+        ***REMOVED***,
+      ***REMOVED***,
+    ***REMOVED******REMOVED***
+
+    if (website) {
+      return res.send({ isDomainTaken: true ***REMOVED******REMOVED***
+    ***REMOVED***
+
+    res.send({ isDomainTaken: false ***REMOVED******REMOVED***
+  ***REMOVED*** catch (error) {
+    next(error***REMOVED***
+  ***REMOVED***
+***REMOVED******REMOVED***
+
 app.get("/v1/:subdomain", async (req, res, next) => {
   try {
     const { subdomain ***REMOVED*** = req.params;
