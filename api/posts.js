@@ -61,6 +61,28 @@ app.post("/v1/save", authHandler, visitorHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
+app.put("/v1/used", visitorHandler, async (req, res, next) => {
+  try {
+    const { post_id ***REMOVED*** = req.body;
+
+    console.log(post_id, " #_#_#_#_#_#_#_#_"***REMOVED***
+
+    const postOwner = await Post.findOne({
+      where: { owner: res.locals.postToken ***REMOVED***,
+    ***REMOVED******REMOVED***
+
+    const post = postOwner.posts.filter((p) => p.post_id === post_id)[0];
+
+    post.used = true;
+
+    await postOwner.save(***REMOVED***
+
+    res.sendStatus(200***REMOVED***
+  ***REMOVED*** catch (error) {
+    next(error***REMOVED***
+  ***REMOVED***
+***REMOVED******REMOVED***
+
 app.get("/v1/", authHandler, visitorHandler, async (req, res, next) => {
   try {
     const { upvotes, keywords, misc, readTime ***REMOVED*** = req.query.filters
@@ -162,26 +184,6 @@ app.get("/v1/", authHandler, visitorHandler, async (req, res, next) => {
       ***REMOVED***,
       maxPages: _owner ? Math.round(_owner.posts.length / 25) : 0,
     ***REMOVED******REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
-
-app.put("/v1/update", visitorHandler, async (req, res, next) => {
-  try {
-    const { post_id ***REMOVED*** = req.body;
-
-    const postOwner = await Post.findOne({
-      where: { owner: res.locals.postToken ***REMOVED***,
-    ***REMOVED******REMOVED***
-
-    const post = postOwner.posts.filter((p) => p.post_id === post_id)[0];
-
-    post.viewed = true;
-
-    await postOwner.save(***REMOVED***
-
-    res.sendStatus(200***REMOVED***
   ***REMOVED*** catch (error) {
     next(error***REMOVED***
   ***REMOVED***

@@ -62,6 +62,8 @@ app.use("/api/submitted", submitted***REMOVED***
 db.on("error", console.error.bind(console, "Connection error - Mongodb")***REMOVED***
 db.once("open", () => console.log("Connected sucessfully to Mongo database")***REMOVED***
 
+console.log("For Chris: biscuits"***REMOVED***
+
 app.use(function (err, req, res, next) {
   console.log("--------error--------"***REMOVED***
   console.error(err.message***REMOVED***

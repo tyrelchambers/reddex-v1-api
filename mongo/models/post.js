@@ -24,6 +24,10 @@ const postSchema = new Schema(
           type: Boolean,
           default: false,
         ***REMOVED***,
+        used: {
+          type: Boolean,
+          default: false,
+        ***REMOVED***,
         page: Number,
         readTime: Number,
       ***REMOVED***,

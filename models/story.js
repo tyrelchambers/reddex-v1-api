@@ -64,7 +64,7 @@ module.exports = (sequelize, DataTypes) => {
       reading_time: {
         type: DataTypes.INTEGER,
       ***REMOVED***,
-      viewed: {
+      used: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       ***REMOVED***,
