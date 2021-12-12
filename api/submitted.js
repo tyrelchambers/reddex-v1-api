@@ -6,7 +6,7 @@ const app = express.Router(***REMOVED***
 
 app.delete("/v1/", authHandler, async (req, res, next) => {
   try {
-=    const { uuid ***REMOVED*** = req.query;
+    const { uuid ***REMOVED*** = req.query;
 
     await db.SubmittedStory.destroy({
       where: {
