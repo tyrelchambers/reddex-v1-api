@@ -80,6 +80,10 @@ app.post("/v1/submitStory", async (req, res, next) => {
   try {
     const { title, email, content, author, sentToOthers, siteOwner ***REMOVED*** = req.body;
 
+    if ((title || email || author).length > 255) {
+      return res.status(400).send({ error: "Word limit exceeded" ***REMOVED******REMOVED***
+    ***REMOVED***
+
     await db.SubmittedStory.create({
       story_title: title,
       email,
