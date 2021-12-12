@@ -33,7 +33,11 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "CASCADE",
       ***REMOVED******REMOVED***
 
-      User.hasMany(models.Website, {
+      User.hasOne(models.Website, {
+        foreignKey: "userId",
+      ***REMOVED******REMOVED***
+
+      User.hasMany(models.SubmittedStory, {
         foreignKey: "userId",
         onDelete: "CASCADE",
       ***REMOVED******REMOVED***
@@ -63,6 +67,14 @@ module.exports = (sequelize, DataTypes) => {
       email_confirmed: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
+      ***REMOVED***,
+      websiteId: {
+        type: DataTypes.UUID,
+        references: {
+          model: "Websites",
+          key: "uuid",
+        ***REMOVED***,
+        onDelete: "SET NULL",
       ***REMOVED***,
     ***REMOVED***,
     {

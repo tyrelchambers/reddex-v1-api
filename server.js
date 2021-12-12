@@ -21,6 +21,7 @@ const readingList = require("./api/readingList"***REMOVED***
 const tags = require("./api/tags"***REMOVED***
 const search = require("./api/search"***REMOVED***
 const website = require("./api/website"***REMOVED***
+const submitted = require("./api/submitted"***REMOVED***
 
 app.use(helmet()***REMOVED***
 const database = config[config.env].database;
@@ -56,6 +57,7 @@ app.use("/api/reading_list", readingList***REMOVED***
 app.use("/api/tags", tags***REMOVED***
 app.use("/api/search", search***REMOVED***
 app.use("/api/website", website***REMOVED***
+app.use("/api/submitted", submitted***REMOVED***
 
 db.on("error", console.error.bind(console, "Connection error - Mongodb")***REMOVED***
 db.once("open", () => console.log("Connected sucessfully to Mongo database")***REMOVED***
