@@ -4,6 +4,23 @@ const db = require("../models"***REMOVED***
 
 const app = express.Router(***REMOVED***
 
+app.get("/v1/:uuid", authHandler, async (req, res, next) => {
+  try {
+    const { uuid ***REMOVED*** = req.params;
+
+    const story = await db.SubmittedStory.findOne({
+      where: {
+        uuid,
+        userId: res.locals.userId,
+      ***REMOVED***,
+    ***REMOVED******REMOVED***
+
+    res.send(story***REMOVED***
+  ***REMOVED*** catch (error) {
+    next(error***REMOVED***
+  ***REMOVED***
+***REMOVED******REMOVED***
+
 app.delete("/v1/", authHandler, async (req, res, next) => {
   try {
     const { uuid ***REMOVED*** = req.query;

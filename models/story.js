@@ -64,10 +64,7 @@ module.exports = (sequelize, DataTypes) => {
       reading_time: {
         type: DataTypes.INTEGER,
       ***REMOVED***,
-      used: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
-      ***REMOVED***,
+
       upvote_ratio: {
         type: DataTypes.FLOAT,
       ***REMOVED***,
