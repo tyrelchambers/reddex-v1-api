@@ -78,7 +78,7 @@ app.get("/v1/checkSubdomain", async (req, res, next) => {
 
 app.post("/v1/submitStory", async (req, res, next) => {
   try {
-    const { title, email, content, author, sentToOthers, siteOwner ***REMOVED*** = req.body;
+    const { title, email, content, author, siteOwner ***REMOVED*** = req.body;
 
     if ((title || email || author).length > 255) {
       return res.status(400).send({ error: "Word limit exceeded" ***REMOVED******REMOVED***
@@ -89,7 +89,6 @@ app.post("/v1/submitStory", async (req, res, next) => {
       email,
       body: content,
       author,
-      sentToOthers,
       userId: siteOwner,
     ***REMOVED******REMOVED***
 
