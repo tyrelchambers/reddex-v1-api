@@ -1,6 +1,5 @@
-require("dotenv").config(***REMOVED***
 const express = require("express"***REMOVED***
-const stripe = require("stripe")(process.env.STRIPE_TEST_KEY***REMOVED***
+const stripe = require("../libs/stripe"***REMOVED***
 
 const app = express.Router(***REMOVED***
 
