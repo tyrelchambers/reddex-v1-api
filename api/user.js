@@ -155,7 +155,7 @@ app.get("/v1/confirm_email", authHandler, async (req, res, next) => {
 
     const userId = await decodeToken(emailToken***REMOVED***
 
-    const user = await db.User.update(
+    await db.User.update(
       {
         email_confirmed: true,
       ***REMOVED***,

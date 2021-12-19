@@ -8,6 +8,19 @@ module.exports = {
         primaryKey: true,
         unique: true,
       ***REMOVED***,
+      customerId: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      ***REMOVED***,
+      plan: {
+        type: Sequelize.STRING,
+      ***REMOVED***,
+      trialEnds: {
+        type: Sequelize.DATE,
+      ***REMOVED***,
+      card: {
+        type: Sequelize.JSONB,
+      ***REMOVED***,
       userId: {
         type: Sequelize.UUID,
         references: {

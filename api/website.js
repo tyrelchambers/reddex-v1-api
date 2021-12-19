@@ -67,10 +67,11 @@ app.get("/v1/checkSubdomain", async (req, res, next) => {
     ***REMOVED******REMOVED***
 
     if (website) {
-      return res.send({ isDomainTaken: true ***REMOVED******REMOVED***
+      console.log(website***REMOVED***
+      return res.send({ available: false ***REMOVED******REMOVED***
     ***REMOVED***
 
-    res.send({ isDomainTaken: false ***REMOVED******REMOVED***
+    res.send({ available: true ***REMOVED******REMOVED***
   ***REMOVED*** catch (error) {
     next(error***REMOVED***
   ***REMOVED***

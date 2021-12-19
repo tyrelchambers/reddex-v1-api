@@ -4,6 +4,8 @@ const db = require("../models"***REMOVED***
 const bcrypt = require("bcryptjs"***REMOVED***
 const app = express.Router(***REMOVED***
 const sendEmail = require("../libs/sendEmail"***REMOVED***
+const stripe = require("../libs/stripe"***REMOVED***
+const { addWeeks ***REMOVED*** = require("date-fns"***REMOVED***
 
 app.get("/v1/login", async (req, res, next) => {
   try {
@@ -59,6 +61,21 @@ app.post("/v1/register", async (req, res, next) => {
 
     await db.Profile.create({
       userId: user.uuid,
+    ***REMOVED******REMOVED***
+
+    const customer = await stripe.customers.create({
+      email,
+    ***REMOVED******REMOVED***
+
+    // start customer on pro trial
+    await stripe.subscriptions.create({
+      customer: customer.id,
+      items: [
+        {
+          price: "price_1K64chI8C7KcVoSyUj7qgv65",
+        ***REMOVED***,
+      ],
+      trial_end: addWeeks(new Date(Date.now()), 1),
     ***REMOVED******REMOVED***
 
     const token = await signToken(user.uuid, "1m"***REMOVED***

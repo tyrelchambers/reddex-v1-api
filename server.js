@@ -60,6 +60,7 @@ app.use("/api/search", search***REMOVED***
 app.use("/api/website", website***REMOVED***
 app.use("/api/submitted", submitted***REMOVED***
 app.use("/api/subscriptions", subscriptions***REMOVED***
+app.use("/api/stripe", require("./api/stripe")***REMOVED***
 
 db.on("error", console.error.bind(console, "Connection error - Mongodb")***REMOVED***
 db.once("open", () => console.log("Connected sucessfully to Mongo database")***REMOVED***
