@@ -30,6 +30,9 @@ module.exports = (sequelize, DataTypes) => {
       card: {
         type: DataTypes.JSONB,
       ***REMOVED***,
+      subscriptionId: {
+        type: DataTypes.STRING,
+      ***REMOVED***,
       userId: {
         type: DataTypes.UUID,
         references: {

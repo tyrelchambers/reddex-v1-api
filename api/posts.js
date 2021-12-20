@@ -9,6 +9,7 @@ const app = express.Router(***REMOVED***
 const authHandler = require("../middleware/authHandler"***REMOVED***
 const db = require("../models/index"***REMOVED***
 const Post = require("../mongo/models/post"***REMOVED***
+const checkTokens = require("../middleware/checkTokens"***REMOVED***
 
 app.delete(
   "/v1/delete",
@@ -89,19 +90,14 @@ app.get("/v1/", authHandler, visitorHandler, async (req, res, next) => {
       ? { ...JSON.parse(req.query.filters) ***REMOVED***
       : {***REMOVED***;
 
+    const { wpm ***REMOVED*** = req.query;
+
     let resLimit = 25;
     let page = req.query.page || 1;
     const limit = resLimit * page;
     const skip = resLimit * page - resLimit;
     let query = {***REMOVED***;
-    const postOwner = res.locals.userId || res.locals.postToken;
-
-    const user = await db.User.findOne({
-      where: {
-        uuid: res.locals.userId,
-      ***REMOVED***,
-      include: [db.Profile],
-    ***REMOVED******REMOVED***
+    const postOwner = res.locals.token;
 
     if (upvotes) {
       if (upvotes.value > "0") {
@@ -171,7 +167,7 @@ app.get("/v1/", authHandler, visitorHandler, async (req, res, next) => {
               filterByReadTime({
                 post,
                 query,
-                wpm: user.Profile.words_per_minute,
+                wpm,
               ***REMOVED***)
             )
             .filter((post) => filterByKeywords({ post, query ***REMOVED***))
