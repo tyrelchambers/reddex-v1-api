@@ -39,28 +39,30 @@ app.get("/v1/plan", authHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.post("/webhooks", async (req, res, next) => {
-  try {
-    const event = stripe.webhooks.constructEvent(
-      req.body,
-      req.headers["stripe-signature"],
-      process.env.STRIPE_WEBHOOK_SECRET
-    ***REMOVED***
-    console.log(event***REMOVED***
-    if (event.type === "customer.subscription.deleted") {
-      const sub = await db.Subscription.findOne({
-        where: {
-          customerId: event.data.object.customer,
-        ***REMOVED***,
-      ***REMOVED******REMOVED***
+app.post(
+  "/v1/webhooks",
+  express.raw({ type: "application/json" ***REMOVED***),
+  async (req, res, next) => {
+    try {
+      const event = stripe.webhooks.constructEvent(
+        req.body,
+        req.headers["stripe-signature"],
+        process.env.STRIPE_WEBHOOK_SECRET
+      ***REMOVED***
 
-      await sub.destroy(***REMOVED***
-    ***REMOVED***
+      if (event.type === "customer.subscription.deleted") {
+        await db.Subscription.findOne({
+          where: {
+            customerId: event.data.object.customer,
+          ***REMOVED***,
+        ***REMOVED******REMOVED***
+      ***REMOVED***
 
-    res.sendStatus(200***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
+      res.sendStatus(200***REMOVED***
+    ***REMOVED*** catch (error) {
+      next(error***REMOVED***
+    ***REMOVED***
   ***REMOVED***
-***REMOVED******REMOVED***
+***REMOVED***
 
 module.exports = app;
