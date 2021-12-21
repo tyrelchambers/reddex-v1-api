@@ -24,13 +24,20 @@ const website = require("./api/website"***REMOVED***
 const submitted = require("./api/submitted"***REMOVED***
 const subscriptions = require("./api/subscriptions"***REMOVED***
 
+// jobs
+const deleteCancelledSubscriptions = require("./jobs/deleteCancelledSubscriptions"***REMOVED***
+
+deleteCancelledSubscriptions.start(***REMOVED***
+
 app.use(helmet()***REMOVED***
 const database = config[config.env].database;
 const db = mongoose.connection;
 
 const port = process.env.PORT || "4000";
 
-app.use("/api/stripe", require("./api/stripe")***REMOVED***
+app.use("/api/webhooks", require("./api/webhooks")***REMOVED***
+
+app.use(cors()***REMOVED***
 
 app.use(
   express.json({
@@ -46,7 +53,6 @@ app.use(
 
 mongoose.connect(database, { useNewUrlParser: true ***REMOVED******REMOVED***
 
-app.use(cors()***REMOVED***
 app.use(morgan("combined")***REMOVED***
 
 app.use("/api/auth", auth***REMOVED***
@@ -63,6 +69,7 @@ app.use("/api/search", search***REMOVED***
 app.use("/api/website", website***REMOVED***
 app.use("/api/submitted", submitted***REMOVED***
 app.use("/api/subscriptions", subscriptions***REMOVED***
+app.use("/api/stripe", require("./api/stripe")***REMOVED***
 
 db.on("error", console.error.bind(console, "Connection error - Mongodb")***REMOVED***
 db.once("open", () => console.log("Connected sucessfully to Mongo database")***REMOVED***

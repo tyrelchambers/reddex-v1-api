@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       subscriptionId: {
         type: DataTypes.STRING,
       ***REMOVED***,
+      cancelOn: DataTypes.INTEGER,
       userId: {
         type: DataTypes.UUID,
         references: {
