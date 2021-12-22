@@ -35,6 +35,7 @@ module.exports = (sequelize, DataTypes) => {
 
       User.hasOne(models.Website, {
         foreignKey: "userId",
+        onDelete: "CASCADE",
       ***REMOVED******REMOVED***
 
       User.hasMany(models.SubmittedStory, {
@@ -44,6 +45,11 @@ module.exports = (sequelize, DataTypes) => {
 
       User.hasOne(models.Subscription, {
         foreignKey: "userId",
+        onDelete: "CASCADE",
+      ***REMOVED******REMOVED***
+
+      User.hasMany(models.Story, {
+        foreignKey: "user_id",
         onDelete: "CASCADE",
       ***REMOVED******REMOVED***
     ***REMOVED***

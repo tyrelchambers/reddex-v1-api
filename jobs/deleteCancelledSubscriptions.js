@@ -2,7 +2,7 @@ const db = require("../models"***REMOVED***
 
 var CronJob = require("cron").CronJob;
 var job = new CronJob(
-  "* * * * * *",
+  "0 0 * * * *",
   async function () {
     const user = await db.User.findAll({
       where: {
