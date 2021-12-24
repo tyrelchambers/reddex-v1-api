@@ -149,11 +149,13 @@ app.put("/v1/update", authHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.get("/v1/confirm_email", authHandler, async (req, res, next) => {
+app.get("/v1/confirm_email", async (req, res, next) => {
   try {
     const { emailToken ***REMOVED*** = req.query;
 
     const userId = await decodeToken(emailToken***REMOVED***
+
+    if (!userId) throw new Error("Something went wrong"***REMOVED***
 
     await db.User.update(
       {

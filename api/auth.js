@@ -68,7 +68,7 @@ app.post("/v1/register", async (req, res, next) => {
     ***REMOVED******REMOVED***
 
     // start customer on pro trial
-    await stripe.subscriptions.create({
+    const sub = await stripe.subscriptions.create({
       customer: customer.id,
       items: [
         {
@@ -76,6 +76,12 @@ app.post("/v1/register", async (req, res, next) => {
         ***REMOVED***,
       ],
       trial_end: addWeeks(new Date(Date.now()), 1),
+    ***REMOVED******REMOVED***
+
+    await db.Subscription.create({
+      customerId: customer.id,
+      subscriptionId: sub.id,
+      userId: user.uuid,
     ***REMOVED******REMOVED***
 
     const token = await signToken(user.uuid, "1m"***REMOVED***
