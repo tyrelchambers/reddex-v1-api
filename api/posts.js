@@ -84,105 +84,110 @@ app.put("/v1/used", visitorHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.get("/v1/", authHandler, visitorHandler, async (req, res, next) => {
-  try {
-    const { upvotes, keywords, misc, readTime ***REMOVED*** = req.query.filters
-      ? { ...JSON.parse(req.query.filters) ***REMOVED***
-      : {***REMOVED***;
+app.get(
+  "/v1/",
+  authHandler({ continueOnNoUser: true ***REMOVED***),
+  visitorHandler,
+  async (req, res, next) => {
+    try {
+      const { upvotes, keywords, misc, readTime ***REMOVED*** = req.query.filters
+        ? { ...JSON.parse(req.query.filters) ***REMOVED***
+        : {***REMOVED***;
 
-    const { wpm ***REMOVED*** = req.query;
+      const { wpm ***REMOVED*** = req.query;
 
-    let resLimit = 25;
-    let page = req.query.page || 1;
-    const limit = resLimit * page;
-    const skip = resLimit * page - resLimit;
-    let query = {***REMOVED***;
-    const postOwner = res.locals.token;
+      let resLimit = 25;
+      let page = req.query.page || 1;
+      const limit = resLimit * page;
+      const skip = resLimit * page - resLimit;
+      let query = {***REMOVED***;
+      const postOwner = res.locals.token;
 
-    if (upvotes) {
-      if (upvotes.value > "0") {
-        if (upvotes.operator === "over") {
-          query.ups = {
-            operator: ">=",
-            value: Number(upvotes.value),
-          ***REMOVED***;
-        ***REMOVED***
+      if (upvotes) {
+        if (upvotes.value > "0") {
+          if (upvotes.operator === "over") {
+            query.ups = {
+              operator: ">=",
+              value: Number(upvotes.value),
+            ***REMOVED***;
+          ***REMOVED***
 
-        if (upvotes.operator === "equal") {
-          query.ups = {
-            operator: "=",
-            value: Number(upvotes.value),
-          ***REMOVED***;
-        ***REMOVED***
+          if (upvotes.operator === "equal") {
+            query.ups = {
+              operator: "=",
+              value: Number(upvotes.value),
+            ***REMOVED***;
+          ***REMOVED***
 
-        if (upvotes.operator === "under") {
-          query.ups = {
-            operator: "<=",
-            value: Number(upvotes.value),
-          ***REMOVED***;
-        ***REMOVED***
-      ***REMOVED***
-    ***REMOVED***
-
-    if (readTime) {
-      if (readTime.value > "0") {
-        if (readTime.operator === "over") {
-          query.readTime = {
-            operator: ">=",
-            value: Number(readTime.value),
-          ***REMOVED***;
-        ***REMOVED***
-
-        if (readTime.operator === "under") {
-          query.readTime = {
-            operator: "<=",
-            value: Number(readTime.value),
-          ***REMOVED***;
+          if (upvotes.operator === "under") {
+            query.ups = {
+              operator: "<=",
+              value: Number(upvotes.value),
+            ***REMOVED***;
+          ***REMOVED***
         ***REMOVED***
       ***REMOVED***
-    ***REMOVED***
 
-    if (keywords) {
-      query.keywords = keywords.value;
-    ***REMOVED***
+      if (readTime) {
+        if (readTime.value > "0") {
+          if (readTime.operator === "over") {
+            query.readTime = {
+              operator: ">=",
+              value: Number(readTime.value),
+            ***REMOVED***;
+          ***REMOVED***
 
-    if (misc) {
-      if (misc.value === "seriesOnly") {
-        query.seriesOnly = true;
+          if (readTime.operator === "under") {
+            query.readTime = {
+              operator: "<=",
+              value: Number(readTime.value),
+            ***REMOVED***;
+          ***REMOVED***
+        ***REMOVED***
       ***REMOVED***
 
-      if (misc.value === "omitSeries") {
-        query.omitSeries = true;
+      if (keywords) {
+        query.keywords = keywords.value;
       ***REMOVED***
+
+      if (misc) {
+        if (misc.value === "seriesOnly") {
+          query.seriesOnly = true;
+        ***REMOVED***
+
+        if (misc.value === "omitSeries") {
+          query.omitSeries = true;
+        ***REMOVED***
+      ***REMOVED***
+
+      const _owner = await Post.findOne({ owner: postOwner ***REMOVED******REMOVED***
+
+      const posts =
+        _owner === null
+          ? []
+          : _owner.posts
+              .filter((post) => filterByUpvotes({ post, query ***REMOVED***))
+              .filter((post) =>
+                filterByReadTime({
+                  post,
+                  query,
+                  wpm,
+                ***REMOVED***)
+              )
+              .filter((post) => filterByKeywords({ post, query ***REMOVED***))
+              .filter((post) => filterBySeries({ post, query ***REMOVED***)***REMOVED***
+
+      res.send({
+        post: {
+          subreddit: _owner?.subreddit,
+          posts: posts.slice(skip, limit),
+        ***REMOVED***,
+        maxPages: _owner ? Math.round(_owner.posts.length / 25) : 0,
+      ***REMOVED******REMOVED***
+    ***REMOVED*** catch (error) {
+      next(error***REMOVED***
     ***REMOVED***
-
-    const _owner = await Post.findOne({ owner: postOwner ***REMOVED******REMOVED***
-
-    const posts =
-      _owner === null
-        ? []
-        : _owner.posts
-            .filter((post) => filterByUpvotes({ post, query ***REMOVED***))
-            .filter((post) =>
-              filterByReadTime({
-                post,
-                query,
-                wpm,
-              ***REMOVED***)
-            )
-            .filter((post) => filterByKeywords({ post, query ***REMOVED***))
-            .filter((post) => filterBySeries({ post, query ***REMOVED***)***REMOVED***
-
-    res.send({
-      post: {
-        subreddit: _owner?.subreddit,
-        posts: posts.slice(skip, limit),
-      ***REMOVED***,
-      maxPages: _owner ? Math.round(_owner.posts.length / 25) : 0,
-    ***REMOVED******REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
   ***REMOVED***
-***REMOVED******REMOVED***
+***REMOVED***
 
 module.exports = app;

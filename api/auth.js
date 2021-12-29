@@ -18,6 +18,8 @@ app.get("/v1/login", async (req, res, next) => {
       include: [db.Profile],
     ***REMOVED******REMOVED***
 
+    if (!user) throw new Error("User not found"***REMOVED***
+
     const hashPassword = await bcrypt.compareSync(password, user.password***REMOVED***
     if (!hashPassword) return next({ error: "Incorrect password" ***REMOVED******REMOVED***
 
