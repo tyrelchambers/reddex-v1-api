@@ -4,7 +4,7 @@ const db = require("../models"***REMOVED***
 
 const app = express.Router(***REMOVED***
 
-app.put("/v1/update", authHandler, async (req, res, next) => {
+app.put("/v1/update", authHandler(), async (req, res, next) => {
   try {
     let website = await db.Website.findOne({
       where: {
@@ -38,7 +38,7 @@ app.put("/v1/update", authHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.get("/v1/me", authHandler, async (req, res, next) => {
+app.get("/v1/me", authHandler(), async (req, res, next) => {
   try {
     const website = await db.Website.findOne({
       where: {

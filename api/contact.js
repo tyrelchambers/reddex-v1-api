@@ -4,7 +4,7 @@ const db = require("../models"***REMOVED***
 
 const app = express.Router(***REMOVED***
 
-app.post("/v1/save", authHandler, async (req, res, next) => {
+app.post("/v1/save", authHandler(), async (req, res, next) => {
   try {
     const { name, notes ***REMOVED*** = req.body;
 
@@ -20,7 +20,7 @@ app.post("/v1/save", authHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.delete("/v1/delete/:uuid", authHandler, async (req, res, next) => {
+app.delete("/v1/delete/:uuid", authHandler(), async (req, res, next) => {
   try {
     const { uuid ***REMOVED*** = req.params;
     await db.Contact.destroy({
@@ -36,7 +36,7 @@ app.delete("/v1/delete/:uuid", authHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.put("/v1/:id/edit", authHandler, async (req, res, next) => {
+app.put("/v1/:id/edit", authHandler(), async (req, res, next) => {
   try {
     const { id ***REMOVED*** = req.params;
     const { name, notes ***REMOVED*** = req.body;
@@ -60,7 +60,7 @@ app.put("/v1/:id/edit", authHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.get("/v1/:id", authHandler, async (req, res, next) => {
+app.get("/v1/:id", authHandler(), async (req, res, next) => {
   try {
     const { id ***REMOVED*** = req.params;
 
@@ -77,7 +77,7 @@ app.get("/v1/:id", authHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.get("/v1/", authHandler, async (req, res, next) => {
+app.get("/v1/", authHandler(), async (req, res, next) => {
   try {
     const contacts = await db.Contact.findAll({
       where: {

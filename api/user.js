@@ -6,7 +6,7 @@ const db = require("../models"***REMOVED***
 const app = express.Router(***REMOVED***
 require("dotenv").config(***REMOVED***
 
-app.get("/v1/me", authHandler, async (req, res, next) => {
+app.get("/v1/me", authHandler(), async (req, res, next) => {
   try {
     const userId = res.locals.userId;
 
@@ -26,7 +26,7 @@ app.get("/v1/me", authHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.get("/v1/link-reddit", authHandler, async (req, res, next) => {
+app.get("/v1/link-reddit", authHandler(), async (req, res, next) => {
   try {
     const { code ***REMOVED*** = req.query;
 
@@ -67,7 +67,7 @@ app.get("/v1/link-reddit", authHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.get("/v1/reddit-profile", authHandler, async (req, res, next) => {
+app.get("/v1/reddit-profile", authHandler(), async (req, res, next) => {
   try {
     const { accessToken ***REMOVED*** = req.query;
 
@@ -96,7 +96,7 @@ app.get("/v1/reddit-profile", authHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.get("/v1/reddit-access-token", authHandler, async (req, res, next) => {
+app.get("/v1/reddit-access-token", authHandler(), async (req, res, next) => {
   try {
     const encode = Buffer.from(
       `${process.env.REDDIT_APP***REMOVED***:${process.env.REDDIT_SECRET***REMOVED***`
@@ -126,7 +126,7 @@ app.get("/v1/reddit-access-token", authHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.put("/v1/update", authHandler, async (req, res, next) => {
+app.put("/v1/update", authHandler(), async (req, res, next) => {
   try {
     const { greeting, recurring, words_per_minute ***REMOVED*** = { ...req.body ***REMOVED***;
 

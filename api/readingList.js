@@ -5,7 +5,7 @@ const db = require("../models"***REMOVED***
 
 const app = express.Router(***REMOVED***
 
-app.get("/v1/approved", authHandler, async (req, res, next) => {
+app.get("/v1/approved", authHandler(), async (req, res, next) => {
   try {
     const stories = await db.Story.findAll({
       where: {
@@ -20,7 +20,7 @@ app.get("/v1/approved", authHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.get("/v1/completed", authHandler, async (req, res, next) => {
+app.get("/v1/completed", authHandler(), async (req, res, next) => {
   try {
     const stories = await db.Story.findAll({
       where: {
@@ -35,7 +35,7 @@ app.get("/v1/completed", authHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.post("/v1/approved/save", authHandler, async (req, res, next) => {
+app.post("/v1/approved/save", authHandler(), async (req, res, next) => {
   try {
     const { subject ***REMOVED*** = req.body;
 
@@ -60,7 +60,7 @@ app.post("/v1/approved/save", authHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.put("/v1/transfer/to_completed", authHandler, async (req, res, next) => {
+app.put("/v1/transfer/to_completed", authHandler(), async (req, res, next) => {
   try {
     const { uuid ***REMOVED*** = req.body.data;
 
@@ -84,7 +84,7 @@ app.put("/v1/transfer/to_completed", authHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.put("/v1/transfer/to_approved", authHandler, async (req, res, next) => {
+app.put("/v1/transfer/to_approved", authHandler(), async (req, res, next) => {
   try {
     const { uuid ***REMOVED*** = req.body.data;
 

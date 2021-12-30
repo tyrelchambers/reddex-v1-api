@@ -4,7 +4,7 @@ const db = require("../models"***REMOVED***
 
 const app = express.Router(***REMOVED***
 
-app.post("/v1/save", authHandler, async (req, res, next) => {
+app.post("/v1/save", authHandler(), async (req, res, next) => {
   try {
     const { name ***REMOVED*** = req.body;
 
@@ -19,7 +19,7 @@ app.post("/v1/save", authHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.get("/v1/", authHandler, async (req, res, next) => {
+app.get("/v1/", authHandler(), async (req, res, next) => {
   try {
     const contacteds = await db.Contacted.findAll({
       where: {

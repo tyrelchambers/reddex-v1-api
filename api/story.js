@@ -5,7 +5,7 @@ const db = require("../models"***REMOVED***
 
 const app = express.Router(***REMOVED***
 
-app.post("/v1/save", authHandler, async (req, res, next) => {
+app.post("/v1/save", authHandler(), async (req, res, next) => {
   try {
     const {
       author,
@@ -55,7 +55,7 @@ app.post("/v1/save", authHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.put("/v1/tag", authHandler, async (req, res, next) => {
+app.put("/v1/tag", authHandler(), async (req, res, next) => {
   try {
     const { tags, storyId ***REMOVED*** = req.body.data;
 
@@ -75,7 +75,7 @@ app.put("/v1/tag", authHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.delete("/v1/delete", authHandler, async (req, res, next) => {
+app.delete("/v1/delete", authHandler(), async (req, res, next) => {
   try {
     const { uuid ***REMOVED*** = req.body;
 

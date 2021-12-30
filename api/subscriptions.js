@@ -3,7 +3,7 @@ const authHandler = require("../middleware/authHandler"***REMOVED***
 const app = express.Router(***REMOVED***
 const db = require("../models/index"***REMOVED***
 
-app.get("/v1/me", authHandler, async (req, res, next) => {
+app.get("/v1/me", authHandler(), async (req, res, next) => {
   try {
     const subscription = await db.Subscription.findOne({
       where: {

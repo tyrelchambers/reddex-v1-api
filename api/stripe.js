@@ -5,7 +5,7 @@ const db = require("../models"***REMOVED***
 
 const app = express.Router(***REMOVED***
 
-app.post("/v1/create-portal", authHandler, async (req, res, next) => {
+app.post("/v1/create-portal", authHandler(), async (req, res, next) => {
   try {
     const { customerId ***REMOVED*** = req.body;
     const session = await stripe.billingPortal.sessions.create({
@@ -19,7 +19,7 @@ app.post("/v1/create-portal", authHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.get("/v1/plan", authHandler, async (req, res, next) => {
+app.get("/v1/plan", authHandler(), async (req, res, next) => {
   try {
     const sub = await db.Subscription.findOne({
       where: {

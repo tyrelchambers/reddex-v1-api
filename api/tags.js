@@ -4,7 +4,7 @@ const db = require("../models"***REMOVED***
 
 const app = express.Router(***REMOVED***
 
-app.post("/v1/save", authHandler, async (req, res, next) => {
+app.post("/v1/save", authHandler(), async (req, res, next) => {
   try {
     const { tag, stories ***REMOVED*** = req.body;
 
@@ -21,7 +21,7 @@ app.post("/v1/save", authHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.delete("/v1/:id/delete", authHandler, async (req, res, next) => {
+app.delete("/v1/:id/delete", authHandler(), async (req, res, next) => {
   try {
     const { id ***REMOVED*** = req.params;
 
@@ -38,7 +38,7 @@ app.delete("/v1/:id/delete", authHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.put("/v1/edit", authHandler, async (req, res, next) => {
+app.put("/v1/edit", authHandler(), async (req, res, next) => {
   try {
     const { tag, stories ***REMOVED*** = req.body;
 
@@ -71,7 +71,7 @@ app.put("/v1/edit", authHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.get("/v1/:uuid", authHandler, async (req, res, next) => {
+app.get("/v1/:uuid", authHandler(), async (req, res, next) => {
   try {
     const { uuid ***REMOVED*** = req.params;
 
@@ -88,7 +88,7 @@ app.get("/v1/:uuid", authHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.get("/v1/", authHandler, async (req, res, next) => {
+app.get("/v1/", authHandler(), async (req, res, next) => {
   try {
     const tags = await db.Tag.findAll({
       where: {

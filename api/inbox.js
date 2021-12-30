@@ -4,7 +4,7 @@ const authHandler = require("../middleware/authHandler"***REMOVED***
 const db = require("../models"***REMOVED***
 const app = express.Router(***REMOVED***
 
-app.get("/v1/", authHandler, async (req, res, next) => {
+app.get("/v1/", authHandler(), async (req, res, next) => {
   try {
     const { author, subject ***REMOVED*** = JSON.parse(req.query.data***REMOVED***
 

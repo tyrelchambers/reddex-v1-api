@@ -4,7 +4,7 @@ const db = require("../models"***REMOVED***
 
 const app = express.Router(***REMOVED***
 
-app.post("/v1/save", authHandler, async (req, res, next) => {
+app.post("/v1/save", authHandler(), async (req, res, next) => {
   try {
     const { subreddit ***REMOVED*** = req.body.data;
 
@@ -28,7 +28,7 @@ app.post("/v1/save", authHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.delete("/v1/", authHandler, async (req, res, next) => {
+app.delete("/v1/", authHandler(), async (req, res, next) => {
   try {
     const { id, subreddit ***REMOVED*** = req.query;
 
@@ -46,7 +46,7 @@ app.delete("/v1/", authHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.get("/v1/", authHandler, async (req, res, next) => {
+app.get("/v1/", authHandler(), async (req, res, next) => {
   try {
     const searches = await db.Searched.findAll({
       where: {

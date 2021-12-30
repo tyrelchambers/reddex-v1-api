@@ -1,6 +1,6 @@
 const decodeToken = require("../libs/decodeToken"***REMOVED***
-const authHandler = async ({ continueOnNoUser ***REMOVED***) => {
-  return (req, res, next) => {
+const authHandler = ({ continueOnNoUser = false ***REMOVED*** = {***REMOVED***) => {
+  return async (req, res, next) => {
     try {
       const token = req.headers.token || req.query.token;
       const userId = await decodeToken(token***REMOVED***

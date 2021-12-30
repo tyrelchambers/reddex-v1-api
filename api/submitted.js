@@ -4,7 +4,7 @@ const db = require("../models"***REMOVED***
 
 const app = express.Router(***REMOVED***
 
-app.get("/v1/:uuid", authHandler, async (req, res, next) => {
+app.get("/v1/:uuid", authHandler(), async (req, res, next) => {
   try {
     const { uuid ***REMOVED*** = req.params;
 
@@ -21,7 +21,7 @@ app.get("/v1/:uuid", authHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.delete("/v1/", authHandler, async (req, res, next) => {
+app.delete("/v1/", authHandler(), async (req, res, next) => {
   try {
     const { uuid ***REMOVED*** = req.query;
 
@@ -38,7 +38,7 @@ app.delete("/v1/", authHandler, async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.get("/v1/", authHandler, async (req, res, next) => {
+app.get("/v1/", authHandler(), async (req, res, next) => {
   try {
     const submittedStories = await db.SubmittedStory.findAll({
       where: {

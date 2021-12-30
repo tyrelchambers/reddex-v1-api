@@ -13,7 +13,7 @@ const checkTokens = require("../middleware/checkTokens"***REMOVED***
 
 app.delete(
   "/v1/delete",
-  authHandler,
+  authHandler(),
   visitorHandler,
   async (req, res, next) => {
     try {
@@ -30,7 +30,7 @@ app.delete(
   ***REMOVED***
 ***REMOVED***
 
-app.post("/v1/save", authHandler, visitorHandler, async (req, res, next) => {
+app.post("/v1/save", authHandler(), visitorHandler, async (req, res, next) => {
   try {
     const { subreddit ***REMOVED*** = req.body;
 
