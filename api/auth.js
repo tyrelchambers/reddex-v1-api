@@ -6,6 +6,7 @@ const app = express.Router(***REMOVED***
 const sendEmail = require("../libs/sendEmail"***REMOVED***
 const stripe = require("../libs/stripe"***REMOVED***
 const { addWeeks ***REMOVED*** = require("date-fns"***REMOVED***
+const pricePlans = require("../constants/pricePlans"***REMOVED***
 
 app.get("/v1/login", async (req, res, next) => {
   try {
@@ -41,7 +42,7 @@ app.get("/v1/login", async (req, res, next) => {
 
 app.post("/v1/register", async (req, res, next) => {
   try {
-    const { email, password ***REMOVED*** = req.body;
+    const { email, password, plan, term ***REMOVED*** = req.body;
 
     if (!(email || password)) throw new Error("Email or password are missing"***REMOVED***
 
@@ -69,14 +70,18 @@ app.post("/v1/register", async (req, res, next) => {
       email,
     ***REMOVED******REMOVED***
 
-    // start customer on pro trial
+    // start customer on pro monthly trial
     const sub = await stripe.subscriptions.create({
       customer: customer.id,
-      items: [
-        {
-          price: "price_1K64chI8C7KcVoSyUj7qgv65",
-        ***REMOVED***,
-      ],
+      items: {
+        object: "list",
+        data: [
+          {
+            price: pricePlans.pro.monthly,
+          ***REMOVED***,
+        ],
+        quantity: 1,
+      ***REMOVED***,
       trial_end: addWeeks(new Date(Date.now()), 1),
     ***REMOVED******REMOVED***
 
@@ -84,6 +89,8 @@ app.post("/v1/register", async (req, res, next) => {
       customerId: customer.id,
       subscriptionId: sub.id,
       userId: user.uuid,
+      plan,
+      term,
     ***REMOVED******REMOVED***
 
     const token = await signToken(user.uuid, "1m"***REMOVED***

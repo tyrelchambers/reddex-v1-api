@@ -16,10 +16,16 @@ app.post(
       ***REMOVED***
 
       if (event.type === "customer.subscription.updated") {
+        const product = await stripe.products.retrieve(
+          event.data.object.plan.product
+        ***REMOVED***
+
         await db.Subscription.update(
           {
             subscriptionId: event.data.object.id,
             cancelOn: event.data.object.cancel_at,
+            plan: product.name.toLowerCase(),
+            term: event.data.object.plan.interval,
           ***REMOVED***,
           {
             where: {
@@ -27,6 +33,24 @@ app.post(
             ***REMOVED***,
           ***REMOVED***
         ***REMOVED***
+      ***REMOVED***
+
+      if (event.type === "customer.subscription.trial_will_end") {
+        const sub = await db.Subscription.findOne({
+          where: {
+            customerId: event.data.object.customer,
+          ***REMOVED***,
+        ***REMOVED******REMOVED***
+
+        console.log("--- updating subscription ---"***REMOVED***
+
+        await stripe.subscriptions.update(sub.subscriptionId, {
+          items: [
+            {
+              price: pricePlans[sub.plan][sub.term],
+            ***REMOVED***,
+          ],
+        ***REMOVED******REMOVED***
       ***REMOVED***
 
       res.sendStatus(200***REMOVED***

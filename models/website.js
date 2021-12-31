@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "CASCADE",
       ***REMOVED***,
   ***REMOVED***: DataTypes.JSONB,
+      hidden: DataTypes.BOOLEAN,
     ***REMOVED***,
     {
 ***REMOVED***

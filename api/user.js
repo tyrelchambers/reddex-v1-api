@@ -4,6 +4,7 @@ const decodeToken = require("../libs/decodeToken"***REMOVED***
 const authHandler = require("../middleware/authHandler"***REMOVED***
 const db = require("../models"***REMOVED***
 const app = express.Router(***REMOVED***
+const jwt = require("jsonwebtoken"***REMOVED***
 require("dotenv").config(***REMOVED***
 
 app.get("/v1/me", authHandler(), async (req, res, next) => {
@@ -153,7 +154,16 @@ app.get("/v1/confirm_email", async (req, res, next) => {
   try {
     const { emailToken ***REMOVED*** = req.query;
 
-    const userId = await decodeToken(emailToken***REMOVED***
+    const userId = await jwt.verify(
+      emailToken,
+      process.env.JWT_SECRET,
+      async (err, decoded) => {
+        if (decoded === "undefined" || !decoded || err) return false;
+        let uuid = decoded.uuid;
+
+        return uuid;
+      ***REMOVED***
+    ***REMOVED***
 
     if (!userId) throw new Error("Something went wrong"***REMOVED***
 

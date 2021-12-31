@@ -24,12 +24,8 @@ module.exports = (sequelize, DataTypes) => {
       plan: {
         type: DataTypes.STRING,
       ***REMOVED***,
-      trialEnds: {
-        type: DataTypes.DATE,
-      ***REMOVED***,
-      card: {
-        type: DataTypes.JSONB,
-      ***REMOVED***,
+      term: DataTypes.STRING,
+
       subscriptionId: {
         type: DataTypes.STRING,
       ***REMOVED***,
