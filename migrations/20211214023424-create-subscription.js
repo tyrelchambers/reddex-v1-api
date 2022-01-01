@@ -18,6 +18,7 @@ module.exports = {
       trialEnds: {
         type: Sequelize.DATE,
       ***REMOVED***,
+      term: Sequelize.STRING,
       card: {
         type: Sequelize.JSONB,
       ***REMOVED***,

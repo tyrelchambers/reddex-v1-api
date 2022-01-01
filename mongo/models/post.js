@@ -5,8 +5,7 @@ const Schema = mongoose.Schema;
 const postSchema = new Schema(
   {
     subreddit: String,
-    visitor_token: String,
-
+    owner: String,
     posts: [
       {
         author: String,

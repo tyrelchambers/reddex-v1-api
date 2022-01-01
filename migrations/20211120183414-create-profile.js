@@ -17,16 +17,16 @@ module.exports = {
       reading_time: {
         type: Sequelize.INTEGER,
       ***REMOVED***,
-      reddit_profile:{
-        type: Sequelize.JSON
+      reddit_profile: {
+        type: Sequelize.JSON,
       ***REMOVED***,
       userId: {
         type: Sequelize.UUID,
         references: {
           model: "Users",
           key: "uuid",
-          onDelete: "CASCADE",
         ***REMOVED***,
+        onDelete: "CASCADE",
       ***REMOVED***,
       createdAt: {
         allowNull: false,

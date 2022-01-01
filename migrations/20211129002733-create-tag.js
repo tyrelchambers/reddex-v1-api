@@ -24,8 +24,8 @@ module.exports = {
         references: {
           model: "Stories",
           key: "uuid",
-          onDelete: "CASCADE",
         ***REMOVED***,
+        onDelete: "CASCADE",
       ***REMOVED***,
       createdAt: {
         allowNull: false,

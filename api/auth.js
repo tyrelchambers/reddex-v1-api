@@ -45,6 +45,7 @@ app.post("/v1/register", async (req, res, next) => {
     const { email, password, plan, term ***REMOVED*** = req.body;
 
     if (!(email || password)) throw new Error("Email or password are missing"***REMOVED***
+    if (!(plan || term)) throw new Error("Plan or term are missing"***REMOVED***
 
     const existingUser = await db.User.findOne({
       where: {
@@ -73,15 +74,11 @@ app.post("/v1/register", async (req, res, next) => {
     // start customer on pro monthly trial
     const sub = await stripe.subscriptions.create({
       customer: customer.id,
-      items: {
-        object: "list",
-        data: [
-          {
-            price: pricePlans.pro.monthly,
-          ***REMOVED***,
-        ],
-        quantity: 1,
-      ***REMOVED***,
+      items: [
+        {
+          price: pricePlans.pro.monthly,
+        ***REMOVED***,
+      ],
       trial_end: addWeeks(new Date(Date.now()), 1),
     ***REMOVED******REMOVED***
 

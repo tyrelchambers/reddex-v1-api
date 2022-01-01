@@ -13,11 +13,11 @@ const checkTokens = require("../middleware/checkTokens"***REMOVED***
 
 app.delete(
   "/v1/delete",
-  authHandler(),
+  authHandler({ continueOnNoUser: true ***REMOVED***),
   visitorHandler,
   async (req, res, next) => {
     try {
-      const postOwner = res.locals.userId || res.locals.postToken;
+      const postOwner = res.locals.token;
 
       await Post.deleteMany({
         owner: postOwner,
@@ -30,43 +30,46 @@ app.delete(
   ***REMOVED***
 ***REMOVED***
 
-app.post("/v1/save", authHandler(), visitorHandler, async (req, res, next) => {
-  try {
-    const { subreddit ***REMOVED*** = req.body;
+app.post(
+  "/v1/save",
+  authHandler({ continueOnNoUser: true ***REMOVED***),
+  visitorHandler,
+  async (req, res, next) => {
+    try {
+      const { subreddit ***REMOVED*** = req.body;
 
-    const postOwner = res.locals.userId || res.locals.postToken;
+      const postOwner = res.locals.token;
 
-    const toInsert = req.body.posts.map((x) => ({
-      author: x.author,
-      title: x.title,
-      self_text: x.self_text,
-      ups: x.ups,
-      url: x.url,
-      num_comments: x.num_comments,
-      created: x.created,
-      flair: x.flair,
-      post_id: x.post_id,
-      subreddit: x.subreddit,
-      upvote_ratio: x.upvote_ratio.toFixed(2),
-    ***REMOVED***)***REMOVED***
+      const toInsert = req.body.posts.map((x) => ({
+        author: x.author,
+        title: x.title,
+        self_text: x.self_text,
+        ups: x.ups,
+        url: x.url,
+        num_comments: x.num_comments,
+        created: x.created,
+        flair: x.flair,
+        post_id: x.post_id,
+        subreddit: x.subreddit,
+        upvote_ratio: x.upvote_ratio.toFixed(2),
+      ***REMOVED***)***REMOVED***
 
-    const posts = await Post.create({
-      posts: toInsert,
-      subreddit,
-      owner: postOwner,
-    ***REMOVED******REMOVED***
+      const posts = await Post.create({
+        posts: toInsert,
+        subreddit,
+        owner: postOwner,
+      ***REMOVED******REMOVED***
 
-    res.send(posts***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
+      res.send(posts***REMOVED***
+    ***REMOVED*** catch (error) {
+      next(error***REMOVED***
+    ***REMOVED***
   ***REMOVED***
-***REMOVED******REMOVED***
+***REMOVED***
 
 app.put("/v1/used", visitorHandler, async (req, res, next) => {
   try {
     const { post_id ***REMOVED*** = req.body;
-
-    console.log(post_id, " #_#_#_#_#_#_#_#_"***REMOVED***
 
     const postOwner = await Post.findOne({
       where: { owner: res.locals.postToken ***REMOVED***,
@@ -159,7 +162,6 @@ app.get(
           query.omitSeries = true;
         ***REMOVED***
       ***REMOVED***
-
       const _owner = await Post.findOne({ owner: postOwner ***REMOVED******REMOVED***
 
       const posts =

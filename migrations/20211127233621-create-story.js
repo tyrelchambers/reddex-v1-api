@@ -50,6 +50,7 @@ module.exports = {
           model: "Users",
           key: "uuid",
         ***REMOVED***,
+        onDelete: "CASCADE",
       ***REMOVED***,
       createdAt: {
         allowNull: false,
