@@ -60,13 +60,22 @@ app.put("/v1/:id/edit", authHandler(), async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.get("/v1/:id", authHandler(), async (req, res, next) => {
+app.get("/v1/contact", authHandler(), async (req, res, next) => {
   try {
-    const { id ***REMOVED*** = req.params;
+    const { username, uuid ***REMOVED*** = { ...req.query ***REMOVED***;
+    const options = {***REMOVED***;
+
+    if (username) {
+      options.name = username;
+    ***REMOVED***
+
+    if (uuid) {
+      options.uuid = uuid;
+    ***REMOVED***
 
     const contact = await db.Contact.findOne({
       where: {
-        uuid: id,
+        ...options,
         userId: res.locals.userId,
       ***REMOVED***,
     ***REMOVED******REMOVED***

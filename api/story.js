@@ -75,18 +75,46 @@ app.put("/v1/tag", authHandler(), async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
-app.delete("/v1/delete", authHandler(), async (req, res, next) => {
+app.post("/v1/delete", authHandler(), async (req, res, next) => {
   try {
     const { uuid ***REMOVED*** = req.body;
+    await db.Story.update(
+      {
+        read: false,
+        permission: false,
+      ***REMOVED***,
+      {
+        where: {
+          uuid,
+          user_id: res.locals.userId,
+        ***REMOVED***,
+      ***REMOVED***
+    ***REMOVED***
 
-    await db.Story.destroy({
+    res.sendStatus(200***REMOVED***
+  ***REMOVED*** catch (error) {
+    next(error***REMOVED***
+  ***REMOVED***
+***REMOVED******REMOVED***
+
+app.get("/v1/story", authHandler(), async (req, res, next) => {
+  try {
+    const { title ***REMOVED*** = { ...req.query ***REMOVED***;
+
+    const options = {***REMOVED***;
+
+    if (title) {
+      options.title = title;
+    ***REMOVED***
+
+    const story = await db.Story.findOne({
       where: {
-        uuid,
+        ...options,
         user_id: res.locals.userId,
       ***REMOVED***,
     ***REMOVED******REMOVED***
 
-    res.sendStatus(200***REMOVED***
+    res.send(story***REMOVED***
   ***REMOVED*** catch (error) {
     next(error***REMOVED***
   ***REMOVED***
