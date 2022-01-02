@@ -46,7 +46,7 @@ app.get("/v1/me", authHandler(), async (req, res, next) => {
       ***REMOVED***,
     ***REMOVED******REMOVED***
 
-    res.send(website***REMOVED***
+    res.send(website ? website : { config: {***REMOVED*** ***REMOVED******REMOVED***
   ***REMOVED*** catch (error) {
     next(error***REMOVED***
   ***REMOVED***
@@ -67,7 +67,6 @@ app.get("/v1/checkSubdomain", async (req, res, next) => {
     ***REMOVED******REMOVED***
 
     if (website) {
-      console.log(website***REMOVED***
       return res.send({ available: false ***REMOVED******REMOVED***
     ***REMOVED***
 
