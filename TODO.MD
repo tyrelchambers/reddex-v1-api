@@ -2,3 +2,4 @@
 
 - change password functionality
 - change email functionality
+- add warnings for image size

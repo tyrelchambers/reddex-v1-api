@@ -16,7 +16,7 @@ const s3 = new aws.S3(***REMOVED***
 
 const dateNow = Date.now().toString(***REMOVED***
 
-const upload = multer({
+const uploadLogo = multer({
   storage: multerS3({
     s3: s3,
     bucket: "reddex",
@@ -25,26 +25,8 @@ const upload = multer({
       {
         id: "original",
         key: async function (req, file, cb) {
-          const fullPath = `${dateNow***REMOVED***_${file.originalname***REMOVED***/original-${file.originalname***REMOVED***`;
+          const fullPath = `${dateNow***REMOVED***_${file.originalname***REMOVED***/logo-original-${file.originalname***REMOVED***`;
           cb(null, fullPath***REMOVED***
-        ***REMOVED***,
-        transform: function (req, file, cb) {
-          if (file.mimetype === "image/jpeg" || file.mimetype === "image/jpg") {
-            cb(null, sharp().jpeg()***REMOVED***
-          ***REMOVED***
-
-          if (file.mimetype === "image/png") {
-            cb(null, sharp().png()***REMOVED***
-          ***REMOVED***
-        ***REMOVED***,
-      ***REMOVED***,
-      {
-        id: "thumbnail",
-        key: function (req, file, cb) {
-          cb(
-            null,
-            `${dateNow***REMOVED***_${file.originalname***REMOVED***/thumbnail-${file.originalname***REMOVED***`
-          ***REMOVED***
         ***REMOVED***,
         transform: function (req, file, cb) {
           if (file.mimetype === "image/jpeg" || file.mimetype === "image/jpg") {
@@ -53,6 +35,7 @@ const upload = multer({
               sharp()
                 .resize({
                   width: 400,
+                  height: 400,
                   fit: "cover",
                 ***REMOVED***)
                 .jpeg({
@@ -68,6 +51,7 @@ const upload = multer({
               sharp()
                 .resize({
                   width: 400,
+                  height: 400,
                   fit: "cover",
                 ***REMOVED***)
                 .png({
@@ -75,6 +59,49 @@ const upload = multer({
                   chromaSubsampling: "4:4:4",
                 ***REMOVED***)
             ***REMOVED***
+          ***REMOVED***
+        ***REMOVED***,
+      ***REMOVED***,
+    ],
+  ***REMOVED***),
+  files: 1,
+  fileSize: 3000000,
+  fileFilter: (req, file, cb) => {
+    let isFinished = 0;
+    const acceptedMimeTypes = ["image/jpeg", "image/png", "image/jpg"];
+
+    for (let i = 0; i < acceptedMimeTypes.length; i++) {
+      if (file.mimetype === acceptedMimeTypes[i]) {
+        isFinished = 1;
+        return cb(null, true***REMOVED***
+      ***REMOVED***
+    ***REMOVED***
+
+    if (isFinished === 0) {
+      cb(null, false***REMOVED***
+    ***REMOVED***
+  ***REMOVED***,
+***REMOVED******REMOVED***
+
+const uploadBanner = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: "reddex",
+    shouldTransform: true,
+    transforms: [
+      {
+        id: "original",
+        key: async function (req, file, cb) {
+          const fullPath = `${dateNow***REMOVED***_${file.originalname***REMOVED***/banner-original-${file.originalname***REMOVED***`;
+          cb(null, fullPath***REMOVED***
+        ***REMOVED***,
+        transform: function (req, file, cb) {
+          if (file.mimetype === "image/jpeg" || file.mimetype === "image/jpg") {
+            cb(null, sharp().jpeg()***REMOVED***
+          ***REMOVED***
+
+          if (file.mimetype === "image/png") {
+            cb(null, sharp().png()***REMOVED***
           ***REMOVED***
         ***REMOVED***,
       ***REMOVED***,
@@ -130,6 +157,7 @@ const deleteObject = (url) => {
 ***REMOVED***;
 
 module.exports = {
-  upload,
+  uploadLogo,
+  uploadBanner,
   deleteObject,
 ***REMOVED***;

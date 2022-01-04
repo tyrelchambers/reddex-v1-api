@@ -1,13 +1,14 @@
 const express = require("express"***REMOVED***
-const { upload, deleteObject ***REMOVED*** = require("../libs/aws"***REMOVED***
+const { uploadLogo, uploadBanner, deleteObject ***REMOVED*** = require("../libs/aws"***REMOVED***
 const authHandler = require("../middleware/authHandler"***REMOVED***
 
-const anyUpload = upload.any(***REMOVED***
+const anyUploadLogo = uploadLogo.any(***REMOVED***
+const anyUploadBanner = uploadBanner.any(***REMOVED***
 
 const app = express.Router(***REMOVED***
 
-app.post("/save/logo", authHandler(), (req, res, next) => {
-  anyUpload(req, res, (err) => {
+app.post("/v1/logo", authHandler(), (req, res, next) => {
+  anyUploadLogo(req, res, (err) => {
     if (err) {
       return res.status(422).send({
         errors: [{ title: "Image Upload Error", detail: err.message ***REMOVED***],
@@ -15,15 +16,14 @@ app.post("/save/logo", authHandler(), (req, res, next) => {
     ***REMOVED***
     for (let i = 0; i < req.files.length; i++) {
       res.send({
-        original: req.files[0].transforms[1].location,
-        thumbnail: req.files[0].transforms[0].location,
+        original: req.files[0].transforms[0].location,
       ***REMOVED******REMOVED***
     ***REMOVED***
   ***REMOVED******REMOVED***
 ***REMOVED******REMOVED***
 
-app.post("/save/banner", authHandler(), (req, res, next) => {
-  anyUpload(req, res, (err) => {
+app.post("/v1/banner", authHandler(), (req, res, next) => {
+  anyUploadBanner(req, res, (err) => {
     if (err) {
       return res.status(422).send({
         errors: [{ title: "Image Upload Error", detail: err.message ***REMOVED***],
@@ -31,7 +31,7 @@ app.post("/save/banner", authHandler(), (req, res, next) => {
     ***REMOVED***
     for (let i = 0; i < req.files.length; i++) {
       res.send({
-        original: req.files[0].transforms[1].location,
+        original: req.files[0].transforms[0].location,
       ***REMOVED******REMOVED***
     ***REMOVED***
   ***REMOVED******REMOVED***
