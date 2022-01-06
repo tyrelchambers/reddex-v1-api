@@ -1,4 +1,5 @@
 const express = require("express"***REMOVED***
+const sendStorySubmissionEmail = require("../libs/sendStorySubmissionEmail"***REMOVED***
 const authHandler = require("../middleware/authHandler"***REMOVED***
 const db = require("../models"***REMOVED***
 
@@ -84,6 +85,12 @@ app.post("/v1/submitStory", async (req, res, next) => {
       return res.status(400).send({ error: "Word limit exceeded" ***REMOVED******REMOVED***
     ***REMOVED***
 
+    const user = await db.User.findOne({
+      where: {
+        uuid: siteOwner,
+      ***REMOVED***,
+    ***REMOVED******REMOVED***
+
     await db.SubmittedStory.create({
       story_title: title,
       email,
@@ -92,6 +99,10 @@ app.post("/v1/submitStory", async (req, res, next) => {
       userId: siteOwner,
     ***REMOVED******REMOVED***
 
+    sendStorySubmissionEmail({
+      email: user.email,
+      subject: "New Story Submission",
+    ***REMOVED******REMOVED***
     res.sendStatus(200***REMOVED***
   ***REMOVED*** catch (error) {
     next(error***REMOVED***
