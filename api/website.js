@@ -113,16 +113,42 @@ app.get("/v1/:subdomain", async (req, res, next) => {
         {
           model: db.User,
           as: "user",
-          attributes: ["uuid"],
+          include: [
+            {
+              model: db.Subscription,
+              attributes: ["plan"],
+            ***REMOVED***,
+          ],
         ***REMOVED***,
       ],
     ***REMOVED******REMOVED***
+
+    if (website.user.Subscription.plan === "basic") {
+      return res.sendStatus(404***REMOVED***
+    ***REMOVED***
 
     if (!website) {
       return res.sendStatus(404***REMOVED***
     ***REMOVED***
 
     res.send(website***REMOVED***
+  ***REMOVED*** catch (error) {
+    next(error***REMOVED***
+  ***REMOVED***
+***REMOVED******REMOVED***
+
+app.delete("/v1/delete", authHandler(), async (req, res, next) => {
+  try {
+    const { uuid ***REMOVED*** = req.query;
+
+    await db.Website.destroy({
+      where: {
+        uuid,
+        userId: res.locals.userId,
+      ***REMOVED***,
+    ***REMOVED******REMOVED***
+
+    res.sendStatus(200***REMOVED***
   ***REMOVED*** catch (error) {
     next(error***REMOVED***
   ***REMOVED***
