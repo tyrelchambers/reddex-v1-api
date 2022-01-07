@@ -7,6 +7,7 @@ const sendEmail = require("../libs/sendEmail"***REMOVED***
 const stripe = require("../libs/stripe"***REMOVED***
 const { addWeeks ***REMOVED*** = require("date-fns"***REMOVED***
 const pricePlans = require("../constants/pricePlans"***REMOVED***
+const addUserToSendGridContact = require("../libs/addUserToSendGridContact"***REMOVED***
 
 app.get("/v1/login", async (req, res, next) => {
   try {
@@ -97,6 +98,8 @@ app.post("/v1/register", async (req, res, next) => {
       subject: "Confirm your email",
       token,
     ***REMOVED******REMOVED***
+
+    addUserToSendGridContact(user***REMOVED***
 
     res.send({ user, token ***REMOVED******REMOVED***
   ***REMOVED*** catch (error) {
