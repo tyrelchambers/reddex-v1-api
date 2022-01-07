@@ -22,7 +22,7 @@ app.get("/v1/login", async (req, res, next) => {
     if (!user) throw new Error("User not found"***REMOVED***
 
     const hashPassword = await bcrypt.compareSync(password, user.password***REMOVED***
-    if (!hashPassword) return next({ error: "Incorrect password" ***REMOVED******REMOVED***
+    if (!hashPassword) throw new Error("Password is incorrect"***REMOVED***
 
     const token = await signToken(user.uuid, "4w"***REMOVED***
 

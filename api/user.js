@@ -6,6 +6,7 @@ const db = require("../models"***REMOVED***
 const app = express.Router(***REMOVED***
 const jwt = require("jsonwebtoken"***REMOVED***
 require("dotenv").config(***REMOVED***
+const bcrypt = require("bcryptjs"***REMOVED***
 
 app.get("/v1/me", authHandler(), async (req, res, next) => {
   try {
@@ -179,6 +180,34 @@ app.get("/v1/confirm_email", async (req, res, next) => {
         plain: true,
       ***REMOVED***
     ***REMOVED***
+
+    res.sendStatus(200***REMOVED***
+  ***REMOVED*** catch (error) {
+    next(error***REMOVED***
+  ***REMOVED***
+***REMOVED******REMOVED***
+
+app.post("/v1/change-password", authHandler(), async (req, res, next) => {
+  try {
+    const { currentPassword, newPassword ***REMOVED*** = req.body;
+
+    const user = await db.User.findOne({
+      where: {
+        uuid: res.locals.userId,
+      ***REMOVED***,
+    ***REMOVED******REMOVED***
+
+    const hashPassword = await bcrypt.compareSync(
+      currentPassword,
+      user.password
+    ***REMOVED***
+    if (!hashPassword) return next({ error: "Incorrect password" ***REMOVED******REMOVED***
+
+    const hashNewPassword = await bcrypt.hashSync(newPassword, 10***REMOVED***
+
+    await user.update({
+      password: hashNewPassword,
+    ***REMOVED******REMOVED***
 
     res.sendStatus(200***REMOVED***
   ***REMOVED*** catch (error) {
