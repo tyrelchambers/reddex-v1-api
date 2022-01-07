@@ -1,5 +1,7 @@
 - send email to customer regarding ending trial and pending invoice charge
 
-- change password functionality
+[x] change password functionality
+
 - change email functionality
 - add warnings for image size
+- send email on password change
