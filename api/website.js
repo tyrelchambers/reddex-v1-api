@@ -1,5 +1,6 @@
 const express = require("express"***REMOVED***
-const sendStorySubmissionEmail = require("../libs/sendStorySubmissionEmail"***REMOVED***
+const { emailTemplates ***REMOVED*** = require("../constants"***REMOVED***
+const sendEmail = require("../emails/sendEmail"***REMOVED***
 const authHandler = require("../middleware/authHandler"***REMOVED***
 const db = require("../models"***REMOVED***
 
@@ -99,9 +100,13 @@ app.post("/v1/submitStory", async (req, res, next) => {
       userId: siteOwner,
     ***REMOVED******REMOVED***
 
-    sendStorySubmissionEmail({
-      email: user.email,
+    sendEmail({
+      to: user.email,
       subject: "New Story Submission",
+      template: emailTemplates.storySubmission,
+      dynamics: {
+        host: `${process.env.FRONT_END***REMOVED***`,
+      ***REMOVED***,
     ***REMOVED******REMOVED***
     res.sendStatus(200***REMOVED***
   ***REMOVED*** catch (error) {

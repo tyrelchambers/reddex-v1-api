@@ -5,13 +5,12 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY***REMOVED***
 
 const sendEmail = (data) => {
   const msg = {
-    to: data.email, // Change to your recipient
+    to: data.to, // Change to your recipient
     from: "services@reddex.app", // Change to your verified sender
     subject: data.subject,
-    templateId: emailTemplates.confirmEmail,
+    templateId: data.template,
     dynamic_template_data: {
-      redirect_url: process.env.FRONT_END,
-      token: data.token,
+      ...data.dynamics,
     ***REMOVED***,
   ***REMOVED***;
 

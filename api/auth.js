@@ -3,11 +3,12 @@ const signToken = require("../libs/signToken"***REMOVED***
 const db = require("../models"***REMOVED***
 const bcrypt = require("bcryptjs"***REMOVED***
 const app = express.Router(***REMOVED***
-const sendEmail = require("../libs/sendEmail"***REMOVED***
+const sendEmail = require("../emails/sendEmail"***REMOVED***
 const stripe = require("../libs/stripe"***REMOVED***
 const { addWeeks ***REMOVED*** = require("date-fns"***REMOVED***
 const pricePlans = require("../constants/pricePlans"***REMOVED***
 const addUserToSendGridContact = require("../libs/addUserToSendGridContact"***REMOVED***
+const { emailTemplates ***REMOVED*** = require("../constants"***REMOVED***
 
 app.get("/v1/login", async (req, res, next) => {
   try {
@@ -29,9 +30,13 @@ app.get("/v1/login", async (req, res, next) => {
 
     if (!user.email_confirmed) {
       sendEmail({
-        email,
+        to: user.email,
         subject: "Confirm your email",
-        token,
+        template: emailTemplates.confirmEmail,
+        dynamics: {
+          redirect_url: process.env.FRONT_END,
+          token,
+        ***REMOVED***,
       ***REMOVED******REMOVED***
     ***REMOVED***
 
@@ -94,9 +99,13 @@ app.post("/v1/register", async (req, res, next) => {
     const token = await signToken(user.uuid, "1m"***REMOVED***
 
     sendEmail({
-      email,
+      to: user.email,
       subject: "Confirm your email",
-      token,
+      template: emailTemplates.confirmEmail,
+      dynamics: {
+        redirect_url: process.env.FRONT_END,
+        token,
+      ***REMOVED***,
     ***REMOVED******REMOVED***
 
     addUserToSendGridContact(user***REMOVED***

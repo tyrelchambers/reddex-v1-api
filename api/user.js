@@ -1,12 +1,13 @@
 const { default: axios ***REMOVED*** = require("axios"***REMOVED***
 const express = require("express"***REMOVED***
-const decodeToken = require("../libs/decodeToken"***REMOVED***
 const authHandler = require("../middleware/authHandler"***REMOVED***
 const db = require("../models"***REMOVED***
 const app = express.Router(***REMOVED***
 const jwt = require("jsonwebtoken"***REMOVED***
 require("dotenv").config(***REMOVED***
 const bcrypt = require("bcryptjs"***REMOVED***
+const sendEmail = require("../emails/sendEmail"***REMOVED***
+const { emailTemplates ***REMOVED*** = require("../constants"***REMOVED***
 
 app.get("/v1/me", authHandler(), async (req, res, next) => {
   try {
@@ -207,6 +208,12 @@ app.post("/v1/change-password", authHandler(), async (req, res, next) => {
 
     await user.update({
       password: hashNewPassword,
+    ***REMOVED******REMOVED***
+
+    sendEmail({
+      to: user.email,
+      subject: "Your password has been changed",
+      template: emailTemplates.passwordChange,
     ***REMOVED******REMOVED***
 
     res.sendStatus(200***REMOVED***
