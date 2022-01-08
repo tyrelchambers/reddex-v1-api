@@ -67,7 +67,9 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
         validate: {
-          isEmail: true,
+          isEmail: {
+            msg: "Email must be a valid email address",
+          ***REMOVED***,
         ***REMOVED***,
       ***REMOVED***,
       password: {

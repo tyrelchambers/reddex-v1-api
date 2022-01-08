@@ -222,4 +222,40 @@ app.post("/v1/change-password", authHandler(), async (req, res, next) => {
   ***REMOVED***
 ***REMOVED******REMOVED***
 
+app.post("/v1/change-email", authHandler(), async (req, res, next) => {
+  try {
+    const { email ***REMOVED*** = req.body;
+
+    if (!email) throw new Error("Email is required"***REMOVED***
+
+    const existingUser = await db.User.findOne({
+      where: {
+        email,
+      ***REMOVED***,
+    ***REMOVED******REMOVED***
+
+    if (existingUser) throw new Error("Email already exists"***REMOVED***
+
+    const user = await db.User.findOne({
+      where: {
+        uuid: res.locals.userId,
+      ***REMOVED***,
+    ***REMOVED******REMOVED***
+
+    await user.update({
+      email,
+    ***REMOVED******REMOVED***
+
+    sendEmail({
+      to: user.email,
+      subject: "Your email has been changed",
+      template: emailTemplates.emailChange,
+    ***REMOVED******REMOVED***
+
+    res.sendStatus(200***REMOVED***
+  ***REMOVED*** catch (error) {
+    next(error***REMOVED***
+  ***REMOVED***
+***REMOVED******REMOVED***
+
 module.exports = app;

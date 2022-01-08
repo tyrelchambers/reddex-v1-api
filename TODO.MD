@@ -2,6 +2,6 @@
 
 [x] change password functionality
 
-- change email functionality
-- add warnings for image size
-- send email on password change
+[x] change email functionality
+[] add warnings for image size
+[x] send email on password change
