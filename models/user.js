@@ -89,6 +89,13 @@ module.exports = (sequelize, DataTypes) => {
         ***REMOVED***,
         onDelete: "SET NULL",
       ***REMOVED***,
+      subscriptionId: {
+        type: DataTypes.UUID,
+        references: {
+          model: "Subscriptions",
+          key: "uuid",
+        ***REMOVED***,
+      ***REMOVED***,
     ***REMOVED***,
     {
 ***REMOVED***

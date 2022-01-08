@@ -7,7 +7,12 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {***REMOVED***
+    static associate(models) {
+      Subscription.belongsTo(models.User, {
+        foreignKey: "userId",
+        onDelete: "CASCADE",
+      ***REMOVED******REMOVED***
+    ***REMOVED***
   ***REMOVED***
   Subscription.init(
     {

@@ -40,6 +40,7 @@ app.post(
           where: {
             customerId: event.data.object.customer,
           ***REMOVED***,
+          include: [db.User],
         ***REMOVED******REMOVED***
 
         console.log("--- updating subscription ---"***REMOVED***
@@ -51,6 +52,8 @@ app.post(
             ***REMOVED***,
           ],
         ***REMOVED******REMOVED***
+
+        console.log(sub***REMOVED***
       ***REMOVED***
 
       res.sendStatus(200***REMOVED***
