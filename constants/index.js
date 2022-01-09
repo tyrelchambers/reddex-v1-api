@@ -3,6 +3,7 @@ const emailTemplates = {
   storySubmission: "d-b43fbb7b96a54f9ab164620ff62c6346",
   passwordChange: "d-d9efed684ca64571aa5ef8285e071cf9",
   emailChange: "d-2d0d3269b4da4e8089492b71db474dca",
+  trialEnding: "d-cdf6cd0dd3a64c779c53ee0ddb6aabe9",
 ***REMOVED***;
 
 const contactLists = {

@@ -1,4 +1,7 @@
 const express = require("express"***REMOVED***
+const { emailTemplates ***REMOVED*** = require("../constants"***REMOVED***
+const pricePlans = require("../constants/pricePlans"***REMOVED***
+const sendEmail = require("../emails/sendEmail"***REMOVED***
 const stripe = require("../libs/stripe"***REMOVED***
 const db = require("../models"***REMOVED***
 
@@ -53,7 +56,15 @@ app.post(
           ],
         ***REMOVED******REMOVED***
 
-        console.log(sub***REMOVED***
+        sendEmail({
+          to: sub.User.email,
+          subject: "Your trial will be ending soon",
+          template: emailTemplates.trialEnding,
+          dynamics: {
+            host: process.env.FRONT_END,
+            trialEndDate: sub.cancelOn,
+          ***REMOVED***,
+        ***REMOVED******REMOVED***
       ***REMOVED***
 
       res.sendStatus(200***REMOVED***

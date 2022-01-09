@@ -1,4 +1,4 @@
-- send email to customer regarding ending trial and pending invoice charge
+[x] send email to customer regarding ending trial and pending invoice charge
 
 [x] change password functionality
 
