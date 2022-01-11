@@ -34,8 +34,8 @@ const uploadLogo = multer({
               null,
               sharp()
                 .resize({
-                  width: 400,
-                  height: 400,
+                  width: 200,
+                  height: 200,
                   fit: "cover",
                 ***REMOVED***)
                 .jpeg({
@@ -50,8 +50,8 @@ const uploadLogo = multer({
               null,
               sharp()
                 .resize({
-                  width: 400,
-                  height: 400,
+                  width: 200,
+                  height: 200,
                   fit: "cover",
                 ***REMOVED***)
                 .png({

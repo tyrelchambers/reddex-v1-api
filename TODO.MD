@@ -5,3 +5,5 @@
 [x] change email functionality
 [] add warnings for image size
 [x] send email on password change
+
+[] request handler
