@@ -11,7 +11,7 @@ const stripe = require("./stripe"***REMOVED***
 
     const subscription = await stripe.subscriptions.create({
       customer: customer.id,
-      coupon: "5BlDslIS",
+      coupon: "1U95ho4B",
       items: [
         {
           price: "price_1K64chI8C7KcVoSyUj7qgv65",
