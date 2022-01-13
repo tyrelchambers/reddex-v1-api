@@ -1,6 +1,6 @@
 const express = require("express"***REMOVED***
 const { emailTemplates ***REMOVED*** = require("../constants"***REMOVED***
-const pricePlans = require("../constants/pricePlans"***REMOVED***
+const stripeData = require("../constants/stripeData"***REMOVED***
 const sendEmail = require("../emails/sendEmail"***REMOVED***
 const stripe = require("../libs/stripe"***REMOVED***
 const db = require("../models"***REMOVED***
@@ -51,7 +51,7 @@ app.post(
         await stripe.subscriptions.update(sub.subscriptionId, {
           items: [
             {
-              price: pricePlans[sub.plan][sub.term],
+              price: stripeData.products[sub.plan][sub.term],
             ***REMOVED***,
           ],
         ***REMOVED******REMOVED***
