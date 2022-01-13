@@ -4,6 +4,7 @@ const emailTemplates = {
   passwordChange: "d-d9efed684ca64571aa5ef8285e071cf9",
   emailChange: "d-2d0d3269b4da4e8089492b71db474dca",
   trialEnding: "d-cdf6cd0dd3a64c779c53ee0ddb6aabe9",
+  forgotPassword: "d-7f17a906dceb4c7188f63d303e385e12",
 ***REMOVED***;
 
 const contactLists = {

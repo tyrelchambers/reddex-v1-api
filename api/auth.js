@@ -9,6 +9,7 @@ const { addWeeks ***REMOVED*** = require("date-fns"***REMOVED***
 const pricePlans = require("../constants/pricePlans"***REMOVED***
 const addUserToSendGridContact = require("../libs/addUserToSendGridContact"***REMOVED***
 const { emailTemplates ***REMOVED*** = require("../constants"***REMOVED***
+const decodeToken = require("../libs/decodeToken"***REMOVED***
 
 app.get("/v1/login", async (req, res, next) => {
   try {
@@ -111,6 +112,61 @@ app.post("/v1/register", async (req, res, next) => {
     addUserToSendGridContact(user***REMOVED***
 
     res.send({ user, token ***REMOVED******REMOVED***
+  ***REMOVED*** catch (error) {
+    next(error***REMOVED***
+  ***REMOVED***
+***REMOVED******REMOVED***
+
+app.post("/v1/forgot-password", async (req, res, next) => {
+  try {
+    const { email ***REMOVED*** = req.body;
+
+    const user = await db.User.findOne({
+      where: {
+        email,
+      ***REMOVED***,
+    ***REMOVED******REMOVED***
+
+    if (!user) throw new Error("User not found"***REMOVED***
+
+    const token = await signToken(user.uuid, "1m"***REMOVED***
+
+    sendEmail({
+      to: user.email,
+      subject: "Reset your password",
+      template: emailTemplates.forgotPassword,
+      dynamics: {
+        redirect_url: `${process.env.FRONT_END***REMOVED***/reset-password?token=${token***REMOVED***`,
+      ***REMOVED***,
+    ***REMOVED******REMOVED***
+
+    res.sendStatus(200***REMOVED***
+  ***REMOVED*** catch (error) {
+    next(error***REMOVED***
+  ***REMOVED***
+***REMOVED******REMOVED***
+
+app.post("/v1/reset-password", async (req, res, next) => {
+  try {
+    const { password, token ***REMOVED*** = req.body;
+
+    const userId = decodeToken(token***REMOVED***
+
+    const user = await db.User.findOne({
+      where: {
+        uuid: userId,
+      ***REMOVED***,
+    ***REMOVED******REMOVED***
+
+    if (!user) throw new Error("User not found"***REMOVED***
+
+    const hashPassword = bcrypt.hashSync(password, 10***REMOVED***
+
+    user.password = hashPassword;
+
+    await user.save(***REMOVED***
+
+    res.sendStatus(200***REMOVED***
   ***REMOVED*** catch (error) {
     next(error***REMOVED***
   ***REMOVED***
