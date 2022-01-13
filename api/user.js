@@ -192,6 +192,11 @@ app.post("/v1/change-password", authHandler(), async (req, res, next) => {
   try {
     const { currentPassword, newPassword ***REMOVED*** = req.body;
 
+    if (newPassword.length < 8)
+      throw new Error("Password must be at least 8 characters"***REMOVED***
+    if (newPassword.length > 255)
+      throw new Error("Password must be less than 255 characters"***REMOVED***
+
     const user = await db.User.findOne({
       where: {
         uuid: res.locals.userId,

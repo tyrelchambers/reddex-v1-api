@@ -14,7 +14,6 @@ const decodeToken = async (token) => {
       if (Date.now() >= decoded.exp * 1000) {
         await signToken({ userId: decoded.uuid ***REMOVED***).then((res) => (uuid = res)***REMOVED***
       ***REMOVED***
-
       return uuid;
     ***REMOVED***
   ***REMOVED***

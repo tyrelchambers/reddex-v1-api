@@ -54,6 +54,11 @@ app.post("/v1/register", async (req, res, next) => {
     if (!(email || password)) throw new Error("Email or password are missing"***REMOVED***
     if (!(plan || term)) throw new Error("Plan or term are missing"***REMOVED***
 
+    if (password.length < 8)
+      throw new Error("Password must be at least 8 characters"***REMOVED***
+    if (password.length > 255)
+      throw new Error("Password must be less than 255 characters"***REMOVED***
+
     const existingUser = await db.User.findOne({
       where: {
         email,
@@ -148,9 +153,14 @@ app.post("/v1/forgot-password", async (req, res, next) => {
 
 app.post("/v1/reset-password", async (req, res, next) => {
   try {
-    const { password, token ***REMOVED*** = req.body;
+    const { newPassword: password, token ***REMOVED*** = req.body;
 
-    const userId = decodeToken(token***REMOVED***
+    if (password.length < 8)
+      throw new Error("Password must be at least 8 characters"***REMOVED***
+    if (password.length > 255)
+      throw new Error("Password must be less than 255 characters"***REMOVED***
+
+    const userId = await decodeToken(token***REMOVED***
 
     const user = await db.User.findOne({
       where: {
