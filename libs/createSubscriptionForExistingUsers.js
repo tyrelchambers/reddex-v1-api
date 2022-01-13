@@ -1,5 +1,5 @@
+const stripeData = require("../constants/stripeData"***REMOVED***
 const db = require("../models"***REMOVED***
-const stripe = require("./stripe"***REMOVED***
 
 (async () => {
   const users = await db.User.findAll(***REMOVED***
@@ -11,10 +11,10 @@ const stripe = require("./stripe"***REMOVED***
 
     const subscription = await stripe.subscriptions.create({
       customer: customer.id,
-      coupon: "1U95ho4B",
+      coupon: stripeData.coupons.freeYearPro,
       items: [
         {
-          price: "price_1K64chI8C7KcVoSyUj7qgv65",
+          price: stripeData.products.pro.year,
         ***REMOVED***,
       ],
     ***REMOVED******REMOVED***

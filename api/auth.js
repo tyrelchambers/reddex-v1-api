@@ -6,7 +6,7 @@ const app = express.Router(***REMOVED***
 const sendEmail = require("../emails/sendEmail"***REMOVED***
 const stripe = require("../libs/stripe"***REMOVED***
 const { addWeeks ***REMOVED*** = require("date-fns"***REMOVED***
-const pricePlans = require("../constants/pricePlans"***REMOVED***
+const stripeData = require("../constants/stripeData"***REMOVED***
 const addUserToSendGridContact = require("../libs/addUserToSendGridContact"***REMOVED***
 const { emailTemplates ***REMOVED*** = require("../constants"***REMOVED***
 const decodeToken = require("../libs/decodeToken"***REMOVED***
@@ -88,7 +88,7 @@ app.post("/v1/register", async (req, res, next) => {
       customer: customer.id,
       items: [
         {
-          price: pricePlans.pro.monthly,
+          price: stripeData.products.pro.year,
         ***REMOVED***,
       ],
       trial_end: addWeeks(new Date(Date.now()), 1),
