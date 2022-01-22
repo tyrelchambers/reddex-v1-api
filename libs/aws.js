@@ -1,7 +1,6 @@
 const multerS3 = require("multer-s3-transform"***REMOVED***
 const aws = require("aws-sdk"***REMOVED***
 const multer = require("multer"***REMOVED***
-const sharp = require("sharp"***REMOVED***
 
 require("dotenv").config(***REMOVED***
 
