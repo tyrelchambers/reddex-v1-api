@@ -28,39 +28,6 @@ const uploadLogo = multer({
           const fullPath = `${dateNow***REMOVED***_${file.originalname***REMOVED***/logo-original-${file.originalname***REMOVED***`;
           cb(null, fullPath***REMOVED***
         ***REMOVED***,
-        transform: function (req, file, cb) {
-          if (file.mimetype === "image/jpeg" || file.mimetype === "image/jpg") {
-            cb(
-              null,
-              sharp()
-                .resize({
-                  width: 200,
-                  height: 200,
-                  fit: "cover",
-                ***REMOVED***)
-                .jpeg({
-                  quality: 90,
-                  chromaSubsampling: "4:4:4",
-                ***REMOVED***)
-            ***REMOVED***
-          ***REMOVED***
-
-          if (file.mimetype === "image/png") {
-            cb(
-              null,
-              sharp()
-                .resize({
-                  width: 200,
-                  height: 200,
-                  fit: "cover",
-                ***REMOVED***)
-                .png({
-                  quality: 90,
-                  chromaSubsampling: "4:4:4",
-                ***REMOVED***)
-            ***REMOVED***
-          ***REMOVED***
-        ***REMOVED***,
       ***REMOVED***,
     ],
   ***REMOVED***),
@@ -94,15 +61,6 @@ const uploadBanner = multer({
         key: async function (req, file, cb) {
           const fullPath = `${dateNow***REMOVED***_${file.originalname***REMOVED***/banner-original-${file.originalname***REMOVED***`;
           cb(null, fullPath***REMOVED***
-        ***REMOVED***,
-        transform: function (req, file, cb) {
-          if (file.mimetype === "image/jpeg" || file.mimetype === "image/jpg") {
-            cb(null, sharp().jpeg()***REMOVED***
-          ***REMOVED***
-
-          if (file.mimetype === "image/png") {
-            cb(null, sharp().png()***REMOVED***
-          ***REMOVED***
         ***REMOVED***,
       ***REMOVED***,
     ],

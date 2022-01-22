@@ -16,7 +16,7 @@ app.post("/v1/logo", authHandler(), (req, res, next) => {
     ***REMOVED***
     for (let i = 0; i < req.files.length; i++) {
       res.send({
-        original: req.files[0].transforms[0].location,
+        original: req.files[0].location,
       ***REMOVED******REMOVED***
     ***REMOVED***
   ***REMOVED******REMOVED***
@@ -31,7 +31,7 @@ app.post("/v1/banner", authHandler(), (req, res, next) => {
     ***REMOVED***
     for (let i = 0; i < req.files.length; i++) {
       res.send({
-        original: req.files[0].transforms[0].location,
+        original: req.files[0].location,
       ***REMOVED******REMOVED***
     ***REMOVED***
   ***REMOVED******REMOVED***
