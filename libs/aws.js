@@ -19,16 +19,10 @@ const uploadLogo = multer({
   storage: multerS3({
     s3: s3,
     bucket: "reddex",
-    shouldTransform: true,
-    transforms: [
-      {
-        id: "original",
-        key: async function (req, file, cb) {
-          const fullPath = `${dateNow***REMOVED***_${file.originalname***REMOVED***/logo-original-${file.originalname***REMOVED***`;
-          cb(null, fullPath***REMOVED***
-        ***REMOVED***,
-      ***REMOVED***,
-    ],
+    key: async function (req, file, cb) {
+      const fullPath = `${dateNow***REMOVED***_${file.originalname***REMOVED***/logo-original-${file.originalname***REMOVED***`;
+      cb(null, fullPath***REMOVED***
+    ***REMOVED***,
   ***REMOVED***),
   files: 1,
   fileSize: 3000000,
@@ -53,16 +47,10 @@ const uploadBanner = multer({
   storage: multerS3({
     s3: s3,
     bucket: "reddex",
-    shouldTransform: true,
-    transforms: [
-      {
-        id: "original",
-        key: async function (req, file, cb) {
-          const fullPath = `${dateNow***REMOVED***_${file.originalname***REMOVED***/banner-original-${file.originalname***REMOVED***`;
-          cb(null, fullPath***REMOVED***
-        ***REMOVED***,
-      ***REMOVED***,
-    ],
+    key: async function (req, file, cb) {
+      const fullPath = `${dateNow***REMOVED***_${file.originalname***REMOVED***/banner-original-${file.originalname***REMOVED***`;
+      cb(null, fullPath***REMOVED***
+    ***REMOVED***,
   ***REMOVED***),
   files: 1,
   fileSize: 3000000,
