@@ -18,11 +18,28 @@ app.post(
         process.env.STRIPE_WEBHOOK_SECRET
       ***REMOVED***
 
+      if (event.type === "customer.updated") {
+        await db.Subscription.update(
+          {
+            ...event.data.object,
+          ***REMOVED***,
+          {
+            where: {
+              include: {
+                model: db.User,
+                where: {
+                  email: event.data.object.email,
+                ***REMOVED***,
+              ***REMOVED***,
+            ***REMOVED***,
+          ***REMOVED***
+        ***REMOVED***
+      ***REMOVED***
+
       if (event.type === "customer.subscription.updated") {
         const product = await stripe.products.retrieve(
           event.data.object.plan.product
         ***REMOVED***
-
         await db.Subscription.update(
           {
             subscriptionId: event.data.object.id,
