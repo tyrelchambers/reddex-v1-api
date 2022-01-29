@@ -1,11 +1,11 @@
 require("dotenv").config(***REMOVED***
 
 const couponsLive = {
-  freeYearPro: "tbyPys9Y",
+  free6MonthsPro: "tbyPys9Y",
 ***REMOVED***;
 
 const couponsTest = {
-  freeYearPro: "1U95ho4B",
+  free6MonthsPro: "XRW4d5fo",
 ***REMOVED***;
 
 const productsLive = {
