@@ -12,7 +12,7 @@
 ***REMOVED***
 
 ***REMOVED***
-  "postgres://reddexadmin:VNmq92IfmqMvyECQMsxq@reddex.app:5432/reddex"
+***REMOVED***
 ***REMOVED***
 
 ***REMOVED***

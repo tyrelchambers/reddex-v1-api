@@ -31,6 +31,7 @@ app.get("/v1/plan", authHandler(), async (req, res, next) => {
     const subscription = await stripe.subscriptions.retrieve(
       sub.subscriptionId
     ***REMOVED***
+
     const product = await stripe.products.retrieve(subscription.plan.product***REMOVED***
 
     res.send({ subscription, product ***REMOVED******REMOVED***
