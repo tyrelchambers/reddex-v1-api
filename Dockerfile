@@ -9,8 +9,7 @@ COPY package*.json ./
 
 RUN npm install
 
-RUN npm install -g sequelize-cli
-RUN npm install -g nodemon
+RUN npm install -g sequelize-cli nodemon
 
 COPY . .
 
