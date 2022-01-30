@@ -224,7 +224,7 @@ const migrateContacts = async () => {
     await db.Contact.create({
       uuid: contact.uuid,
       userId: contact.user_id,
-      name: contact.contact,
+      name: contact.name,
       notes: contact.notes,
     ***REMOVED******REMOVED***
   ***REMOVED***
@@ -245,7 +245,7 @@ const migrateContacted = async () => {
 
 const main = async () => {
   // await migrateUsers(***REMOVED***
-  await migrateWebsites(***REMOVED***
+  // await migrateWebsites(***REMOVED***
   // await migrateTags(***REMOVED***
   // await migrateSubmittedStories(***REMOVED***
   // await migrateRecentlySearched(***REMOVED***

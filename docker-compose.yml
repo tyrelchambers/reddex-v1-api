@@ -22,16 +22,6 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     restart: unless-stopped
-  db_r_v1:
-    container_name: db_r_v1
-    image: postgres
-    ports:
-      - "5433:5432"
-    env_file:
-      - .env
-    volumes:
-      - postgres_data_v1:/var/lib/postgresql/data/
-    restart: unless-stopped
 
   mongodb:
     container_name: mongodb_reddex
@@ -45,4 +35,3 @@ networks:
     name: reddex_v2_backend
 volumes:
   postgres_data:
-  postgres_data_v1:
