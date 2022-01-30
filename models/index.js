@@ -10,6 +10,12 @@
 
 ***REMOVED***
 ***REMOVED***
+
+***REMOVED***
+  "postgres://reddexadmin:VNmq92IfmqMvyECQMsxq@reddex.app:5432/reddex"
+***REMOVED***
+
+***REMOVED***
 ***REMOVED***process.env[config.use_env_variable], config***REMOVED***
 ***REMOVED***
 ***REMOVED***
@@ -41,6 +47,8 @@
 ***REMOVED******REMOVED***
 
 ***REMOVED***
+***REMOVED***
+
 ***REMOVED***
 
 ***REMOVED***
