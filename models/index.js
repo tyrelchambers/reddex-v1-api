@@ -9,11 +9,6 @@
 ***REMOVED***
 
 ***REMOVED***
-***REMOVED***
-
-***REMOVED***
-***REMOVED***
-***REMOVED***
 
 ***REMOVED***
 ***REMOVED***process.env[config.use_env_variable], config***REMOVED***
@@ -47,8 +42,6 @@
 ***REMOVED******REMOVED***
 
 ***REMOVED***
-***REMOVED***
-
 ***REMOVED***
 
 ***REMOVED***
