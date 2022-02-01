@@ -1,14 +1,14 @@
-const { v4: uuidv4 ***REMOVED*** = require("uuid"***REMOVED***
+const { v4: uuidv4 } = require("uuid");
 
 const visitorHandler = async (req, res, next) => {
   try {
     let token = req.headers.posttoken;
     res.locals.token = token;
 
-    next(***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED***;
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
 
 module.exports = visitorHandler;

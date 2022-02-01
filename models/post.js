@@ -1,5 +1,5 @@
-***REMOVED***
-const { Model ***REMOVED*** = require("sequelize"***REMOVED***
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Post extends Model {
     /**
@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-    ***REMOVED***
-  ***REMOVED***
+    }
+  }
   Post.init(
     {
       uuid: {
@@ -18,21 +18,21 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
         unique: true,
-      ***REMOVED***,
+      },
       owner: {
         type: DataTypes.STRING,
-      ***REMOVED***,
+      },
       posts: {
         type: DataTypes.ARRAY(DataTypes.JSON),
-      ***REMOVED***,
+      },
       subreddit: {
         type: DataTypes.STRING,
-      ***REMOVED***,
-    ***REMOVED***,
+      },
+    },
     {
-***REMOVED***
+      sequelize,
       modelName: "Post",
-    ***REMOVED***
-  ***REMOVED***
+    }
+  );
   return Post;
-***REMOVED***;
+};

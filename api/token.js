@@ -1,5 +1,5 @@
-const express = require('express'***REMOVED***
-const { v4: uuidv4 ***REMOVED*** = require('uuid'***REMOVED***
+const express = require('express');
+const { v4: uuidv4 } = require('uuid');
 
 const app = express.Router()
 
@@ -9,12 +9,12 @@ app.get('/v1/postToken', async (req, res, next) => {
 
     if (!token) {
       token = uuidv4()
-    ***REMOVED***
+    }
 
-    res.send({ postToken: token ***REMOVED***)
-  ***REMOVED*** catch (error) {
+    res.send({ postToken: token })
+  } catch (error) {
     next(error)
-  ***REMOVED***
-***REMOVED***)
+  }
+})
 
 module.exports = app

@@ -1,14 +1,14 @@
-const { sendGridApiUrl, contactLists ***REMOVED*** = require("../constants"***REMOVED***
+const { sendGridApiUrl, contactLists } = require("../constants");
 const addContactSendGrid = (email) => {
   axios.put(
     sendGridApiUrl + "/marketing/contacts",
-    { list_ids: contactLists.users, contacts: [{ email ***REMOVED***] ***REMOVED***,
+    { list_ids: contactLists.users, contacts: [{ email }] },
     {
       headers: {
         Authorization: "Bearer " + process.env.SENDGRID_API_KEY,
-      ***REMOVED***,
-    ***REMOVED***
-  ***REMOVED***
-***REMOVED***;
+      },
+    }
+  );
+};
 
 module.exports = addContactSendGrid;

@@ -1,9 +1,9 @@
-const express = require("express"***REMOVED***
-const averageReadingTime = require("../libs/averageReadingTime"***REMOVED***
-const authHandler = require("../middleware/authHandler"***REMOVED***
-const db = require("../models"***REMOVED***
+const express = require("express");
+const averageReadingTime = require("../libs/averageReadingTime");
+const authHandler = require("../middleware/authHandler");
+const db = require("../models");
 
-const app = express.Router(***REMOVED***
+const app = express.Router();
 
 app.post("/v1/save", authHandler(), async (req, res, next) => {
   try {
@@ -20,7 +20,7 @@ app.post("/v1/save", authHandler(), async (req, res, next) => {
       permission,
       created,
       upvote_ratio,
-    ***REMOVED*** = req.body;
+    } = req.body;
 
     const existingStory = await db.Story.findOne({
       where: {
@@ -28,10 +28,10 @@ app.post("/v1/save", authHandler(), async (req, res, next) => {
         title,
         post_id,
         user_id: res.locals.userId,
-      ***REMOVED***,
-    ***REMOVED******REMOVED***
+      },
+    });
 
-    if (existingStory) throw new Error("Story already exists"***REMOVED***
+    if (existingStory) throw new Error("Story already exists");
 
     await db.Story.create({
       author,
@@ -47,77 +47,77 @@ app.post("/v1/save", authHandler(), async (req, res, next) => {
       user_id: res.locals.userId,
       created,
       upvote_ratio: upvote_ratio.toFixed(2),
-    ***REMOVED******REMOVED***
+    });
 
-    res.sendStatus(200***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.put("/v1/tag", authHandler(), async (req, res, next) => {
   try {
-    const { tags, storyId ***REMOVED*** = req.body.data;
+    const { tags, storyId } = req.body.data;
 
-    const tagIds = tags.map((tag) => tag.uuid***REMOVED***
+    const tagIds = tags.map((tag) => tag.uuid);
 
     const story = await db.Story.findOne({
       where: {
         uuid: storyId,
-      ***REMOVED***,
-    ***REMOVED******REMOVED***
+      },
+    });
 
-    story.addTags(tagIds***REMOVED***
+    story.addTags(tagIds);
 
-    res.sendStatus(200***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.post("/v1/delete", authHandler(), async (req, res, next) => {
   try {
-    const { uuid ***REMOVED*** = req.body;
+    const { uuid } = req.body;
     await db.Story.update(
       {
         read: false,
         permission: false,
-      ***REMOVED***,
+      },
       {
         where: {
           uuid,
           user_id: res.locals.userId,
-        ***REMOVED***,
-      ***REMOVED***
-    ***REMOVED***
+        },
+      }
+    );
 
-    res.sendStatus(200***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.get("/v1/story", authHandler(), async (req, res, next) => {
   try {
-    const { title ***REMOVED*** = { ...req.query ***REMOVED***;
+    const { title } = { ...req.query };
 
-    const options = {***REMOVED***;
+    const options = {};
 
     if (title) {
       options.title = title;
-    ***REMOVED***
+    }
 
     const story = await db.Story.findOne({
       where: {
         ...options,
         user_id: res.locals.userId,
-      ***REMOVED***,
-    ***REMOVED******REMOVED***
+      },
+    });
 
-    res.send(story***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.send(story);
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = app;

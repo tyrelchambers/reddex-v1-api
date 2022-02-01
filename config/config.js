@@ -1,4 +1,4 @@
-require("dotenv").config(***REMOVED***
+require("dotenv").config();
 
 module.exports = {
   development: {
@@ -8,7 +8,7 @@ module.exports = {
     password: process.env.POSTGRES_PASSWORD,
     dialect: "postgres",
     port: 5432,
-  ***REMOVED***,
+  },
   production: {
     dialect: "postgres",
     host: "reddex_v2_db",
@@ -17,7 +17,7 @@ module.exports = {
     password: process.env.POSTGRES_PASSWORD,
     port: "5432",
     logging: false,
-  ***REMOVED***,
+  },
   staging: {
     host: process.env.STAGING_HOST,
     dialect: "postgres",
@@ -25,5 +25,5 @@ module.exports = {
     username: process.env.STAGING_USERNAME,
     password: process.env.STAGING_PASSWORD,
     ssl: true,
-  ***REMOVED***,
-***REMOVED***;
+  },
+};

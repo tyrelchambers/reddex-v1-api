@@ -1,5 +1,5 @@
-***REMOVED***
-const { Model ***REMOVED*** = require("sequelize"***REMOVED***
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Website extends Model {
     /**
@@ -12,9 +12,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "userId",
         as: "user",
         onDelete: "CASCADE",
-      ***REMOVED******REMOVED***
-    ***REMOVED***
-  ***REMOVED***
+      });
+    }
+  }
   Website.init(
     {
       uuid: {
@@ -22,23 +22,23 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
         unique: true,
-      ***REMOVED***,
+      },
       userId: {
         type: DataTypes.UUID,
         references: {
           model: "Users",
           key: "uuid",
-        ***REMOVED***,
+        },
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
-      ***REMOVED***,
-  ***REMOVED***: DataTypes.JSONB,
+      },
+      config: DataTypes.JSONB,
       hidden: DataTypes.BOOLEAN,
-    ***REMOVED***,
+    },
     {
-***REMOVED***
+      sequelize,
       modelName: "Website",
-    ***REMOVED***
-  ***REMOVED***
+    }
+  );
   return Website;
-***REMOVED***;
+};

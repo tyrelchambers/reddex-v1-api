@@ -1,9 +1,9 @@
-const express = require("express"***REMOVED***
-const { Op ***REMOVED*** = require("sequelize"***REMOVED***
-const authHandler = require("../middleware/authHandler"***REMOVED***
-const db = require("../models"***REMOVED***
+const express = require("express");
+const { Op } = require("sequelize");
+const authHandler = require("../middleware/authHandler");
+const db = require("../models");
 
-const app = express.Router(***REMOVED***
+const app = express.Router();
 
 app.get("/v1/approved", authHandler(), async (req, res, next) => {
   try {
@@ -11,14 +11,15 @@ app.get("/v1/approved", authHandler(), async (req, res, next) => {
       where: {
         user_id: res.locals.userId,
         permission: true,
-      ***REMOVED***,
-    ***REMOVED******REMOVED***
+        read: false,
+      },
+    });
 
-    res.send(stories***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.send(stories);
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.get("/v1/completed", authHandler(), async (req, res, next) => {
   try {
@@ -26,86 +27,86 @@ app.get("/v1/completed", authHandler(), async (req, res, next) => {
       where: {
         user_id: res.locals.userId,
         read: true,
-      ***REMOVED***,
-    ***REMOVED******REMOVED***
+      },
+    });
 
-    res.send(stories***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.send(stories);
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.post("/v1/approved/save", authHandler(), async (req, res, next) => {
   try {
-    const { subject ***REMOVED*** = req.body;
+    const { subject } = req.body;
 
     const story = await db.Story.findOne({
       where: {
         user_id: res.locals.userId,
         title: {
-          [Op.substring]: `${subject.substring(0, subject.length - 3)***REMOVED***`,
-        ***REMOVED***,
-      ***REMOVED***,
-    ***REMOVED******REMOVED***
+          [Op.substring]: `${subject.substring(0, subject.length - 3)}`,
+        },
+      },
+    });
 
-    if (!story) throw new Error("Story not found"***REMOVED***
+    if (!story) throw new Error("Story not found");
 
     await story.update({
       permission: true,
-    ***REMOVED******REMOVED***
+    });
 
-    res.sendStatus(200***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.put("/v1/transfer/to_completed", authHandler(), async (req, res, next) => {
   try {
-    const { uuid ***REMOVED*** = req.body.data;
+    const { uuid } = req.body.data;
 
     const story = await db.Story.findOne({
       where: {
         uuid,
         user_id: res.locals.userId,
-      ***REMOVED***,
-    ***REMOVED******REMOVED***
+      },
+    });
 
-    if (!story) throw new Error("Story not found"***REMOVED***
+    if (!story) throw new Error("Story not found");
 
     await story.update({
       read: true,
       permission: false,
-    ***REMOVED******REMOVED***
+    });
 
-    res.sendStatus(200***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.put("/v1/transfer/to_approved", authHandler(), async (req, res, next) => {
   try {
-    const { uuid ***REMOVED*** = req.body.data;
+    const { uuid } = req.body.data;
 
     const story = await db.Story.findOne({
       where: {
         uuid,
         user_id: res.locals.userId,
-      ***REMOVED***,
-    ***REMOVED******REMOVED***
+      },
+    });
 
-    if (!story) throw new Error("Story not found"***REMOVED***
+    if (!story) throw new Error("Story not found");
 
     await story.update({
       read: false,
       permission: true,
-    ***REMOVED******REMOVED***
+    });
 
-    res.sendStatus(200***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = app;

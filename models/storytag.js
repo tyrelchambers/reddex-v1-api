@@ -1,5 +1,5 @@
-***REMOVED***
-const { Model ***REMOVED*** = require("sequelize"***REMOVED***
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class StoryTag extends Model {
     /**
@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-    ***REMOVED***
-  ***REMOVED***
+    }
+  }
   StoryTag.init(
     {
       storyId: {
@@ -18,24 +18,24 @@ module.exports = (sequelize, DataTypes) => {
         references: {
           model: "Stories",
           key: "uuid",
-        ***REMOVED***,
+        },
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
-      ***REMOVED***,
+      },
       tagId: {
         type: DataTypes.UUID,
         references: {
           model: "Tags",
           key: "uuid",
-        ***REMOVED***,
+        },
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
-      ***REMOVED***,
-    ***REMOVED***,
+      },
+    },
     {
-***REMOVED***
+      sequelize,
       modelName: "StoryTag",
-    ***REMOVED***
-  ***REMOVED***
+    }
+  );
   return StoryTag;
-***REMOVED***;
+};

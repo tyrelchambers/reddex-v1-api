@@ -1,73 +1,73 @@
 // express server listening on port 3000
-const express = require("express"***REMOVED***
-require("dotenv").config(***REMOVED***
+const express = require("express");
+require("dotenv").config();
 
-const cors = require("cors"***REMOVED***
-const helmet = require("helmet"***REMOVED***
-const morgan = require("morgan"***REMOVED***
-const config = require("./config"***REMOVED***
-const mongoose = require("mongoose"***REMOVED***
-const app = express(***REMOVED***
+const cors = require("cors");
+const helmet = require("helmet");
+const morgan = require("morgan");
+const config = require("./config");
+const mongoose = require("mongoose");
+const app = express();
 
 // jobs
-const deleteCancelledSubscriptions = require("./jobs/deleteCancelledSubscriptions"***REMOVED***
+const deleteCancelledSubscriptions = require("./jobs/deleteCancelledSubscriptions");
 
-deleteCancelledSubscriptions.start(***REMOVED***
+deleteCancelledSubscriptions.start();
 
-app.use(helmet()***REMOVED***
+app.use(helmet());
 const database = config[config.env].database;
 const db = mongoose.connection;
 
 const port = process.env.PORT || "4000";
 
-app.use("/api/webhooks", require("./api/webhooks")***REMOVED***
+app.use("/api/webhooks", require("./api/webhooks"));
 
-app.use(cors()***REMOVED***
+app.use(cors());
 
 app.use(
   express.json({
     limit: 30000000,
-  ***REMOVED***)
-***REMOVED***
+  })
+);
 
 app.use(
   express.urlencoded({
     extended: true,
-  ***REMOVED***)
-***REMOVED***
+  })
+);
 
-mongoose.connect(database, { useNewUrlParser: true ***REMOVED******REMOVED***
+mongoose.connect(database, { useNewUrlParser: true });
 
-app.use(morgan("combined")***REMOVED***
+app.use(morgan("combined"));
 
-app.use("/api/auth", require("./api/auth")***REMOVED***
-app.use("/api/user", require("./api/user")***REMOVED***
-app.use("/api/posts", require("./api/posts")***REMOVED***
-app.use("/api/tokens", require("./api/token")***REMOVED***
-app.use("/api/contacts", require("./api/contact")***REMOVED***
-app.use("/api/contacted", require("./api/contacted")***REMOVED***
-app.use("/api/story", require("./api/story")***REMOVED***
-app.use("/api/inbox", require("./api/inbox")***REMOVED***
-app.use("/api/reading_list", require("./api/readingList")***REMOVED***
-app.use("/api/tags", require("./api/tags")***REMOVED***
-app.use("/api/search", require("./api/search")***REMOVED***
-app.use("/api/website", require("./api/website")***REMOVED***
-app.use("/api/submitted", require("./api/submitted")***REMOVED***
-app.use("/api/subscriptions", require("./api/subscriptions")***REMOVED***
-app.use("/api/stripe", require("./api/stripe")***REMOVED***
-app.use("/api/upload", require("./api/upload")***REMOVED***
+app.use("/api/auth", require("./api/auth"));
+app.use("/api/user", require("./api/user"));
+app.use("/api/posts", require("./api/posts"));
+app.use("/api/tokens", require("./api/token"));
+app.use("/api/contacts", require("./api/contact"));
+app.use("/api/contacted", require("./api/contacted"));
+app.use("/api/story", require("./api/story"));
+app.use("/api/inbox", require("./api/inbox"));
+app.use("/api/reading_list", require("./api/readingList"));
+app.use("/api/tags", require("./api/tags"));
+app.use("/api/search", require("./api/search"));
+app.use("/api/website", require("./api/website"));
+app.use("/api/submitted", require("./api/submitted"));
+app.use("/api/subscriptions", require("./api/subscriptions"));
+app.use("/api/stripe", require("./api/stripe"));
+app.use("/api/upload", require("./api/upload"));
 
-db.on("error", console.error.bind(console, "Connection error - Mongodb")***REMOVED***
-db.once("open", () => console.log("Connected sucessfully to Mongo database")***REMOVED***
+db.on("error", console.error.bind(console, "Connection error - Mongodb"));
+db.once("open", () => console.log("Connected sucessfully to Mongo database"));
 
-console.log("For Chris: biscuits"***REMOVED***
+console.log("For Chris: biscuits");
 
 app.use(function (err, req, res, next) {
-  console.log("--------error--------"***REMOVED***
-  console.error(err.message***REMOVED***
-  console.log("--------error--------"***REMOVED***
+  console.log("--------error--------");
+  console.error(err.message);
+  console.log("--------error--------");
 
-  res.status(500).send(err.message***REMOVED***
-***REMOVED******REMOVED***
+  res.status(500).send(err.message);
+});
 
-app.listen(port, () => console.log("App running on " + port)***REMOVED***
+app.listen(port, () => console.log("App running on " + port));

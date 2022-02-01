@@ -1,10 +1,10 @@
-const db = require("../models"***REMOVED***
-const addUserToSendGridContact = require("./addUserToSendGridContact"***REMOVED***
+const db = require("../models");
+const addUserToSendGridContact = require("./addUserToSendGridContact");
 
 (async () => {
-  const users = await db.User.findAll(***REMOVED***
+  const users = await db.User.findAll();
 
   users.forEach((user) => {
-    addUserToSendGridContact(user***REMOVED***
-  ***REMOVED******REMOVED***
-***REMOVED***)(***REMOVED***
+    addUserToSendGridContact(user);
+  });
+})();

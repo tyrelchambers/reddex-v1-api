@@ -1,5 +1,5 @@
-require("dotenv").config(***REMOVED***
+require("dotenv").config();
 
-const stripe = require("stripe")(process.env.STRIPE_KEY***REMOVED***
+const stripe = require("stripe")(process.env.STRIPE_KEY);
 
 module.exports = stripe;

@@ -1,4 +1,4 @@
-const db = require("../models"***REMOVED***
+const db = require("../models");
 
 var CronJob = require("cron").CronJob;
 var job = new CronJob(
@@ -8,18 +8,18 @@ var job = new CronJob(
       where: {
         "$Subscription.cancelOn$": {
           [db.Sequelize.Op.gte]: Math.floor(new Date().getTime() / 1000),
-        ***REMOVED***,
-      ***REMOVED***,
+        },
+      },
       include: [db.Subscription],
-    ***REMOVED******REMOVED***
+    });
 
     for (let i = 0; i < user.length; i++) {
-      await user[i].destroy({***REMOVED******REMOVED***
-    ***REMOVED***
-  ***REMOVED***,
+      await user[i].destroy({});
+    }
+  },
   null,
   true,
   "America/Toronto"
-***REMOVED***
+);
 
 module.exports = job;

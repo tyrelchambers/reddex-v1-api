@@ -3,10 +3,10 @@ const averageReadingTime = (text, wpm) => {
   let result;
 
   if (text > 0) {
-    result = Math.ceil(text / wordsPerMinute***REMOVED***
-  ***REMOVED***
+    result = Math.ceil(text / wordsPerMinute);
+  }
 
-  return Number(result***REMOVED***
-***REMOVED***;
+  return Number(result);
+};
 
 module.exports = averageReadingTime;

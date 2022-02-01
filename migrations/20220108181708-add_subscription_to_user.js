@@ -1,4 +1,4 @@
-***REMOVED***
+"use strict";
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -7,11 +7,11 @@ module.exports = {
       references: {
         model: "Subscriptions",
         key: "uuid",
-      ***REMOVED***,
-    ***REMOVED******REMOVED***
-  ***REMOVED***,
+      },
+    });
+  },
 
   down: async (queryInterface, Sequelize) => {
-    return queryInterface.removeColumn("Users", "subscriptionId"***REMOVED***
-  ***REMOVED***,
-***REMOVED***;
+    return queryInterface.removeColumn("Users", "subscriptionId");
+  },
+};

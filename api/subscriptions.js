@@ -1,20 +1,20 @@
-const express = require("express"***REMOVED***
-const authHandler = require("../middleware/authHandler"***REMOVED***
-const app = express.Router(***REMOVED***
-const db = require("../models/index"***REMOVED***
+const express = require("express");
+const authHandler = require("../middleware/authHandler");
+const app = express.Router();
+const db = require("../models/index");
 
 app.get("/v1/me", authHandler(), async (req, res, next) => {
   try {
     const subscription = await db.Subscription.findOne({
       where: {
         userId: res.locals.userId,
-      ***REMOVED***,
-    ***REMOVED******REMOVED***
+      },
+    });
 
-    res.send({ subscription ***REMOVED******REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.send({ subscription });
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = app;

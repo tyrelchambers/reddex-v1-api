@@ -1,106 +1,106 @@
-const express = require("express"***REMOVED***
-const authHandler = require("../middleware/authHandler"***REMOVED***
-const db = require("../models"***REMOVED***
+const express = require("express");
+const authHandler = require("../middleware/authHandler");
+const db = require("../models");
 
-const app = express.Router(***REMOVED***
+const app = express.Router();
 
 app.post("/v1/save", authHandler(), async (req, res, next) => {
   try {
-    const { tag, stories ***REMOVED*** = req.body;
+    const { tag, stories } = req.body;
 
     const newTags = await db.Tag.create({
       tag: tag.tag,
       userId: res.locals.userId,
-    ***REMOVED******REMOVED***
+    });
 
-    newTags.setStories(stories***REMOVED***
+    newTags.setStories(stories);
 
-    res.sendStatus(200***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.delete("/v1/:id/delete", authHandler(), async (req, res, next) => {
   try {
-    const { id ***REMOVED*** = req.params;
+    const { id } = req.params;
 
     await db.Tag.destroy({
       where: {
         uuid: id,
         userId: res.locals.userId,
-      ***REMOVED***,
-    ***REMOVED******REMOVED***
+      },
+    });
 
-    res.sendStatus(200***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.put("/v1/edit", authHandler(), async (req, res, next) => {
   try {
-    const { tag, stories ***REMOVED*** = req.body;
+    const { tag, stories } = req.body;
 
     await db.Tag.update(
       {
         tag: tag.tag,
-      ***REMOVED***,
+      },
       {
         where: {
           uuid: tag.uuid,
           userId: res.locals.userId,
-        ***REMOVED***,
+        },
         returning: true,
         plain: true,
-      ***REMOVED***
-    ***REMOVED***
+      }
+    );
 
     const tagToAddStoryTo = await db.Tag.findOne({
       where: {
         uuid: tag.uuid,
         userId: res.locals.userId,
-      ***REMOVED***,
-    ***REMOVED******REMOVED***
+      },
+    });
 
-    tagToAddStoryTo.setStories(stories***REMOVED***
+    tagToAddStoryTo.setStories(stories);
 
-    res.sendStatus(200***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.get("/v1/:uuid", authHandler(), async (req, res, next) => {
   try {
-    const { uuid ***REMOVED*** = req.params;
+    const { uuid } = req.params;
 
     const tag = await db.Tag.findOne({
       where: {
         uuid,
-      ***REMOVED***,
+      },
       include: ["stories"],
-    ***REMOVED******REMOVED***
+    });
 
-    res.send(tag***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.send(tag);
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.get("/v1/", authHandler(), async (req, res, next) => {
   try {
     const tags = await db.Tag.findAll({
       where: {
         userId: res.locals.userId,
-      ***REMOVED***,
+      },
       include: ["stories"],
-    ***REMOVED******REMOVED***
+    });
 
-    res.send(tags***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.send(tags);
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = app;

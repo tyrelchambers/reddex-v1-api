@@ -5,11 +5,11 @@ const emailTemplates = {
   emailChange: "d-2d0d3269b4da4e8089492b71db474dca",
   trialEnding: "d-cdf6cd0dd3a64c779c53ee0ddb6aabe9",
   forgotPassword: "d-7f17a906dceb4c7188f63d303e385e12",
-***REMOVED***;
+};
 
 const contactLists = {
   users: "696f0fc7-fba0-4cfb-ae64-753dc7318772",
-***REMOVED***;
+};
 
 const sendGridApiUrl = "https://api.sendgrid.com/v3";
 
@@ -17,4 +17,4 @@ module.exports = {
   emailTemplates,
   sendGridApiUrl,
   contactLists,
-***REMOVED***;
+};

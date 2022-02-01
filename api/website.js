@@ -1,96 +1,96 @@
-const express = require("express"***REMOVED***
-const { emailTemplates ***REMOVED*** = require("../constants"***REMOVED***
-const sendEmail = require("../emails/sendEmail"***REMOVED***
-const authHandler = require("../middleware/authHandler"***REMOVED***
-const db = require("../models"***REMOVED***
+const express = require("express");
+const { emailTemplates } = require("../constants");
+const sendEmail = require("../emails/sendEmail");
+const authHandler = require("../middleware/authHandler");
+const db = require("../models");
 
-const app = express.Router(***REMOVED***
+const app = express.Router();
 
 app.put("/v1/update", authHandler(), async (req, res, next) => {
   try {
     let website = await db.Website.findOne({
       where: {
         userId: res.locals.userId,
-      ***REMOVED***,
-    ***REMOVED******REMOVED***
+      },
+    });
 
     if (!website) {
       website = await db.Website.create({
         userId: res.locals.userId,
-      ***REMOVED******REMOVED***
+      });
 
       await db.User.update(
         {
           websiteId: website.uuid,
-        ***REMOVED***,
+        },
         {
           where: {
             uuid: res.locals.userId,
-          ***REMOVED***,
-        ***REMOVED***
-      ***REMOVED***
-    ***REMOVED***
+          },
+        }
+      );
+    }
 
-    await website.update({ config: { ...req.body ***REMOVED*** ***REMOVED******REMOVED***
-    await website.save(***REMOVED***
+    await website.update({ config: { ...req.body } });
+    await website.save();
 
-    res.sendStatus(200***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.get("/v1/me", authHandler(), async (req, res, next) => {
   try {
     const website = await db.Website.findOne({
       where: {
         userId: res.locals.userId,
-      ***REMOVED***,
-    ***REMOVED******REMOVED***
+      },
+    });
 
-    res.send(website ? website : { config: {***REMOVED*** ***REMOVED******REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.send(website ? website : { config: {} });
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.get("/v1/checkSubdomain", async (req, res, next) => {
   try {
-    const { subdomain ***REMOVED*** = req.query;
+    const { subdomain } = req.query;
 
     const website = await db.Website.findOne({
       where: {
-    ***REMOVED***: {
+        config: {
           general: {
             domain: subdomain,
-          ***REMOVED***,
-        ***REMOVED***,
-      ***REMOVED***,
-    ***REMOVED******REMOVED***
+          },
+        },
+      },
+    });
 
     if (website) {
-      return res.send({ available: false ***REMOVED******REMOVED***
-    ***REMOVED***
+      return res.send({ available: false });
+    }
 
-    res.send({ available: true ***REMOVED******REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.send({ available: true });
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.post("/v1/submitStory", async (req, res, next) => {
   try {
-    const { title, email, content, author, siteOwner ***REMOVED*** = req.body;
+    const { title, email, content, author, siteOwner } = req.body;
 
     if ((title || email || author).length > 255) {
-      return res.status(400).send({ error: "Word limit exceeded" ***REMOVED******REMOVED***
-    ***REMOVED***
+      return res.status(400).send({ error: "Word limit exceeded" });
+    }
 
     const user = await db.User.findOne({
       where: {
         uuid: siteOwner,
-      ***REMOVED***,
-    ***REMOVED******REMOVED***
+      },
+    });
 
     await db.SubmittedStory.create({
       story_title: title,
@@ -98,33 +98,33 @@ app.post("/v1/submitStory", async (req, res, next) => {
       body: content,
       author,
       userId: siteOwner,
-    ***REMOVED******REMOVED***
+    });
 
     sendEmail({
       to: user.email,
       subject: "New Story Submission",
       template: emailTemplates.storySubmission,
       dynamics: {
-        host: `${process.env.FRONT_END***REMOVED***`,
-      ***REMOVED***,
-    ***REMOVED******REMOVED***
-    res.sendStatus(200***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+        host: `${process.env.FRONT_END}`,
+      },
+    });
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.get("/v1/:subdomain", async (req, res, next) => {
   try {
-    const { subdomain ***REMOVED*** = req.params;
+    const { subdomain } = req.params;
     const website = await db.Website.findOne({
       where: {
-    ***REMOVED***: {
+        config: {
           general: {
             domain: subdomain,
-          ***REMOVED***,
-        ***REMOVED***,
-      ***REMOVED***,
+          },
+        },
+      },
       include: [
         {
           model: db.User,
@@ -133,41 +133,41 @@ app.get("/v1/:subdomain", async (req, res, next) => {
             {
               model: db.Subscription,
               attributes: ["plan"],
-            ***REMOVED***,
+            },
           ],
-        ***REMOVED***,
+        },
       ],
-    ***REMOVED******REMOVED***
+    });
 
     if (website.user.Subscription.plan === "basic") {
-      return res.sendStatus(404***REMOVED***
-    ***REMOVED***
+      return res.sendStatus(404);
+    }
 
     if (!website) {
-      return res.sendStatus(404***REMOVED***
-    ***REMOVED***
+      return res.sendStatus(404);
+    }
 
-    res.send(website***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.send(website);
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.delete("/v1/delete", authHandler(), async (req, res, next) => {
   try {
-    const { uuid ***REMOVED*** = req.query;
+    const { uuid } = req.query;
 
     await db.Website.destroy({
       where: {
         uuid,
         userId: res.locals.userId,
-      ***REMOVED***,
-    ***REMOVED******REMOVED***
+      },
+    });
 
-    res.sendStatus(200***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = app;

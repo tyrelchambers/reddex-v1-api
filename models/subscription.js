@@ -1,5 +1,5 @@
-***REMOVED***
-const { Model ***REMOVED*** = require("sequelize"***REMOVED***
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Subscription extends Model {
     /**
@@ -11,9 +11,9 @@ module.exports = (sequelize, DataTypes) => {
       Subscription.belongsTo(models.User, {
         foreignKey: "userId",
         onDelete: "CASCADE",
-      ***REMOVED******REMOVED***
-    ***REMOVED***
-  ***REMOVED***
+      });
+    }
+  }
   Subscription.init(
     {
       uuid: {
@@ -21,34 +21,34 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
         unique: true,
-      ***REMOVED***,
+      },
       customerId: {
         type: DataTypes.STRING,
         allowNull: false,
-      ***REMOVED***,
+      },
       plan: {
         type: DataTypes.STRING,
-      ***REMOVED***,
+      },
       term: DataTypes.STRING,
 
       subscriptionId: {
         type: DataTypes.STRING,
-      ***REMOVED***,
+      },
       cancelOn: DataTypes.INTEGER,
       userId: {
         type: DataTypes.UUID,
         references: {
           model: "Users",
           key: "uuid",
-        ***REMOVED***,
+        },
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
-      ***REMOVED***,
-    ***REMOVED***,
+      },
+    },
     {
-***REMOVED***
+      sequelize,
       modelName: "Subscription",
-    ***REMOVED***
-  ***REMOVED***
+    }
+  );
   return Subscription;
-***REMOVED***;
+};

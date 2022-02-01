@@ -1,7 +1,7 @@
-const jwt = require("jsonwebtoken"***REMOVED***
-const signToken = require("./signToken"***REMOVED***
+const jwt = require("jsonwebtoken");
+const signToken = require("./signToken");
 
-require("dotenv").config(***REMOVED***
+require("dotenv").config();
 
 const decodeToken = async (token) => {
   const userId = await jwt.verify(
@@ -12,13 +12,13 @@ const decodeToken = async (token) => {
       let uuid = decoded.uuid;
 
       if (Date.now() >= decoded.exp * 1000) {
-        await signToken({ userId: decoded.uuid ***REMOVED***).then((res) => (uuid = res)***REMOVED***
-      ***REMOVED***
+        await signToken({ userId: decoded.uuid }).then((res) => (uuid = res));
+      }
       return uuid;
-    ***REMOVED***
-  ***REMOVED***
+    }
+  );
 
   return userId;
-***REMOVED***;
+};
 
 module.exports = decodeToken;

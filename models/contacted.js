@@ -1,5 +1,5 @@
-***REMOVED***
-const { Model ***REMOVED*** = require("sequelize"***REMOVED***
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Contacted extends Model {
     /**
@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-    ***REMOVED***
-  ***REMOVED***
+    }
+  }
   Contacted.init(
     {
       uuid: {
@@ -18,13 +18,13 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
         unique: true,
-      ***REMOVED***,
+      },
       name: DataTypes.STRING,
-    ***REMOVED***,
+    },
     {
-***REMOVED***
+      sequelize,
       modelName: "Contacted",
-    ***REMOVED***
-  ***REMOVED***
+    }
+  );
   return Contacted;
-***REMOVED***;
+};

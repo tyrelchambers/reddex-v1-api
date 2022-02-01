@@ -1,55 +1,55 @@
-const express = require("express"***REMOVED***
-const authHandler = require("../middleware/authHandler"***REMOVED***
-const db = require("../models"***REMOVED***
+const express = require("express");
+const authHandler = require("../middleware/authHandler");
+const db = require("../models");
 
-const app = express.Router(***REMOVED***
+const app = express.Router();
 
 app.get("/v1/:uuid", authHandler(), async (req, res, next) => {
   try {
-    const { uuid ***REMOVED*** = req.params;
+    const { uuid } = req.params;
 
     const story = await db.SubmittedStory.findOne({
       where: {
         uuid,
         userId: res.locals.userId,
-      ***REMOVED***,
-    ***REMOVED******REMOVED***
+      },
+    });
 
-    res.send(story***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.send(story);
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.delete("/v1/", authHandler(), async (req, res, next) => {
   try {
-    const { uuid ***REMOVED*** = req.query;
+    const { uuid } = req.query;
 
     await db.SubmittedStory.destroy({
       where: {
         uuid,
         userId: res.locals.userId,
-      ***REMOVED***,
-    ***REMOVED******REMOVED***
+      },
+    });
 
-    res.sendStatus(200***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.get("/v1/", authHandler(), async (req, res, next) => {
   try {
     const submittedStories = await db.SubmittedStory.findAll({
       where: {
         userId: res.locals.userId,
-      ***REMOVED***,
-    ***REMOVED******REMOVED***
+      },
+    });
 
-    res.send(submittedStories***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.send(submittedStories);
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = app;

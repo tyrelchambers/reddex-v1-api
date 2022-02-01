@@ -1,5 +1,5 @@
-***REMOVED***
-const { Model ***REMOVED*** = require("sequelize"***REMOVED***
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Profile extends Model {
     /**
@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
      
-    ***REMOVED***
-  ***REMOVED***
+    }
+  }
   Profile.init(
     {
       greeting: DataTypes.STRING,
@@ -23,13 +23,13 @@ module.exports = (sequelize, DataTypes) => {
           model: "Users",
           key: "uuid",
           onDelete: "CASCADE",
-        ***REMOVED***,
-      ***REMOVED***,
-    ***REMOVED***,
+        },
+      },
+    },
     {
-***REMOVED***
+      sequelize,
       modelName: "Profile",
-    ***REMOVED***
-  ***REMOVED***
+    }
+  );
   return Profile;
-***REMOVED***;
+};

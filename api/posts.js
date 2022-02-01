@@ -1,19 +1,19 @@
-const express = require("express"***REMOVED***
-const filterByUpvotes = require("../libs/filterByUpvotes"***REMOVED***
-const filterByReadTime = require("../libs/filterByReadTime"***REMOVED***
-const filterBySeries = require("../libs/filterBySeriesOnly"***REMOVED***
-const filterByKeywords = require("../libs/filterByKeywords"***REMOVED***
-const visitorHandler = require("../middleware/visitorHandler"***REMOVED***
-const averageReadingTime = require("../libs/averageReadingTime"***REMOVED***
-const app = express.Router(***REMOVED***
-const authHandler = require("../middleware/authHandler"***REMOVED***
-const db = require("../models/index"***REMOVED***
-const Post = require("../mongo/models/post"***REMOVED***
-const checkTokens = require("../middleware/checkTokens"***REMOVED***
+const express = require("express");
+const filterByUpvotes = require("../libs/filterByUpvotes");
+const filterByReadTime = require("../libs/filterByReadTime");
+const filterBySeries = require("../libs/filterBySeriesOnly");
+const filterByKeywords = require("../libs/filterByKeywords");
+const visitorHandler = require("../middleware/visitorHandler");
+const averageReadingTime = require("../libs/averageReadingTime");
+const app = express.Router();
+const authHandler = require("../middleware/authHandler");
+const db = require("../models/index");
+const Post = require("../mongo/models/post");
+const checkTokens = require("../middleware/checkTokens");
 
 app.delete(
   "/v1/delete",
-  authHandler({ continueOnNoUser: true ***REMOVED***),
+  authHandler({ continueOnNoUser: true }),
   visitorHandler,
   async (req, res, next) => {
     try {
@@ -21,22 +21,22 @@ app.delete(
 
       await Post.deleteMany({
         owner: postOwner,
-      ***REMOVED******REMOVED***
+      });
 
-      res.sendStatus(200***REMOVED***
-    ***REMOVED*** catch (err) {
-      next(err***REMOVED***
-    ***REMOVED***
-  ***REMOVED***
-***REMOVED***
+      res.sendStatus(200);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
 
 app.post(
   "/v1/save",
-  authHandler({ continueOnNoUser: true ***REMOVED***),
+  authHandler({ continueOnNoUser: true }),
   visitorHandler,
   async (req, res, next) => {
     try {
-      const { subreddit ***REMOVED*** = req.body;
+      const { subreddit } = req.body;
 
       const postOwner = res.locals.token;
 
@@ -52,58 +52,58 @@ app.post(
         post_id: x.post_id,
         subreddit: x.subreddit,
         upvote_ratio: x.upvote_ratio.toFixed(2),
-      ***REMOVED***)***REMOVED***
+      }));
 
       const posts = await Post.create({
         posts: toInsert,
         subreddit,
         owner: postOwner,
-      ***REMOVED******REMOVED***
+      });
 
-      res.send(posts***REMOVED***
-    ***REMOVED*** catch (error) {
-      next(error***REMOVED***
-    ***REMOVED***
-  ***REMOVED***
-***REMOVED***
+      res.send(posts);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 app.put("/v1/used", visitorHandler, async (req, res, next) => {
   try {
-    const { post_id ***REMOVED*** = req.body;
+    const { post_id } = req.body;
 
     const postOwner = await Post.findOne({
-      where: { owner: res.locals.postToken ***REMOVED***,
-    ***REMOVED******REMOVED***
+      where: { owner: res.locals.postToken },
+    });
 
     const post = postOwner.posts.filter((p) => p.post_id === post_id)[0];
 
     post.used = true;
 
-    await postOwner.save(***REMOVED***
+    await postOwner.save();
 
-    res.sendStatus(200***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.get(
   "/v1/",
-  authHandler({ continueOnNoUser: true ***REMOVED***),
+  authHandler({ continueOnNoUser: true }),
   visitorHandler,
   async (req, res, next) => {
     try {
-      const { upvotes, keywords, misc, readTime ***REMOVED*** = req.query.filters
-        ? { ...JSON.parse(req.query.filters) ***REMOVED***
-        : {***REMOVED***;
+      const { upvotes, keywords, misc, readTime } = req.query.filters
+        ? { ...JSON.parse(req.query.filters) }
+        : {};
 
-      const { wpm ***REMOVED*** = req.query;
+      const { wpm } = req.query;
 
       let resLimit = 25;
       let page = req.query.page || 1;
       const limit = resLimit * page;
       const skip = resLimit * page - resLimit;
-      let query = {***REMOVED***;
+      let query = {};
       const postOwner = res.locals.token;
 
       if (upvotes) {
@@ -112,24 +112,24 @@ app.get(
             query.ups = {
               operator: ">=",
               value: Number(upvotes.value),
-            ***REMOVED***;
-          ***REMOVED***
+            };
+          }
 
           if (upvotes.operator === "equal") {
             query.ups = {
               operator: "=",
               value: Number(upvotes.value),
-            ***REMOVED***;
-          ***REMOVED***
+            };
+          }
 
           if (upvotes.operator === "under") {
             query.ups = {
               operator: "<=",
               value: Number(upvotes.value),
-            ***REMOVED***;
-          ***REMOVED***
-        ***REMOVED***
-      ***REMOVED***
+            };
+          }
+        }
+      }
 
       if (readTime) {
         if (readTime.value > "0") {
@@ -137,59 +137,59 @@ app.get(
             query.readTime = {
               operator: ">=",
               value: Number(readTime.value),
-            ***REMOVED***;
-          ***REMOVED***
+            };
+          }
 
           if (readTime.operator === "under") {
             query.readTime = {
               operator: "<=",
               value: Number(readTime.value),
-            ***REMOVED***;
-          ***REMOVED***
-        ***REMOVED***
-      ***REMOVED***
+            };
+          }
+        }
+      }
 
       if (keywords) {
         query.keywords = keywords.value;
-      ***REMOVED***
+      }
 
       if (misc) {
         if (misc.value === "seriesOnly") {
           query.seriesOnly = true;
-        ***REMOVED***
+        }
 
         if (misc.value === "omitSeries") {
           query.omitSeries = true;
-        ***REMOVED***
-      ***REMOVED***
-      const _owner = await Post.findOne({ owner: postOwner ***REMOVED******REMOVED***
+        }
+      }
+      const _owner = await Post.findOne({ owner: postOwner });
 
       const posts =
         _owner === null
           ? []
           : _owner.posts
-              .filter((post) => filterByUpvotes({ post, query ***REMOVED***))
+              .filter((post) => filterByUpvotes({ post, query }))
               .filter((post) =>
                 filterByReadTime({
                   post,
                   query,
                   wpm,
-                ***REMOVED***)
+                })
               )
-              .filter((post) => filterByKeywords({ post, query ***REMOVED***))
-              .filter((post) => filterBySeries({ post, query ***REMOVED***)***REMOVED***
+              .filter((post) => filterByKeywords({ post, query }))
+              .filter((post) => filterBySeries({ post, query }));
 
       res.send({
         post: {
           subreddit: _owner?.subreddit,
           posts: posts.slice(skip, limit),
-        ***REMOVED***,
+        },
         maxPages: _owner ? Math.round(_owner.posts.length / 25) : 0,
-      ***REMOVED******REMOVED***
-    ***REMOVED*** catch (error) {
-      next(error***REMOVED***
-    ***REMOVED***
-  ***REMOVED***
-***REMOVED***
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 module.exports = app;

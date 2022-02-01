@@ -1,5 +1,5 @@
-***REMOVED***
-const { Model ***REMOVED*** = require("sequelize"***REMOVED***
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Tag extends Model {
     /**
@@ -12,9 +12,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "tagId",
         as: "stories",
         through: "StoryTag",
-      ***REMOVED******REMOVED***
-    ***REMOVED***
-  ***REMOVED***
+      });
+    }
+  }
   Tag.init(
     {
       uuid: {
@@ -22,23 +22,23 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
         unique: true,
-      ***REMOVED***,
+      },
       tag: {
         type: DataTypes.STRING,
-      ***REMOVED***,
+      },
       userId: {
         type: DataTypes.UUID,
         references: {
           model: "Users",
           key: "uuid",
           onDelete: "CASCADE",
-        ***REMOVED***,
-      ***REMOVED***,
-    ***REMOVED***,
+        },
+      },
+    },
     {
-***REMOVED***
+      sequelize,
       modelName: "Tag",
-    ***REMOVED***
-  ***REMOVED***
+    }
+  );
   return Tag;
-***REMOVED***;
+};

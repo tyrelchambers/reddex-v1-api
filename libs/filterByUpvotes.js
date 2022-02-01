@@ -1,13 +1,13 @@
-const filterByUpvotes = ({ post, query ***REMOVED***) => {
+const filterByUpvotes = ({ post, query }) => {
   if (!query.ups) return post;
 
   if (query.ups.operator === ">=") {
     return post.ups >= query.ups.value;
-  ***REMOVED*** else if (query.ups.operator === "<=") {
+  } else if (query.ups.operator === "<=") {
     return post.ups <= query.ups.value;
-  ***REMOVED*** else if (query.ups.operator === "=") {
+  } else if (query.ups.operator === "=") {
     return post.ups == query.ups.value;
-  ***REMOVED***
-***REMOVED***;
+  }
+};
 
 module.exports = filterByUpvotes;

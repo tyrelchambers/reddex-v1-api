@@ -1,38 +1,38 @@
-require("dotenv").config(***REMOVED***
+require("dotenv").config();
 
 const couponsLive = {
   free6MonthsPro: "tbyPys9Y",
-***REMOVED***;
+};
 
 const couponsTest = {
   free6MonthsPro: "XRW4d5fo",
-***REMOVED***;
+};
 
 const productsLive = {
   pro: {
     month: "price_1KHc14I8C7KcVoSyCHwBi3aX",
     year: "price_1KHc14I8C7KcVoSyKOtuyz8F",
-  ***REMOVED***,
+  },
   basic: {
     month: "price_1KHc19I8C7KcVoSyFhd5EEap",
     year: "price_1KHc19I8C7KcVoSyLXr3Ko3z",
-  ***REMOVED***,
-***REMOVED***;
+  },
+};
 
 const productsTest = {
   pro: {
     month: "price_1K64chI8C7KcVoSyUj7qgv65",
     year: "price_1K64e7I8C7KcVoSySAubpPyj",
-  ***REMOVED***,
+  },
   basic: {
     month: "price_1K64RzI8C7KcVoSyJ6MjuR8i",
     year: "price_1K64eWI8C7KcVoSyvxqt7X0y",
-  ***REMOVED***,
-***REMOVED***;
+  },
+};
 
-***REMOVED***
+const env = process.env.NODE_ENV || "development";
 
 module.exports = {
   coupons: env === "production" ? couponsLive : couponsTest,
   products: env === "production" ? productsLive : productsTest,
-***REMOVED***;
+};

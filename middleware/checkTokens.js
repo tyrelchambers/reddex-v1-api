@@ -1,16 +1,16 @@
-const { v4: uuidv4 ***REMOVED*** = require("uuid"***REMOVED***
-const decodeToken = require("../libs/decodeToken"***REMOVED***
+const { v4: uuidv4 } = require("uuid");
+const decodeToken = require("../libs/decodeToken");
 
 const checkTokens = async (req, res, next) => {
   try {
-    const { token: authToken, posttoken ***REMOVED*** = req.headers;
+    const { token: authToken, posttoken } = req.headers;
 
     res.locals.token = authToken || posttoken;
     res.locals.userId = authToken ? await decodeToken(authToken) : null;
-    next(***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED***;
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
 
 module.exports = checkTokens;

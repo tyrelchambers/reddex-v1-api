@@ -1,5 +1,5 @@
-***REMOVED***
-const { Model ***REMOVED*** = require("sequelize"***REMOVED***
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -11,49 +11,49 @@ module.exports = (sequelize, DataTypes) => {
       User.hasOne(models.Profile, {
         foreignKey: "userId",
         onDelete: "CASCADE",
-      ***REMOVED******REMOVED***
+      });
 
       User.hasMany(models.Contact, {
         foreignKey: "userId",
         onDelete: "CASCADE",
-      ***REMOVED******REMOVED***
+      });
 
       User.hasMany(models.Contacted, {
         foreignKey: "userId",
         onDelete: "CASCADE",
-      ***REMOVED******REMOVED***
+      });
 
       User.hasMany(models.Tag, {
         foreignKey: "userId",
         onDelete: "CASCADE",
-      ***REMOVED******REMOVED***
+      });
 
       User.hasMany(models.Searched, {
         foreignKey: "userId",
         onDelete: "CASCADE",
-      ***REMOVED******REMOVED***
+      });
 
       User.hasOne(models.Website, {
         foreignKey: "userId",
         onDelete: "CASCADE",
-      ***REMOVED******REMOVED***
+      });
 
       User.hasMany(models.SubmittedStory, {
         foreignKey: "userId",
         onDelete: "CASCADE",
-      ***REMOVED******REMOVED***
+      });
 
       User.hasOne(models.Subscription, {
         foreignKey: "userId",
         onDelete: "CASCADE",
-      ***REMOVED******REMOVED***
+      });
 
       User.hasMany(models.Story, {
         foreignKey: "user_id",
         onDelete: "CASCADE",
-      ***REMOVED******REMOVED***
-    ***REMOVED***
-  ***REMOVED***
+      });
+    }
+  }
   User.init(
     {
       uuid: {
@@ -61,7 +61,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
         unique: true,
-      ***REMOVED***,
+      },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -69,38 +69,38 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           isEmail: {
             msg: "Email must be a valid email address",
-          ***REMOVED***,
-        ***REMOVED***,
-      ***REMOVED***,
+          },
+        },
+      },
       password: {
         type: DataTypes.STRING,
         allowNull: false,
-      ***REMOVED***,
+      },
       reddit_refresh_token: DataTypes.STRING,
       email_confirmed: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
-      ***REMOVED***,
+      },
       websiteId: {
         type: DataTypes.UUID,
         references: {
           model: "Websites",
           key: "uuid",
-        ***REMOVED***,
+        },
         onDelete: "SET NULL",
-      ***REMOVED***,
+      },
       subscriptionId: {
         type: DataTypes.UUID,
         references: {
           model: "Subscriptions",
           key: "uuid",
-        ***REMOVED***,
-      ***REMOVED***,
-    ***REMOVED***,
+        },
+      },
+    },
     {
-***REMOVED***
+      sequelize,
       modelName: "User",
-    ***REMOVED***
-  ***REMOVED***
+    }
+  );
   return User;
-***REMOVED***;
+};

@@ -1,13 +1,13 @@
-const { default: axios ***REMOVED*** = require("axios"***REMOVED***
-const express = require("express"***REMOVED***
-const authHandler = require("../middleware/authHandler"***REMOVED***
-const db = require("../models"***REMOVED***
-const app = express.Router(***REMOVED***
-const jwt = require("jsonwebtoken"***REMOVED***
-require("dotenv").config(***REMOVED***
-const bcrypt = require("bcryptjs"***REMOVED***
-const sendEmail = require("../emails/sendEmail"***REMOVED***
-const { emailTemplates ***REMOVED*** = require("../constants"***REMOVED***
+const { default: axios } = require("axios");
+const express = require("express");
+const authHandler = require("../middleware/authHandler");
+const db = require("../models");
+const app = express.Router();
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+const bcrypt = require("bcryptjs");
+const sendEmail = require("../emails/sendEmail");
+const { emailTemplates } = require("../constants");
 
 app.get("/v1/me", authHandler(), async (req, res, next) => {
   try {
@@ -16,145 +16,145 @@ app.get("/v1/me", authHandler(), async (req, res, next) => {
     const user = await db.User.findOne({
       where: {
         uuid: userId,
-      ***REMOVED***,
+      },
       attributes: {
         exclude: ["password"],
-      ***REMOVED***,
+      },
       include: [db.Profile, db.Searched],
-    ***REMOVED******REMOVED***
+    });
 
-    res.send(user***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.send(user);
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.get("/v1/link-reddit", authHandler(), async (req, res, next) => {
   try {
-    const { code ***REMOVED*** = req.query;
+    const { code } = req.query;
 
     const encode = Buffer.from(
-      `${process.env.REDDIT_APP***REMOVED***:${process.env.REDDIT_SECRET***REMOVED***`
-    ).toString("base64"***REMOVED***
+      `${process.env.REDDIT_APP}:${process.env.REDDIT_SECRET}`
+    ).toString("base64");
 
-    const { refresh_token ***REMOVED*** = await axios
+    const { refresh_token } = await axios
       .post(
         "https://www.reddit.com/api/v1/access_token",
-        `grant_type=authorization_code&code=${code***REMOVED***&redirect_uri=${process.env.REDDIT_REDIRECT***REMOVED***`,
+        `grant_type=authorization_code&code=${code}&redirect_uri=${process.env.REDDIT_REDIRECT}`,
 
         {
           headers: {
-            Authorization: `Basic ${encode***REMOVED***`,
+            Authorization: `Basic ${encode}`,
             "Content-Type": "application/x-www-form-urlencoded",
-          ***REMOVED***,
-        ***REMOVED***
+          },
+        }
       )
       .then((res) => {
         return res.data;
-      ***REMOVED******REMOVED***
+      });
 
     await db.User.update(
       {
         reddit_refresh_token: refresh_token,
-      ***REMOVED***,
+      },
       {
         where: {
           uuid: res.locals.userId,
-        ***REMOVED***,
-      ***REMOVED***
-    ***REMOVED***
+        },
+      }
+    );
 
-    res.sendStatus(200***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.get("/v1/reddit-profile", authHandler(), async (req, res, next) => {
   try {
-    const { accessToken ***REMOVED*** = req.query;
+    const { accessToken } = req.query;
 
     const redditProfile = await axios
       .get("https://oauth.reddit.com/api/v1/me", {
         headers: {
-          Authorization: `bearer ${accessToken***REMOVED***`,
-        ***REMOVED***,
-      ***REMOVED***)
-      .then((res) => res.data***REMOVED***
+          Authorization: `bearer ${accessToken}`,
+        },
+      })
+      .then((res) => res.data);
 
     await db.Profile.update(
       {
         reddit_profile: redditProfile,
-      ***REMOVED***,
+      },
       {
         where: {
           userId: res.locals.userId,
-        ***REMOVED***,
-      ***REMOVED***
-    ***REMOVED***
+        },
+      }
+    );
 
-    res.sendStatus(200***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.get("/v1/reddit-access-token", authHandler(), async (req, res, next) => {
   try {
     const encode = Buffer.from(
-      `${process.env.REDDIT_APP***REMOVED***:${process.env.REDDIT_SECRET***REMOVED***`
-    ).toString("base64"***REMOVED***
+      `${process.env.REDDIT_APP}:${process.env.REDDIT_SECRET}`
+    ).toString("base64");
 
     const user = await db.User.findOne({
       where: {
         uuid: res.locals.userId,
-      ***REMOVED***,
-    ***REMOVED******REMOVED***
+      },
+    });
 
-    const { access_token ***REMOVED*** = await axios
+    const { access_token } = await axios
       .post(
         "https://www.reddit.com/api/v1/access_token",
-        `grant_type=refresh_token&refresh_token=${user.reddit_refresh_token***REMOVED***`,
+        `grant_type=refresh_token&refresh_token=${user.reddit_refresh_token}`,
         {
           headers: {
-            Authorization: `Basic ${encode***REMOVED***`,
-          ***REMOVED***,
-        ***REMOVED***
+            Authorization: `Basic ${encode}`,
+          },
+        }
       )
-      .then((res) => res.data***REMOVED***
+      .then((res) => res.data);
 
-    res.send({ access_token ***REMOVED******REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.send({ access_token });
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.put("/v1/update", authHandler(), async (req, res, next) => {
   try {
-    const { greeting, recurring, words_per_minute ***REMOVED*** = { ...req.body ***REMOVED***;
+    const { greeting, recurring, words_per_minute } = { ...req.body };
 
     await db.Profile.update(
       {
         greeting,
         recurring,
         words_per_minute,
-      ***REMOVED***,
+      },
       {
         where: {
           userId: res.locals.userId,
-        ***REMOVED***,
-      ***REMOVED***
-    ***REMOVED***
+        },
+      }
+    );
 
-    res.sendStatus(200***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.get("/v1/confirm_email", async (req, res, next) => {
   try {
-    const { emailToken ***REMOVED*** = req.query;
+    const { emailToken } = req.query;
 
     const userId = await jwt.verify(
       emailToken,
@@ -164,103 +164,103 @@ app.get("/v1/confirm_email", async (req, res, next) => {
         let uuid = decoded.uuid;
 
         return uuid;
-      ***REMOVED***
-    ***REMOVED***
+      }
+    );
 
-    if (!userId) throw new Error("Something went wrong"***REMOVED***
+    if (!userId) throw new Error("Something went wrong");
 
     await db.User.update(
       {
         email_confirmed: true,
-      ***REMOVED***,
+      },
       {
         where: {
           uuid: userId,
-        ***REMOVED***,
+        },
         returning: true,
         plain: true,
-      ***REMOVED***
-    ***REMOVED***
+      }
+    );
 
-    res.sendStatus(200***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.post("/v1/change-password", authHandler(), async (req, res, next) => {
   try {
-    const { currentPassword, newPassword ***REMOVED*** = req.body;
+    const { currentPassword, newPassword } = req.body;
 
     if (newPassword.length < 8)
-      throw new Error("Password must be at least 8 characters"***REMOVED***
+      throw new Error("Password must be at least 8 characters");
     if (newPassword.length > 255)
-      throw new Error("Password must be less than 255 characters"***REMOVED***
+      throw new Error("Password must be less than 255 characters");
 
     const user = await db.User.findOne({
       where: {
         uuid: res.locals.userId,
-      ***REMOVED***,
-    ***REMOVED******REMOVED***
+      },
+    });
 
     const hashPassword = await bcrypt.compareSync(
       currentPassword,
       user.password
-    ***REMOVED***
-    if (!hashPassword) return next({ error: "Incorrect password" ***REMOVED******REMOVED***
+    );
+    if (!hashPassword) return next({ error: "Incorrect password" });
 
-    const hashNewPassword = await bcrypt.hashSync(newPassword, 10***REMOVED***
+    const hashNewPassword = await bcrypt.hashSync(newPassword, 10);
 
     await user.update({
       password: hashNewPassword,
-    ***REMOVED******REMOVED***
+    });
 
     sendEmail({
       to: user.email,
       subject: "Your password has been changed",
       template: emailTemplates.passwordChange,
-    ***REMOVED******REMOVED***
+    });
 
-    res.sendStatus(200***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.post("/v1/change-email", authHandler(), async (req, res, next) => {
   try {
-    const { email ***REMOVED*** = req.body;
+    const { email } = req.body;
 
-    if (!email) throw new Error("Email is required"***REMOVED***
+    if (!email) throw new Error("Email is required");
 
     const existingUser = await db.User.findOne({
       where: {
         email,
-      ***REMOVED***,
-    ***REMOVED******REMOVED***
+      },
+    });
 
-    if (existingUser) throw new Error("Email already exists"***REMOVED***
+    if (existingUser) throw new Error("Email already exists");
 
     const user = await db.User.findOne({
       where: {
         uuid: res.locals.userId,
-      ***REMOVED***,
-    ***REMOVED******REMOVED***
+      },
+    });
 
     await user.update({
       email,
-    ***REMOVED******REMOVED***
+    });
 
     sendEmail({
       to: user.email,
       subject: "Your email has been changed",
       template: emailTemplates.emailChange,
-    ***REMOVED******REMOVED***
+    });
 
-    res.sendStatus(200***REMOVED***
-  ***REMOVED*** catch (error) {
-    next(error***REMOVED***
-  ***REMOVED***
-***REMOVED******REMOVED***
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = app;

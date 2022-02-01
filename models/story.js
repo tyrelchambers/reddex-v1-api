@@ -1,5 +1,5 @@
-***REMOVED***
-const { Model ***REMOVED*** = require("sequelize"***REMOVED***
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Story extends Model {
     /**
@@ -14,9 +14,9 @@ module.exports = (sequelize, DataTypes) => {
         through: "StoryTag",
         as: "tags",
         onDelete: "CASCADE",
-      ***REMOVED******REMOVED***
-    ***REMOVED***
-  ***REMOVED***
+      });
+    }
+  }
   Story.init(
     {
       uuid: {
@@ -24,50 +24,50 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
         unique: true,
-      ***REMOVED***,
+      },
       author: {
         type: DataTypes.STRING,
         allowNull: false,
-      ***REMOVED***,
+      },
       flair: {
         type: DataTypes.STRING,
-      ***REMOVED***,
+      },
       num_comments: {
         type: DataTypes.INTEGER,
-      ***REMOVED***,
+      },
       post_id: {
         type: DataTypes.STRING,
-      ***REMOVED***,
+      },
       self_text: {
         type: DataTypes.TEXT,
-      ***REMOVED***,
+      },
       title: {
         type: DataTypes.STRING,
-      ***REMOVED***,
+      },
       ups: {
         type: DataTypes.INTEGER,
-      ***REMOVED***,
+      },
       url: {
         type: DataTypes.STRING,
-      ***REMOVED***,
+      },
       subreddit: {
         type: DataTypes.STRING,
-      ***REMOVED***,
+      },
       permission: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
-      ***REMOVED***,
+      },
       read: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
-      ***REMOVED***,
+      },
       reading_time: {
         type: DataTypes.INTEGER,
-      ***REMOVED***,
+      },
 
       upvote_ratio: {
         type: DataTypes.FLOAT,
-      ***REMOVED***,
+      },
       created: DataTypes.INTEGER,
 
       user_id: {
@@ -75,13 +75,13 @@ module.exports = (sequelize, DataTypes) => {
         references: {
           model: "Users",
           key: "uuid",
-        ***REMOVED***,
-      ***REMOVED***,
-    ***REMOVED***,
+        },
+      },
+    },
     {
-***REMOVED***
+      sequelize,
       modelName: "Story",
-    ***REMOVED***
-  ***REMOVED***
+    }
+  );
   return Story;
-***REMOVED***;
+};

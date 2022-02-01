@@ -1,4 +1,4 @@
-***REMOVED***
+"use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable("Tags", {
@@ -7,37 +7,37 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
         unique: true,
-      ***REMOVED***,
+      },
       tag: {
         type: Sequelize.STRING,
-      ***REMOVED***,
+      },
       userId: {
         type: Sequelize.UUID,
         references: {
           model: "Users",
           key: "uuid",
           onDelete: "CASCADE",
-        ***REMOVED***,
-      ***REMOVED***,
+        },
+      },
       storyId: {
         type: Sequelize.UUID,
         references: {
           model: "Stories",
           key: "uuid",
-        ***REMOVED***,
+        },
         onDelete: "CASCADE",
-      ***REMOVED***,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-      ***REMOVED***,
+      },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-      ***REMOVED***,
-    ***REMOVED******REMOVED***
-  ***REMOVED***,
+      },
+    });
+  },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("Tags"***REMOVED***
-  ***REMOVED***,
-***REMOVED***;
+    await queryInterface.dropTable("Tags");
+  },
+};

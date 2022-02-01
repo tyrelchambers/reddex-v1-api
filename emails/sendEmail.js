@@ -1,7 +1,7 @@
-const { emailTemplates ***REMOVED*** = require("../constants"***REMOVED***
-const sgMail = require("@sendgrid/mail"***REMOVED***
+const { emailTemplates } = require("../constants");
+const sgMail = require("@sendgrid/mail");
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY***REMOVED***
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const sendEmail = (data) => {
   const msg = {
@@ -11,17 +11,17 @@ const sendEmail = (data) => {
     templateId: data.template,
     dynamic_template_data: {
       ...data.dynamics,
-    ***REMOVED***,
-  ***REMOVED***;
+    },
+  };
 
   sgMail
     .send(msg)
     .then(() => {
-      console.log("Email sent"***REMOVED***
-    ***REMOVED***)
+      console.log("Email sent");
+    })
     .catch((error) => {
-      console.error(error***REMOVED***
-    ***REMOVED******REMOVED***
-***REMOVED***;
+      console.error(error);
+    });
+};
 
 module.exports = sendEmail;

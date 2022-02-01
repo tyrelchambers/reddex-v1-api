@@ -1,4 +1,4 @@
-const mongoose = require("mongoose"***REMOVED***
+const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
@@ -22,31 +22,31 @@ const postSchema = new Schema(
         viewed: {
           type: Boolean,
           default: false,
-        ***REMOVED***,
+        },
         used: {
           type: Boolean,
           default: false,
-        ***REMOVED***,
+        },
         page: Number,
         readTime: Number,
-      ***REMOVED***,
+      },
     ],
-  ***REMOVED***,
-  { timestamps: { createdAt: "created_at" ***REMOVED*** ***REMOVED***
-***REMOVED***
+  },
+  { timestamps: { createdAt: "created_at" } }
+);
 
 postSchema.index(
   {
     title: "text",
     self_text: "text",
     author: "text",
-  ***REMOVED***,
+  },
   {
     weights: {
       self_text: 15,
       title: 7,
-    ***REMOVED***,
-  ***REMOVED***
-***REMOVED***
-const Post = mongoose.model("Post", postSchema***REMOVED***
+    },
+  }
+);
+const Post = mongoose.model("Post", postSchema);
 module.exports = Post;
