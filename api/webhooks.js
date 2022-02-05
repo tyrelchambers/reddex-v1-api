@@ -7,6 +7,14 @@ const db = require("../models");
 
 const app = express.Router();
 
+app.post('/v1/storyblok', express.raw({type: 'application/json'}), async (req, res, next) => {
+  try {
+    console.log(req);
+  } catch (error) {
+    next(error)
+  }
+})
+
 app.post(
   "/v1/",
   express.raw({ type: "application/json" }),
