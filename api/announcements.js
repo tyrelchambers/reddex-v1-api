@@ -1,18 +1,24 @@
-const { default: axios } = require('axios');
-const express = require('express');
-const authHandler=require('../middleware/authHandler')
-const app = express.Router()
+const { default: axios } = require("axios");
+const express = require("express");
+const authHandler = require("../middleware/authHandler");
+const app = express.Router();
+const StoryblokClient = require("storyblok-js-client");
 
-app.get('/v1/', authHandler, async (req, res, next) => {
+const Storyblok = new StoryblokClient({
+  accessToken: process.env.STORYBLOK_TOKEN,
+});
+
+app.get("/v1/all", authHandler(), async (req, res, next) => {
   try {
-    console.log('here,--------------------');
-    // const posts = await axios.get(`https://api.storyblok.com/v1/cdn/stories/home?version=published&token=${process.env.STORYBLOK_TOKEN}`)
-    // console.log(posts);
+    const posts = await Storyblok.get("cdn/stories/", {
+      per_page: 2,
+      page: 1,
+    }).then((res) => res.data);
 
-    res.sendStatus(200)
+    res.send(posts);
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 
 module.exports = app;

@@ -56,7 +56,7 @@ app.use("/api/submitted", require("./api/submitted"));
 app.use("/api/subscriptions", require("./api/subscriptions"));
 app.use("/api/stripe", require("./api/stripe"));
 app.use("/api/upload", require("./api/upload"));
-app.use('/api/announcements', require('./api/announcements'))
+app.use("/api/announcements", require("./api/announcements"));
 
 db.on("error", console.error.bind(console, "Connection error - Mongodb"));
 db.once("open", () => console.log("Connected sucessfully to Mongo database"));
