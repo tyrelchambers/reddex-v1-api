@@ -12,7 +12,7 @@ let sequelize;
 
 let sequelize2;
 
-// sequelize2 = new Sequelize(process.env.OLD_REDDEX_DB);
+sequelize2 = new Sequelize(process.env.OLD_REDDEX_DB);
 
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
