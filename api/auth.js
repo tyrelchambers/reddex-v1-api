@@ -41,6 +41,9 @@ app.get("/v1/login", async (req, res, next) => {
       });
     }
 
+    user.lastLogin = new Date(Date.now());
+    await user.save();
+
     res.send({ user, token });
   } catch (error) {
     next(error);
