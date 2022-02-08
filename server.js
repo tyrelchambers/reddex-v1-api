@@ -12,7 +12,7 @@ const app = express();
 // jobs
 const deleteCancelledSubscriptions = require("./jobs/deleteCancelledSubscriptions");
 
-deleteCancelledSubscriptions.start();
+// deleteCancelledSubscriptions.start();
 
 app.use(helmet());
 const database = config[config.env].database;

@@ -28,8 +28,10 @@ app.get("/v1/plan", authHandler(), async (req, res, next) => {
       attributes: ["customerId", "subscriptionId"],
     });
 
+    const customer = await stripe.customers.retrieve(sub.customerId);
+
     const subscription = await stripe.subscriptions.retrieve(
-      sub.subscriptionId
+      customer.subscriptions.data[0].id
     );
 
     const product = await stripe.products.retrieve(subscription.plan.product);
