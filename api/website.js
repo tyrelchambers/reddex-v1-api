@@ -98,6 +98,7 @@ app.post("/v1/submitStory", async (req, res, next) => {
       body: content,
       author,
       userId: siteOwner,
+      submittedOn: new Date(),
     });
 
     sendEmail({
@@ -106,6 +107,8 @@ app.post("/v1/submitStory", async (req, res, next) => {
       template: emailTemplates.storySubmission,
       dynamics: {
         host: `${process.env.FRONT_END}`,
+        title,
+        author,
       },
     });
     res.sendStatus(200);

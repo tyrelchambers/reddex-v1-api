@@ -44,6 +44,7 @@ app.get("/v1/", authHandler(), async (req, res, next) => {
       where: {
         userId: res.locals.userId,
       },
+      order: [["createdAt", "DESC"]],
     });
 
     res.send(submittedStories);
