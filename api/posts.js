@@ -179,12 +179,14 @@ app.get(
               .filter((post) => filterByKeywords({ post, query }))
               .filter((post) => filterBySeries({ post, query }));
 
+      const maxPages =
+        Math.round(posts.length / 25) < 25 ? 1 : Math.round(posts.length / 25);
       res.send({
         post: {
           subreddit: _owner?.subreddit,
           posts: posts.slice(skip, limit),
         },
-        maxPages: _owner ? Math.round(_owner.posts.length / 25) : 0,
+        maxPages,
       });
     } catch (error) {
       next(error);
