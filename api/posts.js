@@ -180,7 +180,8 @@ app.get(
               .filter((post) => filterBySeries({ post, query }));
 
       const maxPages =
-        Math.round(posts.length / 25) < 25 ? 1 : Math.round(posts.length / 25);
+        Math.round(posts.length / 25) === 0 ? 1 : Math.round(posts.length / 25);
+
       res.send({
         post: {
           subreddit: _owner?.subreddit,
