@@ -17,7 +17,7 @@ app.delete(
   visitorHandler,
   async (req, res, next) => {
     try {
-      const postOwner = res.locals.token;
+      const postOwner = res.locals.userId || res.locals.token;
 
       await Post.deleteMany({
         owner: postOwner,
@@ -38,7 +38,7 @@ app.post(
     try {
       const { subreddit } = req.body;
 
-      const postOwner = res.locals.token;
+      const postOwner = res.locals.userId || res.locals.token;
 
       const toInsert = req.body.posts.map((x) => ({
         author: x.author,
@@ -67,25 +67,30 @@ app.post(
   }
 );
 
-app.put("/v1/used", visitorHandler, async (req, res, next) => {
-  try {
-    const { post_id } = req.body;
+app.put(
+  "/v1/used",
+  authHandler({ continueOnNoUser: true }),
+  visitorHandler,
+  async (req, res, next) => {
+    try {
+      const { post_id } = req.body;
 
-    const postOwner = await Post.findOne({
-      where: { owner: res.locals.postToken },
-    });
+      const postOwner = await Post.findOne({
+        where: { owner: res.locals.userId || res.locals.token },
+      });
 
-    const post = postOwner.posts.filter((p) => p.post_id === post_id)[0];
+      const post = postOwner.posts.filter((p) => p.post_id === post_id);
 
-    post.used = true;
+      post.used = true;
 
-    await postOwner.save();
+      await postOwner.save();
 
-    res.sendStatus(200);
-  } catch (error) {
-    next(error);
+      res.sendStatus(200);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 app.get(
   "/v1/",
@@ -104,7 +109,8 @@ app.get(
       const limit = resLimit * page;
       const skip = resLimit * page - resLimit;
       let query = {};
-      const postOwner = res.locals.token;
+
+      const postOwner = res.locals.userId || res.locals.token;
 
       if (upvotes) {
         if (upvotes.value > "0") {
