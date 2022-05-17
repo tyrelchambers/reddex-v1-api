@@ -31,23 +31,23 @@ app.post("/v1/save", authHandler(), async (req, res, next) => {
       },
     });
 
-    if (existingStory) throw new Error("Story already exists");
-
-    await db.Story.create({
-      author,
-      title,
-      self_text,
-      ups,
-      url,
-      num_comments,
-      flair,
-      post_id,
-      permission,
-      subreddit,
-      user_id: res.locals.userId,
-      created,
-      upvote_ratio: upvote_ratio.toFixed(2),
-    });
+    if (!existingStory) {
+      await db.Story.create({
+        author,
+        title,
+        self_text,
+        ups,
+        url,
+        num_comments,
+        flair,
+        post_id,
+        permission,
+        subreddit,
+        user_id: res.locals.userId,
+        created,
+        upvote_ratio: upvote_ratio.toFixed(2),
+      });
+    }
 
     res.sendStatus(200);
   } catch (error) {

@@ -38,7 +38,7 @@ app.get("/v1/completed", authHandler(), async (req, res, next) => {
 
 app.post("/v1/approved/save", authHandler(), async (req, res, next) => {
   try {
-    const { subject } = req.body;
+    const { subject, dest } = req.body;
 
     const story = await db.Story.findOne({
       where: {
@@ -46,10 +46,13 @@ app.post("/v1/approved/save", authHandler(), async (req, res, next) => {
         title: {
           [Op.substring]: `${subject.substring(0, subject.length - 3)}`,
         },
+        author: dest,
       },
     });
 
     if (!story) throw new Error("Story not found");
+
+    console.log(story);
 
     await story.update({
       permission: true,
