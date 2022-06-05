@@ -52,8 +52,6 @@ app.post("/v1/approved/save", authHandler(), async (req, res, next) => {
 
     if (!story) throw new Error("Story not found");
 
-    console.log(story);
-
     await story.update({
       permission: true,
     });
