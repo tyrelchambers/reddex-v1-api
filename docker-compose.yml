@@ -15,8 +15,6 @@ services:
   db:
     container_name: reddex_v2_db
     image: postgres
-    ports:
-      - "5432:5432"
     env_file:
       - .env
     volumes:
@@ -26,8 +24,6 @@ services:
   mongodb:
     container_name: mongodb_reddex
     image: mongo
-    ports:
-      - "6000:6000"
     restart: unless-stopped
 
 networks:
