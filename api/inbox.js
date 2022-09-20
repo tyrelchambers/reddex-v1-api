@@ -1,5 +1,5 @@
 const express = require("express");
-const { Op } = require("sequelize/dist");
+const { Op } = require("sequelize");
 const authHandler = require("../middleware/authHandler");
 const db = require("../models");
 const app = express.Router();

@@ -7,7 +7,7 @@ COPY --chown=node:node . .
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm i
 
 RUN npm install -g sequelize-cli nodemon
 

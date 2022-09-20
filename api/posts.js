@@ -7,9 +7,8 @@ const visitorHandler = require("../middleware/visitorHandler");
 const averageReadingTime = require("../libs/averageReadingTime");
 const app = express.Router();
 const authHandler = require("../middleware/authHandler");
-const db = require("../models/index");
 const Post = require("../mongo/models/post");
-const checkTokens = require("../middleware/checkTokens");
+const Sentry = require("@sentry/node");
 
 app.delete(
   "/v1/delete",
@@ -25,6 +24,8 @@ app.delete(
 
       res.sendStatus(200);
     } catch (err) {
+          Sentry.captureException(error)
+
       next(err);
     }
   }
@@ -62,6 +63,8 @@ app.post(
 
       res.send(posts);
     } catch (error) {
+                Sentry.captureException(error)
+
       next(error);
     }
   }
@@ -87,6 +90,8 @@ app.put(
 
       res.sendStatus(200);
     } catch (error) {
+                Sentry.captureException(error)
+
       next(error);
     }
   }
@@ -196,6 +201,8 @@ app.get(
         maxPages,
       });
     } catch (error) {
+                Sentry.captureException(error)
+
       next(error);
     }
   }

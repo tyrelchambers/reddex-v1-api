@@ -2,9 +2,7 @@ version: "3.8"
 services:
   server:
     container_name: reddex_v2_server
-    image: tyrelchambers/reddex-api
-    ports:
-      - "4000:4000"
+    build: tyrelchambers/reddex-api
     env_file:
       - .env
     restart: unless-stopped
@@ -15,8 +13,6 @@ services:
   db:
     container_name: reddex_v2_db
     image: postgres
-    ports:
-      - "5432:5432"
     env_file:
       - .env
     volumes:
@@ -26,8 +22,6 @@ services:
   mongodb:
     container_name: mongodb_reddex
     image: mongo
-    ports:
-      - "6000:6000"
     restart: unless-stopped
 
 networks:

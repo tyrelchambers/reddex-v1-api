@@ -10,6 +10,7 @@ const stripeData = require("../constants/stripeData");
 const addUserToSendGridContact = require("../libs/addUserToSendGridContact");
 const { emailTemplates } = require("../constants");
 const decodeToken = require("../libs/decodeToken");
+const Sentry = require('@sentry/node');
 
 app.get("/v1/login", async (req, res, next) => {
   try {
@@ -46,6 +47,7 @@ app.get("/v1/login", async (req, res, next) => {
 
     res.send({ user, token });
   } catch (error) {
+    Sentry.captureException(error)
     next(error);
   }
 });
@@ -121,6 +123,7 @@ app.post("/v1/register", async (req, res, next) => {
 
     res.send({ user, token });
   } catch (error) {
+    Sentry.captureException(error)
     next(error);
   }
 });
@@ -150,6 +153,8 @@ app.post("/v1/forgot-password", async (req, res, next) => {
 
     res.sendStatus(200);
   } catch (error) {
+        Sentry.captureException(error)
+
     next(error);
   }
 });
@@ -181,6 +186,8 @@ app.post("/v1/reset-password", async (req, res, next) => {
 
     res.sendStatus(200);
   } catch (error) {
+        Sentry.captureException(error)
+
     next(error);
   }
 });
