@@ -2,9 +2,7 @@ version: "3.8"
 services:
   server:
     container_name: reddex_v2_server
-    build: .
-    ports:
-      - "4000:4000"
+    build: tyrelchambers/reddex-api
     env_file:
       - .env
     restart: unless-stopped
