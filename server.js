@@ -1,7 +1,8 @@
 // express server listening on port 3000
 const express = require("express");
 require("dotenv").config();
-
+const Sentry = require('@sentry/node');
+const Tracing = require("@sentry/tracing");
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
@@ -19,6 +20,26 @@ const database = config[config.env].database;
 const db = mongoose.connection;
 
 const port = process.env.PORT || "4000";
+
+if (process.env.NODE_ENV === "production") {
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  environment: 'production',
+  integrations: [
+    // enable HTTP calls tracing
+    new Sentry.Integrations.Http({ tracing: true }),
+    // enable Express.js middleware tracing
+    new Tracing.Integrations.Express({ app }),
+  ],
+
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  // We recommend adjusting this value in production
+  tracesSampleRate: 1.0,
+});
+
+app.use(Sentry.Handlers.errorHandler());
+}
 
 app.use("/api/webhooks", require("./api/webhooks"));
 
@@ -63,12 +84,12 @@ db.once("open", () => console.log("Connected sucessfully to Mongo database"));
 
 console.log("For Chris: biscuits");
 
-app.use(function (err, req, res, next) {
-  console.log("--------error--------");
-  console.error(err.message);
-  console.log("--------error--------");
 
-  res.status(500).send(err.message);
+app.use(function onError(err, req, res, next) {
+  // The error id is attached to `res.sentry` to be returned
+  // and optionally displayed to the user for support.
+  res.statusCode = 500;
+  res.end(res.sentry + "\n");
 });
 
 app.listen(port, () => console.log("App running on " + port));

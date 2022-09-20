@@ -2,7 +2,7 @@ version: "3.8"
 services:
   server:
     container_name: reddex_v2_server
-    image: tyrelchambers/reddex-api
+    build: .
     ports:
       - "4000:4000"
     env_file:
