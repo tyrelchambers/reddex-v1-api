@@ -2,10 +2,12 @@ require("dotenv").config();
 
 const couponsLive = {
   free6MonthsPro: "tbyPys9Y",
+  freeProForever: "JKEc7aTD",
 };
 
 const couponsTest = {
   free6MonthsPro: "XRW4d5fo",
+  freeProForever: "U66kJ9zl",
 };
 
 const productsLive = {
